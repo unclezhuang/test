@@ -18,4 +18,7 @@ body {
   background-size: cover;
   background-position: center;
 }
+body::-webkit-scrollbar {
+  display: none;
+}
 </style>

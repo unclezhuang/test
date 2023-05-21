@@ -2,15 +2,15 @@
   <div class="login">
     <div class="logo"><p>诚信论坛</p></div>
     <nav class="navPage">
-      <router-link to="/" class="home">首页</router-link>
-      <router-link to="/deal" class="home">交易市场</router-link>
+      <router-link to="/" class="home mousehover">首页</router-link>
+      <router-link to="/defo/deal" class="home mousehover">交易市场</router-link>
     </nav>
     <div class="user">
       <span class="userhead" v-show="!isShow" @click="login">登录</span>
       <span v-show="isShow">
         <div class="userhead">
-          <p>个人详情</p>
-          <p>退出登陆</p>
+          <router-link to="/defo/user" class="mousehover">个人详情</router-link>
+          <p class="mousehover">退出登陆</p>
         </div>
         <img
           class="userhead"
@@ -23,9 +23,37 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs } from "vue"
+
 export default {
   setup() {
+    async function islogin(){
+      try {
+    // 检查 MetaMask 是否已安装
+    const isMetaMaskInstalled = typeof window.ethereum !== 'undefined' || (typeof window.web3 !== 'undefined' && window.web3.currentProvider.isMetaMask)
+
+    if (!isMetaMaskInstalled) {
+      console.log('请安装 MetaMask')
+      return false
+    }
+
+    // 检查用户是否已登录
+    const accounts = await  ethereum.request({ method: 'eth_accounts' })
+    const isLoggedIn = accounts.length > 0
+
+    if (!isLoggedIn) {
+      
+      console.log('请先登录 MetaMask')
+      return false
+    }
+    return true
+  } catch (err) {
+    console.error(err)
+    return false
+  }
+}  islogin().then(() => {
+  obj.isShow = !obj.isShow
+})
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
       login();
@@ -50,13 +78,14 @@ export default {
             obj.isShow = !obj.isShow;
           })
           .catch(function (error) {
-            console.log(error);
+            if(error.message = "Already processing eth_requestAccounts. Please wait."){
+            console.log("1")
+            }
           });
       } else {
         console.log("请安装 MetaMask 插件");
       }
     };
-
     return {
       ...toRefs(obj),
       change,
@@ -99,15 +128,6 @@ export default {
 .navPage {
   float: right;
 }
-.el-header {
-  height: 20%;
-}
-.el-main {
-  height: 70%;
-}
-.el-footer {
-  height: 10%;
-}
 .userhead {
   display: inline-block;
   float: right;
@@ -115,5 +135,8 @@ export default {
 }
 .home{
     margin: 10%;
+}
+.mousehover:hover {
+  color: red;
 }
 </style>

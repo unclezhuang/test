@@ -1,30 +1,35 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
-import HomeView from '../views/Home.vue'
-
-
 const routes = [
     {
-        path: '/home',
-        name: 'home',
-        component: () => import('../views/Home.vue')
-    },
-    {
         path: '/',
-        redirect: {name: 'home'}
+        redirect: {name:"homepage"}
     },
     {
         path: '/:panmenglong',
-        redirect: {name: 'home'}
+        redirect: {name:"homepage"}
     },
     {
-        path: '/user',
-        name: 'user',
-        component: () => import('../views/user.vue')
-    },
-    {
-        path: '/deal',
-        name: 'deal',
-        component: () => import('../views/TradingMarket.vue')
+        path: '/defo',
+        name: 'defo',
+        component: () => import('../views/Home.vue'),
+        redirect:{name:"homepage"},
+        children: [
+            {
+                path: 'deal',
+                name: 'deal',
+                component: () => import('../views/TradingMarket.vue')
+            },
+            {
+                path: 'homepage',
+                name: 'homepage',
+                component: () => import('../views/HomePage.vue')
+            },
+            {
+                path: 'user',
+                name: 'user',
+                component: () => import('../views/user.vue')
+            },
+        ]
     },
 ]
 
