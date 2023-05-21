@@ -75,6 +75,7 @@ export default {
   height: 100%;
 }
 .login {
+  
   display: flex;
   flex-direction: row;
   justify-content: center; /*垂直居中*/
@@ -99,15 +100,7 @@ export default {
 .navPage {
   float: right;
 }
-.el-header {
-  height: 20%;
-}
-.el-main {
-  height: 70%;
-}
-.el-footer {
-  height: 10%;
-}
+
 .userhead {
   display: inline-block;
   float: right;

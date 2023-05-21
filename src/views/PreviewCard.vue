@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-card v-for="item in data" :key="item.id" style="margin-bottom: 20px">
+        <el-card v-for="item in data" :key="item.id" style="width:90%;">
             <el-image style="width: 100%; height: 150px;" src="https://picsum.photos/300/150" ></el-image>
             <div style="padding: 14px;">
               <h3 style="font-size: 18px">{{ item.title }}</h3>
