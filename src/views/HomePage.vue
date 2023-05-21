@@ -11,8 +11,7 @@
           line-height: 40px;
           color: #1989fa;
           border-radius: 50%;
-        "
-      >
+        ">
         <img src="../img/toTop.png" style="height: 100%" />
       </div>
     </el-backtop>
