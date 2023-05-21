@@ -13,7 +13,7 @@
           border-radius: 50%;
         ">
         <img src="../img/toTop.png" style="height: 100%" />
-      </div><<<<<<<
+      </div>
     </el-backtop>
     <div class="serch">
       <img src="../img/search.png" class="serachimg" />

@@ -104,6 +104,7 @@ export default {
   height: 100%;
 }
 .login {
+  
   display: flex;
   flex-direction: row;
   justify-content: center; /*垂直居中*/
