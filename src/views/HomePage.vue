@@ -1,29 +1,32 @@
 <template>
   <div>
     <el-backtop :bottom="100">
-    <div
-      style="
-        height: 100%;
-        width: 100%;
-        background-color: var(--el-bg-color-overlay);
-        box-shadow: var(--el-box-shadow-lighter);
-        text-align: center;
-        line-height: 40px;
-        color: #1989fa;
-        border-radius:50%
-      "
-    >
-      <img src="../img/toTop.png" style="height: 100%">
-    </div>
-  </el-backtop>
+      <div
+        style="
+          height: 100%;
+          width: 100%;
+          background-color: var(--el-bg-color-overlay);
+          box-shadow: var(--el-box-shadow-lighter);
+          text-align: center;
+          line-height: 40px;
+          color: #1989fa;
+          border-radius: 50%;
+        "
+      >
+        <img src="../img/toTop.png" style="height: 100%" />
+      </div>
+    </el-backtop>
     <div class="serch">
-      <img src="../img/search.png" class="serachBig" />
+      <img src="../img/search.png" class="serachimg" />
       <input
         style="width: 30rem"
         @keyup="search"
         ref="serchtext"
         class="serachInput"
       />
+      <el-row class="mb-4"
+        ><el-button type="success" style="margin-left: 20%;" @click="serchbystring" round>搜索</el-button>
+      </el-row>
     </div>
     <div style="width: 33.33%" class="tags">
       <button>区块链技术</button>
@@ -66,9 +69,16 @@ export default {
         obj.serchtext.value = "";
       }
     };
+    const serchbystring = (event) => {
+      
+        console.log(obj.serchtext.value);
+        obj.serchtext.value = "";
+      
+    };
     return {
       ...toRefs(obj),
       search,
+      serchbystring
     };
   },
   data() {
@@ -117,8 +127,9 @@ export default {
 .serachInput {
   height: 2rem;
 }
-.serachBig {
+.serachimg {
   width: 2rem;
+  margin-right: 1%;
 }
 .serch {
   text-align: center;
