@@ -37,11 +37,6 @@ export default {
         .get("http://jsonplaceholder.typicode.com/posts")
         .then((res) => console.log(res.data))
         .catch((error) => console.error(error));
-
-      httpClient
-        .post("/login", { username: "admin", password: "password" })
-        .then((res) => console.log(res.data))
-        .catch((error) => console.error(error));
     };
 
     async function islogin() {
