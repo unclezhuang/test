@@ -1,47 +1,43 @@
 <template>
   <div>
-      <el-card v-for="item in data" :key="item.id" style="width:90%;">
+    <div style="width: 33.33%;float:left">
+      <el-card v-for="item in onlyfive()" :key="item.id" style="width:90%;">
           <el-image style="width: 100%; height: 150px;" src="https://picsum.photos/300/150" ></el-image>
           <div style="padding: 14px;">
-            <h3 style="font-size: 18px">{{ item.title }}</h3>
-            <p>作者：{{ item.author }}</p>
+            <h3 style="font-size: 18px">帖子编号：{{ item.id }}</h3>
+            <p>作者：{{ item.userId }}</p>
           </div>
-        </el-card>
+      </el-card>
+    </div> 
   </div>
 </template>
 
 <script lang="ts">
+import HttpClient from "../ajxos/ajxos";
+import { onMounted, reactive } from 'vue'
   export default {
-      data() {
-  return {
-    data: [
-      {
-        id: 1,
-        title: "Vue3新特性",
-        author: "张三"
-      },
-      {
-        id: 2,
-        title: "React常用Hook使用详解",
-        author: "李四"
-      },
-      {
-        id: 3,
-        title: "Webpack常用配置",
-        author: "王五"
-      },
-      {
-        id: 4,
-        title: "Node.js的基本使用",
-        author: "赵六"
-      },
-      {
-        id: 5,
-        title: "JavaScript异步编程",
-        author: "钱七"
-      }
-    ]
-  };
-}
+    setup(){
+      const data = reactive([])
+      const text = function () {
+      const httpClient = new HttpClient("https://api.example.com");
+
+      httpClient
+        .get("http://jsonplaceholder.typicode.com/posts")
+        .then((res) => data.push(...res.data))
+        .catch((error) => console.error(error));
+    };
+    text()
+    const onlyfive = () => {
+      return data.splice(0,5)
+    }
+    onlyfive()
+    console.log(data)
+   
+    return{
+      text,
+      data,
+      onlyfive
+    }
+    }
   }
 </script>

@@ -40,15 +40,7 @@
       <div style="width: 33.33%" class="tags2"><button>二次元</button></div>
       <div style="width: 33.33%" class="tags3"><button>区块链技术</button></div>
     </div>
-    <div style="width: 33.33%;float:left">
-          <my-component></my-component>
-        </div> 
-        <div style="width: 33.33%;float:left">
-          <my-component></my-component>
-        </div>
-        <div style="width: 33.33%;float:left">
-          <my-component></my-component>
-        </div>
+    <my-component></my-component>
   </div>
 </template>
 

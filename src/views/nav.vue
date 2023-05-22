@@ -12,7 +12,7 @@
       <span v-show="isShow">
         <div class="userhead">
           <router-link to="/defo/user" class="mousehover">个人详情</router-link>
-          <p class="mousehover" @click="text">退出登陆</p>
+          <p class="mousehover">退出登陆</p>
         </div>
         <img
           class="userhead"
@@ -26,24 +26,8 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
-import HttpClient from "../ajxos/ajxos";
-
 export default {
   setup() {
-    const text = function () {
-      const httpClient = new HttpClient("https://api.example.com");
-
-      httpClient
-        .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => console.log(res.data))
-        .catch((error) => console.error(error));
-
-      httpClient
-        .post("/login", { username: "admin", password: "password" })
-        .then((res) => console.log(res.data))
-        .catch((error) => console.error(error));
-    };
-
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -113,7 +97,6 @@ export default {
       ...toRefs(obj),
       change,
       login,
-      text,
     };
   },
 };
