@@ -47,20 +47,20 @@ export default {
 
         if (!isLoggedIn) {
           console.log("请先登录 MetaMask");
+          obj.isShow = false;
           return false;
         }
+        obj.isShow = true
         return true;
       } catch (err) {
         console.error(err);
         return false;
       }
     }
-    islogin().then(() => {
-      obj.isShow = !obj.isShow;
-    });
+    islogin()
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
-      login();
+      islogin()
     });
     const obj = reactive({
       isShow: false,
@@ -80,6 +80,7 @@ export default {
             const address = accounts[0];
             console.log("用户地址：", address);
             obj.isShow = !obj.isShow;
+            console.log(obj.isShow)
           })
           .catch(function (error) {
             if (

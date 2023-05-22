@@ -34,23 +34,18 @@
         >
       </el-row>
     </div>
-    <div style="width: 100%"><my-search></my-search></div>
-    <div class="tags-wrapper">
-      <div style="width: 33.33%" class="tags"><button>区块链技术</button></div>
-      <div style="width: 33.33%" class="tags2"><button>二次元</button></div>
-      <div style="width: 33.33%" class="tags3"><button>区块链技术</button></div>
-    </div>
     <my-component></my-component>
   </div>
 </template>
 
 <script lang="ts">
 import { reactive, toRefs, ref } from "vue";
-import MyComponent from "./PreviewCard.vue"
+import MyComponent from "./PreviewCard.vue";
 export default {
-    components: {
-      'my-component': MyComponent,
-    },setup() {
+  components: {
+    "my-component": MyComponent,
+  },
+  setup() {
     const obj = reactive({
       serchtext: ref(),
     });
@@ -93,17 +88,5 @@ export default {
 .serch {
   text-align: center;
   height: 20%;
-}
-.tags-wrapper {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  /* 距离上一行的距离，可自行调整 */
-}
-.tags,
-.tags2,
-.tags3 {
-  display: flex;
-  justify-content: center;
 }
 </style>

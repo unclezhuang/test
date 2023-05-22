@@ -30,13 +30,16 @@ export default {
 .common-layout {
   width: 80%;
   margin: auto;
+  height: 100%;
 }
 
-
+.el-container{
+  height: 100%;
+}
 .el-header {
-  height: 10%;
+  height: 20%;
 }
 .el-main {
-  height: 90%;
+  height: 80%;
 }
 </style>

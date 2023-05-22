@@ -1,7 +1,12 @@
 <template>
   <div>
-    <div style="width: 33.33%;float:left">
-      <el-card v-for="item in onlyfive()" :key="item.id" style="width:90%;">
+    <div class="tags-wrapper">
+      <div style="width: 33.33%" class="tags"><button>区块链技术</button></div>
+      <div style="width: 33.33%" class="tags2"><button>大数据</button></div>
+      <div style="width: 33.33%" class="tags3"><button>人工智能</button></div>
+    </div>
+    <div style="width: 33.33%;float:left;" v-for="i in 3" :key="i">
+      <el-card v-for="item in data" :key="item.id" style="width:90%;margin-bottom:10%">
           <el-image style="width: 100%; height: 150px;" src="https://picsum.photos/300/150" ></el-image>
           <div style="padding: 14px;">
             <h3 style="font-size: 18px">帖子编号：{{ item.id }}</h3>
@@ -27,17 +32,26 @@ import { onMounted, reactive } from 'vue'
         .catch((error) => console.error(error));
     };
     text()
-    const onlyfive = () => {
-      return data.splice(0,5)
-    }
-    onlyfive()
     console.log(data)
    
     return{
       text,
       data,
-      onlyfive
     }
     }
   }
 </script>
+<style scoped>
+.tags-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  /* 距离上一行的距离，可自行调整 */
+}
+.tags,
+.tags2,
+.tags3 {
+  display: flex;
+  justify-content: center;
+}
+</style>
