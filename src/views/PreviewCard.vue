@@ -61,7 +61,7 @@ export default {
       console.log(index)
     }
     const first = async function () {
-      axios
+      await axios
         .get("http://jsonplaceholder.typicode.com/posts")
         .then((res) => obj.dataBC.push(...res.data));
       await axios
