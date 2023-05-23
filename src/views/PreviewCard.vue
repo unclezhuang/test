@@ -3,7 +3,7 @@
     <div class="tags-wrapper">
       <div style="width: 33.33%" class="tags"><button>区块链技术</button></div>
       <div style="width: 33.33%" class="tags2"><button>大数据</button></div>
-      <div style="width: 33.33%" class="tags3"><button>人工智能</button></div>
+      <div style="width: 33.33%"  class="tags3"><button>人工智能</button></div>
     </div>
     <div style="width: 33.33%;float:left;" v-for="i in 3" :key="i">
       <el-card v-for="item in data" :key="item.id" style="width:90%;margin-bottom:10%">
@@ -19,12 +19,16 @@
 
 <script lang="ts">
 import HttpClient from "../ajxos/ajxos";
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive } from 'vue';
+
   export default {
+
     setup(){
       const data = reactive([])
       const text = function () {
       const httpClient = new HttpClient("https://api.example.com");
+
+
 
       httpClient
         .get("http://jsonplaceholder.typicode.com/posts")
@@ -40,6 +44,7 @@ import { onMounted, reactive } from 'vue'
     }
     }
   }
+
 </script>
 <style scoped>
 .tags-wrapper {

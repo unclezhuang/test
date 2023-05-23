@@ -29,6 +29,11 @@ const routes = [
                 name: 'user',
                 component: () => import('../views/user.vue')
             },
+            {
+                path: 'write',
+                name: 'write',
+                component: () => import('../views/write.vue')
+            },
         ]
     },
 ]

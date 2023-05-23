@@ -15,7 +15,8 @@
     "sass": "^1.62.1",
     "scss": "^0.2.4",
     "vue": "^3.2.47",
-    "vue-router": "^4.2.1"
+    "vue-router": "^4.2.1",
+    "web3": "^1.10.0"
   },
   "devDependencies": {
     "@types/web3": "^1.2.2",

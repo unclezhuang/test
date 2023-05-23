@@ -12,7 +12,7 @@
       <span v-show="isShow">
         <div class="userhead">
           <router-link to="/defo/user" class="mousehover">个人详情</router-link>
-          <p class="mousehover">退出登陆</p>
+          <p class="mousehover" @click="disconnect">退出登陆</p>
         </div>
         <img
           class="userhead"
@@ -26,6 +26,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
+
 export default {
   setup() {
     async function islogin() {
@@ -94,10 +95,33 @@ export default {
         console.log("请安装 MetaMask 插件");
       }
     };
+
+
+    const disconnect = async () => {
+      const provider = window.ethereum;
+      if (provider && provider.isConnected()) {
+        try {
+           await provider.request({ method: 'eth_requestAccounts' });
+      //     await provider.request({
+      //   method: 'wallet_requestPermissions',
+      //   params: [{
+      //     eth_accounts: {},
+      //   }],
+      // });   
+          console.log("MetaMask连接已断开");
+              obj.isShow = false;
+            } catch (err) {
+      console.error("关闭 MetaMask 连接时出错：", err);
+    }
+      } else {
+        console.log("MetaMask未连接");
+      }
+    };
     return {
       ...toRefs(obj),
       change,
       login,
+      disconnect,
     };
   },
 };
