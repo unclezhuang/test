@@ -61,13 +61,13 @@ export default {
       console.log(index)
     }
     const first = async function () {
-      await axios
+      axios
         .get("http://jsonplaceholder.typicode.com/posts")
         .then((res) => obj.dataBC.push(...res.data));
-      await axios
+      axios
         .get("http://jsonplaceholder.typicode.com/posts")
         .then((res) => obj.dataBD.push(...res.data));
-      await axios
+      axios
         .get("http://jsonplaceholder.typicode.com/posts")
         .then((res) => obj.dataAI.push(...res.data));
     };
