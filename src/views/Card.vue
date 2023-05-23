@@ -17,19 +17,15 @@
       </el-card>
     </el-col>
   </el-row>
+  
 </template>
   
   <script lang="ts" setup>
 import { ref, reactive } from "vue";
-import HttpClient from "../ajxos/ajxos";
+import axios from 'axios'
 const data = reactive([]);
 const text = function () {
-  const httpClient = new HttpClient("https://api.example.com");
-
-  httpClient
-    .get("http://jsonplaceholder.typicode.com/photos")
-    .then((res) => data.push(...res.data))
-    .catch((error) => console.error(error));
+    axios.get("http://jsonplaceholder.typicode.com/photos").then((res) => data.push(...res.data))
 };
 text();
 console.log(data);

@@ -12,7 +12,7 @@
       <span v-show="isShow">
         <div class="userhead">
           <router-link to="/defo/user" class="mousehover">个人详情</router-link>
-          <p class="mousehover">退出登陆</p>
+          <p class="mousehover" @click="logout">退出登陆</p>
         </div>
         <img
           class="userhead"
@@ -26,6 +26,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
+import { ethers } from "ethers";
 export default {
   setup() {
     async function islogin() {
@@ -44,23 +45,23 @@ export default {
         // 检查用户是否已登录
         const accounts = await ethereum.request({ method: "eth_accounts" });
         const isLoggedIn = accounts.length > 0;
-
         if (!isLoggedIn) {
           console.log("请先登录 MetaMask");
           obj.isShow = false;
           return false;
         }
-        obj.isShow = true
+        console.log("用户已登陆！")
+        obj.isShow = true;
         return true;
       } catch (err) {
         console.error(err);
         return false;
       }
     }
-    islogin()
+    islogin();
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
-      islogin()
+      islogin();
     });
     const obj = reactive({
       isShow: false,
@@ -75,12 +76,28 @@ export default {
         // 通过 MetaMask 访问用户地址
         window.ethereum
           .request({ method: "eth_requestAccounts" })
-          .then(function (accounts) {
+          .then(async function (accounts) {
             // 获取用户地址
             const address = accounts[0];
             console.log("用户地址：", address);
+            const exampleMessage = Date.now();
+            console.log("时间", exampleMessage);
+            try {
+              const from = accounts[0];
+              // For historical reasons, you must submit the message to sign in hex-encoded UTF-8.
+              // This uses a Node.js-style buffer shim in the browser.
+              const msg = `0x${exampleMessage.toString()}`;
+              const sign = await ethereum.request({
+                method: "personal_sign",
+                params: [msg, from, "Example password"],
+              });
+              console.log("nihaohfaidfa", sign);
+            } catch (err) {
+              console.error(err);
+            }
+
             obj.isShow = !obj.isShow;
-            console.log(obj.isShow)
+            console.log(obj.isShow);
           })
           .catch(function (error) {
             if (
@@ -94,10 +111,14 @@ export default {
         console.log("请安装 MetaMask 插件");
       }
     };
+    const logout = () => {
+      obj.isShow = !obj.isShow;
+    };
     return {
       ...toRefs(obj),
       change,
       login,
+      logout,
     };
   },
 };
@@ -145,5 +166,13 @@ export default {
 }
 .mousehover:hover {
   color: red;
+  cursor: pointer;
+}
+.router-link {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
 }
 </style>

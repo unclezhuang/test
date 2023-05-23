@@ -3,28 +3,40 @@
     <el-aside width="20%"
       ><div class="flex justify-space-between mb-4 flex-wrap gap-4">
         <el-button
-          v-for="button in buttons"
+          v-for="(button, index) in buttons"
           :key="button.text"
           :type="button.type"
           text
           style="display: block; width: 100%; margin: 0"
+          @click="buyback(index)"
           >{{ button.text }}</el-button
         >
       </div></el-aside
     >
-    <el-main><my-card></my-card></el-main>
+    <el-main><my-card :data="data"></my-card></el-main>
   </el-container>
 </template>
   
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { reactive } from "vue";
 import Card from "./Card.vue";
-export default defineComponent({
+import axios from 'axios';
+export default {
   components: {
     "my-card": Card,
   },
   setup() {
+    const data = reactive([])
+    const buyback = (index) => {
+      if (index === 0) {
+        axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
+    }else if(index === 1){
+      axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
+    }else if(index === 2){
+      axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
+    }
+  }
     const buttons = [
       { type: "", text: "帖子侧栏背景" },
       { type: "", text: "帖子正文" },
@@ -33,9 +45,10 @@ export default defineComponent({
 
     return {
       buttons,
+      buyback,
     };
   },
-});
+};
 </script>
 
 <style scoped>

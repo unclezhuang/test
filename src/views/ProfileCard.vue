@@ -4,7 +4,7 @@
       <button @click="editProfile">Edit Profile</button>
       </div>
       <div class="profile">
-        <img :src="avatarUrl" alt="avatar">
+        <img :src="avatarUrl" alt="avatar" style="border-radius:52%;width:10rem">
         <h3>{{nickname}}</h3>
         <p>Age: {{age}}</p>
         <p>Gender: {{gender}}</p>

@@ -5,7 +5,7 @@ const routes = [
         redirect: {name:"homepage"}
     },
     {
-        path: '/:panmenglong',
+        path: '/:defo',
         redirect: {name:"homepage"}
     },
     {
@@ -28,6 +28,10 @@ const routes = [
                 path: 'user',
                 name: 'user',
                 component: () => import('../views/user.vue')
+            },
+            {
+                path: ':user',
+                redirect:{name:"homepage"}
             },
         ]
     },

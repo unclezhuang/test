@@ -1,45 +1,83 @@
 <template>
   <div>
+    <el-backtop :bottom="100">
+      <div
+        style="
+          height: 100%;
+          width: 100%;
+          background-color: var(--el-bg-color-overlay);
+          box-shadow: var(--el-box-shadow-lighter);
+          text-align: center;
+          line-height: 40px;
+          color: #1989fa;
+          border-radius: 50%;
+        "
+      >
+        <img src="../img/toTop.png" style="height: 100%" />
+      </div>
+    </el-backtop>
     <div class="tags-wrapper">
-      <div style="width: 33.33%" class="tags"><button>区块链技术</button></div>
-      <div style="width: 33.33%" class="tags2"><button>大数据</button></div>
-      <div style="width: 33.33%" class="tags3"><button>人工智能</button></div>
+      <div style="width: 33.33%" class="tags">
+        <el-button text>区块链技术</el-button>
+      </div>
+      <div style="width: 33.33%" class="tags2">
+        <el-button text>大数据</el-button>
+      </div>
+      <div style="width: 33.33%" class="tags3">
+        <el-button text>人工智能</el-button>
+      </div>
     </div>
-    <div style="width: 33.33%;float:left;" v-for="i in 3" :key="i">
-      <el-card v-for="item in data" :key="item.id" style="width:90%;margin-bottom:10%">
-          <el-image style="width: 100%; height: 150px;" src="https://picsum.photos/300/150" ></el-image>
-          <div style="padding: 14px;">
-            <h3 style="font-size: 18px">帖子编号：{{ item.id }}</h3>
-            <p>作者：{{ item.userId }}</p>
-          </div>
+    <div style="width: 33.33%; float: left" v-for="i in obj" :key="i">
+      <el-card
+        v-for="(item,index) in i"
+        :key="item.id"
+        style="width: 90%; margin-bottom: 10%"
+        @click="detail(index)"
+      >
+        <el-image
+          style="width: 100%; height: 150px"
+          src="https://picsum.photos/300/150"
+        ></el-image>
+        <div style="padding: 14px">
+          <h3 style="font-size: 18px">帖子编号：{{ item.id }}</h3>
+          <p>作者：{{ item.userId }}</p>
+        </div>
       </el-card>
-    </div> 
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import HttpClient from "../ajxos/ajxos";
-import { onMounted, reactive } from 'vue'
-  export default {
-    setup(){
-      const data = reactive([])
-      const text = function () {
-      const httpClient = new HttpClient("https://api.example.com");
-
-      httpClient
+import axios from "axios";
+import { reactive, toRefs } from "vue";
+export default {
+  setup() {
+    const obj = reactive({
+      dataBC: [],
+      dataBD: [],
+      dataAI: [],
+    });
+    const detail = (index) => {
+      console.log(index)
+    }
+    const first = async function () {
+      axios
         .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => data.push(...res.data))
-        .catch((error) => console.error(error));
+        .then((res) => obj.dataBC.push(...res.data));
+      await axios
+        .get("http://jsonplaceholder.typicode.com/posts")
+        .then((res) => obj.dataBD.push(...res.data));
+      await axios
+        .get("http://jsonplaceholder.typicode.com/posts")
+        .then((res) => obj.dataAI.push(...res.data));
     };
-    text()
-    console.log(data)
-   
-    return{
-      text,
-      data,
-    }
-    }
-  }
+    first();
+    return {
+      obj,
+      detail
+    };
+  },
+};
 </script>
 <style scoped>
 .tags-wrapper {

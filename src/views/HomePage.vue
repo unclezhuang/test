@@ -1,21 +1,5 @@
 <template>
   <div>
-    <el-backtop :bottom="100">
-      <div
-        style="
-          height: 100%;
-          width: 100%;
-          background-color: var(--el-bg-color-overlay);
-          box-shadow: var(--el-box-shadow-lighter);
-          text-align: center;
-          line-height: 40px;
-          color: #1989fa;
-          border-radius: 50%;
-        "
-      >
-        <img src="../img/toTop.png" style="height: 100%" />
-      </div>
-    </el-backtop>
     <div class="serch">
       <img src="../img/search.png" class="serachimg" />
       <input
