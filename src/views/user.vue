@@ -43,7 +43,7 @@ import { ref } from 'vue';
 import ProfileCard from "./ProfileCard.vue";
 import EditProfileForm from "./EditProfileForm.vue";
 import MyForm from './writeFrom.vue';
-
+import { state } from "./shared.js";
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       avatar: "https://picsum.photos/200",
-      nickname: "John",
+      nickname: "myValue",
       age: 25,
       gender: "male",
       email: "john@example.com",

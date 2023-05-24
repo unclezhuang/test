@@ -30,19 +30,24 @@ const routes = [
                 component: () => import('../views/user.vue')
             },
             {
-                path: 'write',
-                name: 'write',
-                component: () => import('../views/write.vue')
+                path: 'Post',
+                name: 'Post',
+                component: () => import('../views/PostView.vue')
             },
             {
                 path: 'detail?serch=":serch"$index=":index"',
                 name: 'detail',
-                component: () => import('../views/detail.vue')
+                component: () => import('../views/post.vue')
             },
             {
                 path: 'posts',
                 name: 'posts',
                 component: () => import('../views/posts.vue')
+            },
+            {
+                path: 'post',
+                name: 'post',
+                component: () => import('../views/PostView.vue')
             },
         ]
     },

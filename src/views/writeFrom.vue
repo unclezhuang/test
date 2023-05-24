@@ -1,18 +1,37 @@
 <template>
     <div class="form" ref="formRef">
-      <div class="tittle"><input type="text" v-model="inputValue" /></div>
-      <button @click="handleSubmit">提交</button>
-      <button @click="handleCancel">关闭</button>
+        <el-form-item label="帖子标题">
+            <el-input v-model="form.name" />
+          </el-form-item>
+      <el-form-item label="帖子内容">
+        <el-input v-model="form.desc" type="textarea" />
+      </el-form-item>
+      <el-form-item label="给你的帖子选个封面吧" >
+        <el-input v-model="form.url" />
+      </el-form-item>
+     
+  
+      <el-button type="primary" @click="handleSubmit">提交</el-button>
+      <el-button @click="handleCancel">关闭</el-button>
     </div>
   </template>
   <script>
+  import { state } from "./shared.js";
   import { ref } from "vue";
+  import { reactive } from "vue";
+
   export default {
+    
     setup() {
+        const myValue = state.myValue;
       const formRef = ref(null);
       const inputValue = ref("");
+  
       const handleSubmit = () => {
-        console.log("提交成功")
+      
+        console.log("提交成功，用户地址为 ", myValue);
+        console.log("表单数据为：",JSON.stringify(form));
+
         // 处理表单提交操作
       };
       const handleCancel = () => {
@@ -24,6 +43,11 @@
       const hideForm = () => {
         formRef.value?.classList.remove("show");
       };
+      const form = reactive({
+        desc: "",
+        name: "",
+        url: "https://picsum.photos/300/150",
+      });
       return {
         formRef,
         inputValue,
@@ -31,6 +55,8 @@
         handleCancel,
         showForm,
         hideForm,
+        form,
+        myValue,
       };
     },
   };

@@ -13,12 +13,12 @@
         <div class="userhead">
           <router-link to="/defo/user" class="mousehover">个人详情</router-link>
           <p class="mousehover" @click="logout">退出登陆</p>
-        </div>
+        </div><router-link to="/defo/user" class="mousehover">
         <img
           class="userhead"
           src="../img/少女熊猫.jpg"
           style="width: 10%; border-radius: 50%"
-        />
+        /></router-link>
       </span>
     </div>
   </div>
@@ -26,9 +26,10 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
-import { ethers } from "ethers";
+import { state } from "./shared.js";
 export default {
   setup() {
+  
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -109,6 +110,8 @@ export default {
               console.error(err);
             }
 
+            state.myValue = address;
+            console.log("state的值更新",state.myValue);
             obj.isShow = !obj.isShow;
             console.log(obj.isShow);
           })
@@ -132,6 +135,7 @@ export default {
       change,
       login,
       logout,
+     
     };
   },
 };

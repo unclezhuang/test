@@ -52,7 +52,7 @@ export default {
     });
     const detail = (item,index) => {
       console.log(index);
-      router.push({ name: "detail", params: {serch: item.title,index: index } });
+      router.push({ name: "post"});
     };
     const first = async function () {
       axios
