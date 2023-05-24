@@ -30,10 +30,11 @@ const routes = [
                 component: () => import('../views/user.vue')
             },
             {
-                path: 'write',
-                name: 'write',
-                component: () => import('../views/write.vue')
+                path: 'Post',
+                name: 'Post',
+                component: () => import('../views/PostView.vue')
             },
+           
         ]
     },
 ]

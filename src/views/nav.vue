@@ -26,9 +26,10 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
-
+import { state } from "./shared.js";
 export default {
   setup() {
+  
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -51,6 +52,8 @@ export default {
           obj.isShow = false;
           return false;
         }
+        
+     
         obj.isShow = true
         return true;
       } catch (err) {
@@ -80,6 +83,8 @@ export default {
             // 获取用户地址
             const address = accounts[0];
             console.log("用户地址：", address);
+            state.myValue = address;
+            console.log("state的值更新",state.myValue);
             obj.isShow = !obj.isShow;
             console.log(obj.isShow)
           })
@@ -122,6 +127,7 @@ export default {
       change,
       login,
       disconnect,
+     
     };
   },
 };

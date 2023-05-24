@@ -29,6 +29,7 @@ export default {
 <style lang="scss" scoped>
 .common-layout {
   width: 80%;
+  display: flex;
   margin: auto;
   height: 100%;
 }
@@ -40,6 +41,8 @@ export default {
   height: 20%;
 }
 .el-main {
+  display: flex;
+  flex-wrap: wrap;
   height: 80%;
 }
 </style>

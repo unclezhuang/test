@@ -9,7 +9,7 @@
       <el-card v-for="item in data" :key="item.id" style="width:90%;margin-bottom:10%">
           <el-image style="width: 100%; height: 150px;" src="https://picsum.photos/300/150" ></el-image>
           <div style="padding: 14px;">
-            <h3 style="font-size: 18px">帖子编号：{{ item.id }}</h3>
+            <router-link to="/defo/Post"  style="font-size: 18px">帖子编号：{{ item.id }}</router-link>
             <p>作者：{{ item.userId }}</p>
           </div>
       </el-card>
