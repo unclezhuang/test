@@ -30,8 +30,19 @@ const routes = [
                 component: () => import('../views/user.vue')
             },
             {
-                path: ':user',
-                redirect:{name:"homepage"}
+                path: 'write',
+                name: 'write',
+                component: () => import('../views/write.vue')
+            },
+            {
+                path: 'detail?serch=":serch"$index=":index"',
+                name: 'detail',
+                component: () => import('../views/detail.vue')
+            },
+            {
+                path: 'posts',
+                name: 'posts',
+                component: () => import('../views/posts.vue')
             },
         ]
     },

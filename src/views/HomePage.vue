@@ -9,13 +9,15 @@
         class="serachInput"
       />
       <el-row class="mb-4"
-        ><el-button
+        >
+        <router-link to="/defo/posts">
+        <el-button
           type="success"
           style="margin-left: 20%"
           @click="serchbystring"
           round
           >搜索</el-button
-        >
+        ></router-link>
       </el-row>
     </div>
     <my-component></my-component>
@@ -25,6 +27,7 @@
 <script lang="ts">
 import { reactive, toRefs, ref } from "vue";
 import MyComponent from "./PreviewCard.vue";
+import { useRouter } from "vue-router";
 export default {
   components: {
     "my-component": MyComponent,
@@ -34,10 +37,13 @@ export default {
       serchtext: ref(),
     });
 
+    const router = useRouter();
+
     const search = (event) => {
       if (event.keyCode === 13) {
         console.log(obj.serchtext.value);
-        obj.serchtext.value = "";
+        router.push({ name: "posts", params: { serchtext:obj.serchtext } })
+        
       }
     };
     const serchbystring = (event) => {

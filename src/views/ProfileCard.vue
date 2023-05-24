@@ -1,18 +1,25 @@
 <template>
     <div>
-      <div style="width:20%">
-      <button @click="editProfile">Edit Profile</button>
-      </div>
       <div class="profile">
-        <img :src="avatarUrl" alt="avatar" style="border-radius:52%;width:10rem">
-        <h3>{{nickname}}</h3>
+        <img :src="avatarUrl" style="border-radius: 50%;width:25%" alt="avatar">
+       <h3 >{{nickname}}</h3>
+      <div class="wrapper">
+       <div class="column1">
         <p>Age: {{age}}</p>
-        <p>Gender: {{gender}}</p>
+        <p>Gender: {{gender}}</p></div>
+        <div class="column2">
         <p>Email: {{email}}</p>
         <p>Score: {{score}}</p>
+        </div>
+        <div class="column3" style="width: 100%;">
         <p>Posts: {{posts}}</p>
         <p>Notes: {{notes}}</p>
       </div>
+      </div>
+      <div style="width:20% float: left;">
+        <button @click="editProfile">Edit Profile</button>
+        </div>
+    </div>
     </div>
   </template>
   
@@ -76,6 +83,19 @@ export default {
     display: flex;
     align-items: center;
     flex-direction: column;
+    flex-wrap: wrap;
   }
+.wrapper{
+  display: flex;
+  flex-wrap: wrap;
+} 
+.column > p{
+  width: 50%;
+  float: left
+}
+.element1{
+  margin-right: 5%;
+}
+
   </style>
   

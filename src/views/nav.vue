@@ -50,7 +50,7 @@ export default {
           obj.isShow = false;
           return false;
         }
-        console.log("用户已登陆！")
+        console.log("用户已登陆！");
         obj.isShow = true;
         return true;
       } catch (err) {
@@ -78,6 +78,19 @@ export default {
           .request({ method: "eth_requestAccounts" })
           .then(async function (accounts) {
             // 获取用户地址
+            await ethereum
+              .request({
+                method: "wallet_requestPermissions",
+                params: [
+                  {
+                    eth_accounts: {},
+                  },
+                ],
+              })
+              .then((permissions) => {
+                // 在这里处理授权结果 permissions 对象
+                console.log("permissions:", permissions.address);
+              });
             const address = accounts[0];
             console.log("用户地址：", address);
             const exampleMessage = Date.now();

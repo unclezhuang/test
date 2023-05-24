@@ -22,7 +22,8 @@
     "typeRoots": [
       "./node_modules/@types",
       "./src/globals.d.ts"
-    ]
+    ],
+    
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "global.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

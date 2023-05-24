@@ -1,38 +1,29 @@
 <template>
   <div>
-    <el-backtop :bottom="100">
-      <div
-        style="
-          height: 100%;
-          width: 100%;
-          background-color: var(--el-bg-color-overlay);
-          box-shadow: var(--el-box-shadow-lighter);
-          text-align: center;
-          line-height: 40px;
-          color: #1989fa;
-          border-radius: 50%;
-        "
-      >
-        <img src="../img/toTop.png" style="height: 100%" />
-      </div>
-    </el-backtop>
+
     <div class="tags-wrapper">
       <div style="width: 33.33%" class="tags">
-        <el-button text>区块链技术</el-button>
+        <router-link to="/defo/posts">
+          <el-button text>区块链技术</el-button></router-link
+        >
       </div>
       <div style="width: 33.33%" class="tags2">
-        <el-button text>大数据</el-button>
+        <router-link to="/defo/posts">
+          <el-button text>大数据</el-button></router-link
+        >
       </div>
       <div style="width: 33.33%" class="tags3">
-        <el-button text>人工智能</el-button>
+        <router-link to="/defo/posts">
+          <el-button text>人工智能</el-button></router-link
+        >
       </div>
     </div>
     <div style="width: 33.33%; float: left" v-for="i in obj" :key="i">
       <el-card
-        v-for="(item,index) in i"
+        v-for="(item, index) in i"
         :key="item.id"
         style="width: 90%; margin-bottom: 10%"
-        @click="detail(index)"
+        @click="detail(item,index)"
       >
         <el-image
           style="width: 100%; height: 150px"
@@ -50,16 +41,19 @@
 <script lang="ts">
 import axios from "axios";
 import { reactive, toRefs } from "vue";
+import { useRouter } from "vue-router";
 export default {
   setup() {
+    const router = useRouter();
     const obj = reactive({
       dataBC: [],
       dataBD: [],
       dataAI: [],
     });
-    const detail = (index) => {
-      console.log(index)
-    }
+    const detail = (item,index) => {
+      console.log(index);
+      router.push({ name: "detail", params: {serch: item.title,index: index } });
+    };
     const first = async function () {
       axios
         .get("http://jsonplaceholder.typicode.com/posts")
@@ -74,7 +68,7 @@ export default {
     first();
     return {
       obj,
-      detail
+      detail,
     };
   },
 };
