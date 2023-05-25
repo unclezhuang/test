@@ -19,6 +19,7 @@
   
 
 <script lang="ts">
+import { dterm } from "./determine.js";
 import { reactive } from "vue";
 import Card from "./Card.vue";
 import axios from 'axios';
@@ -33,10 +34,14 @@ export default {
         axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
     }else if(index === 1){
       axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
-    }else if(index === 2){
-      axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
+    }else if(index === 2 ){
+      console.log("值为",dterm.myValue)
+      if(dterm.myValue.length>2){
+      axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))}
+    else{
+      console.log("请先登录！")
     }
-  }
+  }}
     const buttons = [
       { type: "", text: "帖子侧栏背景" },
       { type: "", text: "帖子正文" },

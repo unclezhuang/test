@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="post">
     {{ post.title }}
     {{ post.content }}
   </div>
@@ -29,4 +29,11 @@ setup(){
 </script>
 
 <style scoped>
+.post {
+  flex-grow: 1;
+height: calc(100% / 3);
+
+padding: 10px;
+margin-bottom: 10px;
+}
 </style>

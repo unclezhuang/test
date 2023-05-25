@@ -11,7 +11,7 @@
         <div style="padding: 14px">
           <span>{{ item.title }}</span>
           <el-row class="mb-4">
-            <el-button type="primary">Primary</el-button>
+            <el-button type="primary" @click="buy">Primary</el-button>
           </el-row>
         </div>
       </el-card>
@@ -22,11 +22,19 @@
   
   <script lang="ts" setup>
 import { ref, reactive } from "vue";
+import { dterm } from "./determine.js";
 import axios from 'axios'
 const data = reactive([]);
 const text = function () {
     axios.get("http://jsonplaceholder.typicode.com/photos").then((res) => data.push(...res.data))
 };
+const buy = () =>{
+  if(dterm.myValue.length>0){
+    console.log("这波the shy来全买了")
+  }else{
+    console.log("这波物资来全登录了。")
+  }
+}
 text();
 console.log(data);
 </script>

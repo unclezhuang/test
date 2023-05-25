@@ -27,6 +27,7 @@
 <script lang="ts">
 import { reactive, toRefs } from "vue";
 import { state } from "./shared.js";
+import { dterm } from "./determine.js";
 export default {
   setup() {
   
@@ -109,7 +110,7 @@ export default {
             } catch (err) {
               console.error(err);
             }
-
+            dterm.myValue = address;
             state.myValue = address;
             console.log("state的值更新",state.myValue);
             obj.isShow = !obj.isShow;
@@ -129,6 +130,8 @@ export default {
     };
     const logout = () => {
       obj.isShow = !obj.isShow;
+      dterm.myValue = "";
+      console.log("值的状态",dterm.myValue);
     };
     return {
       ...toRefs(obj),
