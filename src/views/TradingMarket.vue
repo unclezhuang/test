@@ -30,13 +30,17 @@ export default {
     const data = reactive([])
     const buyback = (index) => {
       if (index === 0) {
+        console.log("点击事件",index)
         axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
     }else if(index === 1){
+      console.log("点击事件",index)
       axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
     }else if(index === 2){
+      console.log("点击事件",index)
       axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
     }
   }
+  buyback(0)
     const buttons = [
       { type: "", text: "帖子侧栏背景" },
       { type: "", text: "帖子正文" },
@@ -44,6 +48,7 @@ export default {
     ] as const;
 
     return {
+      data,
       buttons,
       buyback,
     };

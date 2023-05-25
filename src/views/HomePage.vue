@@ -10,14 +10,13 @@
       />
       <el-row class="mb-4"
         >
-        <router-link to="/defo/posts">
         <el-button
           type="success"
           style="margin-left: 20%"
           @click="serchbystring"
           round
           >搜索</el-button
-        ></router-link>
+        >
       </el-row>
     </div>
     <my-component></my-component>
@@ -42,13 +41,12 @@ export default {
     const search = (event) => {
       if (event.keyCode === 13) {
         console.log(obj.serchtext.value);
-        router.push({ name: "posts", params: { serchtext:obj.serchtext } })
-        
+        router.push({ name: "posts", params: { serch:obj.serchtext.value } })
       }
     };
     const serchbystring = (event) => {
       console.log(obj.serchtext.value);
-      obj.serchtext.value = "";
+      router.push({ name: "posts", params: { serch:obj.serchtext.value } })
     };
     return {
       ...toRefs(obj),

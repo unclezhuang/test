@@ -2,6 +2,7 @@
   <div>
     {{ post.title }}
     {{ post.content }}
+    {{ post.id }}
   </div>
 </template>
 
@@ -20,7 +21,6 @@ export default{
     },
 
 setup(){
-
     return {
 
     }

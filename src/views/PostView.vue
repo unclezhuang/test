@@ -10,18 +10,25 @@
       :post="reply"
       :postId="postId + index"
     />
+    {{ index }}
   </div>
 </template>
   
   <script lang="ts">
 import axios from "axios";
 import post from "./post.vue"
+import { useRoute } from "vue-router";
 export default {
   components: {
     post
   },
   data() {
+    const route = useRoute()
+    const index = route.params.index
     return {
+      index,
+      route,
+      post:{},
       posts: [
         {
           title: "这是主贴",
@@ -43,6 +50,16 @@ export default {
     };
   },
   methods: {
+    serchbyid(){
+      console.log("nihoa")
+      axios
+        .get("http://jsonplaceholder.typicode.com/posts/55")
+        .then((res) => this.posts.push(...res.data));
+    }
   },
+  created() {
+      this.serchbyid()
+  },
+
 };
 </script>

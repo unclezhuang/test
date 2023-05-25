@@ -51,8 +51,7 @@ export default {
       dataAI: [],
     });
     const detail = (item,index) => {
-      console.log(index);
-      router.push({ name: "post"});
+      router.push({ name: "post" ,params: { serch: item.title,index:item.id}});
     };
     const first = async function () {
       axios

@@ -35,17 +35,12 @@ const routes = [
                 component: () => import('../views/PostView.vue')
             },
             {
-                path: 'detail?serch=":serch"$index=":index"',
-                name: 'detail',
-                component: () => import('../views/post.vue')
-            },
-            {
-                path: 'posts',
+                path: 'posts?serch=":serch"',
                 name: 'posts',
                 component: () => import('../views/posts.vue')
             },
             {
-                path: 'post',
+                path: 'post?serch=":serch"$index=":index"',
                 name: 'post',
                 component: () => import('../views/PostView.vue')
             },

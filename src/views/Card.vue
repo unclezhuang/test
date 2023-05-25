@@ -17,18 +17,21 @@
       </el-card>
     </el-col>
   </el-row>
-  
 </template>
   
-  <script lang="ts" setup>
-import { ref, reactive } from "vue";
-import axios from 'axios'
-const data = reactive([]);
-const text = function () {
-    axios.get("http://jsonplaceholder.typicode.com/photos").then((res) => data.push(...res.data))
+  <script lang="ts" >
+export default {
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  setup() {
+    return {};
+  },
 };
-text();
-console.log(data);
 </script>
   
   <style>
