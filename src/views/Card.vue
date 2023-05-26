@@ -11,7 +11,7 @@
         <div style="padding: 14px">
           <span>{{ item.title }}</span>
           <el-row class="mb-4">
-            <el-button type="primary">Primary</el-button>
+            <el-button plain type="primary" @click="buy">Primary</el-button>
           </el-row>
         </div>
       </el-card>
@@ -19,7 +19,11 @@
   </el-row>
 </template>
   
-  <script lang="ts" >
+
+  <script lang="ts">
+import { dterm } from "./determine.js";
+import { h } from 'vue';
+import { ElNotification } from 'element-plus';
 export default {
   props: {
     data: {
@@ -27,11 +31,23 @@ export default {
       required: true,
     },
   },
-
-  setup() {
-    return {};
-  },
-};
+  setup(){
+const buy = () => {
+  if (dterm.myValue.length > 0) {
+    console.log("这波the shy来全买了");
+  } else {
+    console.log("这波物资来全登录了。");
+    ElNotification({
+    title: '请登录',
+    message: h('i', { style: 'color: red' }, '购买前请先登陆！！！！'),
+  })
+  }
+  
+}
+return{
+buy}
+}
+}
 </script>
   
   <style>

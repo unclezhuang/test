@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router';
 const routes = [
     {
         path: '/',
@@ -40,7 +40,7 @@ const routes = [
                 component: () => import('../views/posts.vue')
             },
             {
-                path: 'post?serch=":serch"$index=":index"',
+                path: 'post?serch=":serch"',
                 name: 'post',
                 component: () => import('../views/PostView.vue')
             },

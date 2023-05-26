@@ -27,6 +27,8 @@
 <script lang="ts">
 import { reactive, toRefs } from "vue";
 import { state } from "./shared.js";
+import { dterm } from "./determine.js";
+import router from '../router/index.js';
 export default {
   setup() {
   
@@ -68,10 +70,6 @@ export default {
       isShow: false,
     });
 
-    const change = () => {
-      obj.isShow = !obj.isShow;
-    };
-
     const login = () => {
       if (typeof window.ethereum !== "undefined") {
         // 通过 MetaMask 访问用户地址
@@ -88,10 +86,6 @@ export default {
                   },
                 ],
               })
-              .then((permissions) => {
-                // 在这里处理授权结果 permissions 对象
-                console.log("permissions:", permissions.address);
-              });
             const address = accounts[0];
             console.log("用户地址：", address);
             const exampleMessage = Date.now();
@@ -109,10 +103,10 @@ export default {
             } catch (err) {
               console.error(err);
             }
-
+            dterm.myValue = address;
             state.myValue = address;
             console.log("state的值更新",state.myValue);
-            obj.isShow = !obj.isShow;
+            obj.isShow = true;
             console.log(obj.isShow);
           })
           .catch(function (error) {
@@ -129,10 +123,12 @@ export default {
     };
     const logout = () => {
       obj.isShow = !obj.isShow;
+      dterm.myValue = "";
+      console.log("值的状态",dterm.myValue);
+      router.push({name:"homepage"})
     };
     return {
       ...toRefs(obj),
-      change,
       login,
       logout,
      
@@ -154,7 +150,7 @@ export default {
   flex-direction: row;
   justify-content: center; /*垂直居中*/
   align-items: center; /*水平居中*/
-  height: 20vh; /*占满整个浏览器高度*/
+  height: 15vh; /*占满整个浏览器高度*/
 }
 .logo,
 .user,

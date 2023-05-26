@@ -1,26 +1,48 @@
 <template>
-    <div v-for="item in obj" :key="item.id" style="margin:1%">
+    <div v-for="item in pagein()" :key="item.id" style="margin:1%" @click="topostbyindex(item)">
         <div>标题：{{ item.title }}</div>
-        <div>内容：{{ item.body }}</div>
+        <div>内容：{{ item.body }}</div>    
         <div>测试内容：{{ serch }}</div>
     </div>
-    
+    <div class="page"><el-pagination
+    :page-size="20"
+    :pager-count="11"
+    layout="prev, pager, next"
+    :total="obj.posts.length"
+    default-current-page="1"
+    :current-page="currentPage"
+    @update:current-page="handleChange"
+  /></div>
 </template>
 
 <script setup lang="ts">
 import axios from 'axios'
+import { title } from 'process';
 import { reactive, ref } from 'vue';
-import { useRoute } from "vue-router";
-const obj = reactive([])
+import { useRoute,useRouter } from "vue-router";
+const obj = reactive({
+    posts:[]})
+const currentPage = ref(1)
 const posts = useRoute()
+const router = useRouter()
 const serch = posts.params.serch
 const first = async function () {
       axios
         .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => obj.push(...res.data));
+        .then((res) => obj.posts.push(...res.data));
     };
     first();
-    console.log(obj)
+const handleChange = (page:number)=>{
+    currentPage.value = page
+    pagein()
+}
+const pagein = ()=>{
+    return obj.posts.slice((currentPage.value-1)*20,currentPage.value*20)
+    
+}
+const topostbyindex = (item) => {
+    router.push({ name: "post", params: { serch: item} })
+}
 </script>
 
 <style scoped>

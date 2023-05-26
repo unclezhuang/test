@@ -76,5 +76,6 @@ export default {
 .serch {
   text-align: center;
   height: 20%;
+
 }
 </style>

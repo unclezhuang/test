@@ -19,28 +19,44 @@
   
 
 <script lang="ts">
-import { reactive } from "vue";
+import { dterm } from "./determine.js";
+import { reactive,h } from "vue";
 import Card from "./Card.vue";
-import axios from 'axios';
+import axios from "axios";
+import { ElNotification } from 'element-plus';
 export default {
   components: {
     "my-card": Card,
   },
   setup() {
-    const data = reactive([])
+    const data = reactive([]);
     const buyback = (index) => {
       if (index === 0) {
-        console.log("点击事件",index)
-        axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
-    }else if(index === 1){
-      console.log("点击事件",index)
-      axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
-    }else if(index === 2){
-      console.log("点击事件",index)
-      axios.get("http://jsonplaceholder.typicode.com/todos").then((res) => data.push(...res.data))
-    }
-  }
-  buyback(0)
+        console.log("点击事件", index);
+        axios
+          .get("http://jsonplaceholder.typicode.com/todos")
+          .then((res) => data.push(...res.data));
+      } else if (index === 1) {
+        console.log("点击事件", index);
+        axios
+          .get("http://jsonplaceholder.typicode.com/todos")
+          .then((res) => data.push(...res.data));
+      } else if (index === 2) {
+        console.log("值为", dterm.myValue);
+        if (dterm.myValue.length > 2) {
+          axios
+            .get("http://jsonplaceholder.typicode.com/todos")
+            .then((res) => data.push(...res.data));
+        } else {
+          console.log("请先登录！");
+          ElNotification({
+            title: "请登录",
+            message: h("i", { style: "color: red" }, "购买前请先登陆！！！！"),
+          });
+        }
+      }
+    };
+    buyback(0);
     const buttons = [
       { type: "", text: "帖子侧栏背景" },
       { type: "", text: "帖子正文" },

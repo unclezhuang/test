@@ -1,29 +1,29 @@
 <template>
-  <div>
+  <div class="top">
 
     <div class="tags-wrapper">
       <div style="width: 33.33%" class="tags">
-        <router-link to="/defo/posts">
+        <router-link :to="{ name: 'posts' ,params: { serch: '区块链技术' }}">
           <el-button text>区块链技术</el-button></router-link
         >
       </div>
       <div style="width: 33.33%" class="tags2">
-        <router-link to="/defo/posts">
+        <router-link :to="{ name: 'posts' ,params: { serch: '大数据' }}">
           <el-button text>大数据</el-button></router-link
         >
       </div>
       <div style="width: 33.33%" class="tags3">
-        <router-link to="/defo/posts">
+        <router-link :to="{ name: 'posts' ,params: { serch: '人工智能' }}">
           <el-button text>人工智能</el-button></router-link
         >
       </div>
     </div>
     <div style="width: 33.33%; float: left" v-for="i in obj" :key="i">
       <el-card
-        v-for="(item, index) in i"
+        v-for="item in i"
         :key="item.id"
         style="width: 90%; margin-bottom: 10%"
-        @click="detail(item,index)"
+        @click="detail(item)"
       >
         <el-image
           style="width: 100%; height: 150px"
@@ -50,8 +50,8 @@ export default {
       dataBD: [],
       dataAI: [],
     });
-    const detail = (item,index) => {
-      router.push({ name: "post" ,params: { serch: item.title,index:item.id}});
+    const detail = (item) => {
+      router.push({ name: "post" ,params: { serch: item.title}});
     };
     const first = async function () {
       axios

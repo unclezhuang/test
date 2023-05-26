@@ -39,10 +39,10 @@ export default {
   height: 100%;
 }
 .el-header {
-  height: 20%;
+  height: 15%;
 }
 .el-main {
-  height: 80%;
+  height: 85%;
   margin: 0;
   width: 100%;
 }
