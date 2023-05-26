@@ -1,12 +1,12 @@
 <template>
     <div>
-      <div class="profile">
+      <el-card class="profile">
         <img :src="avatarUrl" style="border-radius: 50%;width:25%" alt="avatar">
        <h3 >{{nickname}}</h3>
       <div class="wrapper">
        <div class="column1">
         <p>Age: {{age}}</p>
-        <p>Gender: {{gender}}</p></div>
+        <p>性别: {{gender}}</p></div>
         <div class="column2">
         <p>Email: {{email}}</p>
         <p>Score: {{score}}</p>
@@ -19,7 +19,7 @@
       <div style="width:20% float: left;">
         <button @click="editProfile">Edit Profile</button>
         </div>
-    </div>
+    </el-card>
     </div>
   </template>
   

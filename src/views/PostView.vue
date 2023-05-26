@@ -1,16 +1,12 @@
 <template>
-  <div>
-    fdafadfaf
+  
     <!-- 渲染主贴 -->
-    <post :post="posts[0]" :postId="postId" />
+    <div class="main"><post :post="posts[0]" :postId="postId" /></div>
     <!-- 渲染回复贴 -->
-    <post
-      v-for="(reply, index) in posts.slice(1)"
-      :key="index"
-      :post="reply"
-      :postId="postId + index"
-    />
-  </div>
+      <div class="reply" v-for="(reply, index) in posts.slice(1)" :key="index">
+     <post :post="reply" :postId="postId + index"/>
+    </div>
+  
 </template>
   
   <script lang="ts">
@@ -46,3 +42,19 @@ export default {
   },
 };
 </script>
+<style>
+.main{
+  width: 100%;
+  height: 25%;
+  border: 1px solid rgb(24, 24, 24);
+  padding: 0;
+  margin: 0;
+}
+.reply{
+  width: 100%;
+  height: 25%;
+  border: 1px solid rgb(5, 5, 5);
+  padding: 0;
+  margin: 0;
+}
+</style>

@@ -15,10 +15,10 @@
         <input type="number" id="age" v-model="formData.age">
       </div>
       <div>
-        <label for="gender">Gender:</label>
+        <label for="gender">性别:</label>
         <select id="gender" v-model="formData.gender">
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+          <option value="男">男</option>
+          <option value="女">女</option>
         </select>
       </div>
       <div>

@@ -52,6 +52,8 @@ export default {
           obj.isShow = false;
           return false;
         }
+        
+        
         console.log("用户已登陆！");
         obj.isShow = true;
         return true;

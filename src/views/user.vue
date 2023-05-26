@@ -11,7 +11,8 @@
       :notes="notes"
       @edit-profile="showEditForm"
     ></profile-card>
-   <div class="button1"> <edit-profile-form
+   <div class="button1"> 
+    <edit-profile-form
       v-if="isEditing"
       @save-profile="saveProfile"
       @cancel-edit-profile="hideEditForm"
@@ -32,7 +33,10 @@
       <!-- 如果用户已经发布过帖子则显示帖子列表 -->
       <ul v-else>
         <!-- 根据 v-for 循环遍历每个帖子并渲染 -->
-        <li v-for="post in postList" :key="post.id">{{ post.title }}</li>
+        <li v-for="post in postList" :key="post.id"><div>{{post.time}}</div><router-link to ="/defo/post">{{ post.title }}</router-link>
+      
+      </li>
+       
       </ul>
     </div>
   </div>
@@ -55,7 +59,7 @@ export default {
       avatar: "https://picsum.photos/200",
       nickname: "myValue",
       age: 25,
-      gender: "male",
+      gender: "男",
       email: "john@example.com",
       score: 100,
       posts: 0,
@@ -89,10 +93,10 @@ export default {
     loadPosts() {
       setTimeout(() => {
         this.postList = [
-          { id: 1, title: "Hello World" },
-          { id: 2, title: "Vue.js" },
-          { id: 3, title: "React" },
-          { id: 4, title: "Angular" }
+          { id: 1, title: "Hello World" ,time:"2020/1/5"},
+          { id: 2, title: "Vue.js", time:"2020/1/5" },
+          { id: 3, title: "React", time:"2020/1/5" },
+          { id: 4, title: "Angular", time:"2020/1/5" }
         ];
         this.hasPost = this.postList.length > 0;
       }, 1000);
@@ -120,6 +124,7 @@ export default {
 .post-list {
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .new-post {
@@ -143,12 +148,22 @@ export default {
   margin-top: 10px;
   padding: 10px;
   background-color: #f4f4f4;
+  height: 100%;
 }
-
+li{
+  list-style-position: inside;
+}
 .no-post {
   font-size: 16px;
   text-align: center;
   margin-top: 20px;
+}
+.mypost{
+  width: 100%;
+  height: 25%;
+  border: 1px solid rgb(24, 24, 24);
+  padding: 0;
+  margin: 0;
 }
 
 </style>
