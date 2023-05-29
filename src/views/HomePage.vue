@@ -1,21 +1,5 @@
 <template>
   <div>
-    <el-backtop :bottom="100">
-      <div
-        style="
-          height: 100%;
-          width: 100%;
-          background-color: var(--el-bg-color-overlay);
-          box-shadow: var(--el-box-shadow-lighter);
-          text-align: center;
-          line-height: 40px;
-          color: #1989fa;
-          border-radius: 50%;
-        "
-      >
-        <img src="../img/toTop.png" style="height: 100%" />
-      </div>
-    </el-backtop>
     <div class="serch">
       <img src="../img/search.png" class="serachimg" />
       <input
@@ -24,8 +8,8 @@
         ref="serchtext"
         class="serachInput"
       />
-      <el-row class="mb-4"
-        ><el-button
+      <el-row class="mb-4">
+        <el-button
           type="success"
           style="margin-left: 20%"
           @click="serchbystring"
@@ -41,6 +25,7 @@
 <script lang="ts">
 import { reactive, toRefs, ref } from "vue";
 import MyComponent from "./PreviewCard.vue";
+import { useRouter } from "vue-router";
 export default {
   components: {
     "my-component": MyComponent,
@@ -50,15 +35,17 @@ export default {
       serchtext: ref(),
     });
 
+    const router = useRouter();
+
     const search = (event) => {
       if (event.keyCode === 13) {
         console.log(obj.serchtext.value);
-        obj.serchtext.value = "";
+        router.push({ name: "posts", params: { serch: obj.serchtext.value } });
       }
     };
     const serchbystring = (event) => {
       console.log(obj.serchtext.value);
-      obj.serchtext.value = "";
+      router.push({ name: "posts", params: { serch: obj.serchtext.value } });
     };
     return {
       ...toRefs(obj),

@@ -11,7 +11,7 @@
         <div style="padding: 14px">
           <span>{{ item.title }}</span>
           <el-row class="mb-4">
-            <el-button type="primary">Primary</el-button>
+            <el-button plain type="primary" @click="buy">Primary</el-button>
           </el-row>
         </div>
       </el-card>
@@ -19,20 +19,36 @@
   </el-row>
 </template>
   
-  <script lang="ts" setup>
-import { ref, reactive } from "vue";
-import HttpClient from "../ajxos/ajxos";
-const data = reactive([]);
-const text = function () {
-  const httpClient = new HttpClient("https://api.example.com");
 
-  httpClient
-    .get("http://jsonplaceholder.typicode.com/photos")
-    .then((res) => data.push(...res.data))
-    .catch((error) => console.error(error));
-};
-text();
-console.log(data);
+  <script lang="ts">
+import getCookie from '../help/cookie'
+import { h } from 'vue';
+import { ElNotification } from 'element-plus';
+import { getCookie } from '../help/cookie';
+export default {
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
+  },
+  setup(){
+const buy = async () => {
+  if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
+    console.log("这波the shy来全买了");
+  } else {
+    console.log("这波物资来全登录了。");
+    ElNotification({
+    title: '请登录',
+    message: h('i', { style: 'color: red' }, '购买前请先登陆！！！！'),
+  })
+  }
+  
+}
+return{
+buy}
+}
+}
 </script>
   
   <style>

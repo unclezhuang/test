@@ -12,13 +12,14 @@
       <span v-show="isShow">
         <div class="userhead">
           <router-link to="/defo/user" class="mousehover">个人详情</router-link>
-          <p class="mousehover">退出登陆</p>
+          <p class="mousehover" @click="logout">退出登陆</p>
         </div>
-        <img
-          class="userhead"
-          src="../img/少女熊猫.jpg"
-          style="width: 10%; border-radius: 50%"
-        />
+        <router-link to="/defo/user" class="mousehover">
+          <img
+            class="userhead"
+            src="../img/少女熊猫.jpg"
+            style="width: 10%; border-radius: 50%"
+        /></router-link>
       </span>
     </div>
   </div>
@@ -26,8 +27,14 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
+import router from "../router/index.js";
+import { setCookie, getCookie, deleteCookie } from "../help/cookie";
 export default {
   setup() {
+    const obj = reactive({
+      isShow: false,
+      loginAddress: "",
+    });
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -44,43 +51,68 @@ export default {
         // 检查用户是否已登录
         const accounts = await ethereum.request({ method: "eth_accounts" });
         const isLoggedIn = accounts.length > 0;
-
         if (!isLoggedIn) {
           console.log("请先登录 MetaMask");
           obj.isShow = false;
           return false;
         }
-        obj.isShow = true
+        console.log("获取的Cookie：", getCookie(accounts));
+        if (getCookie(accounts)) {
+          console.log("用户已登陆！");
+          obj.isShow = true;
+        } else {
+          obj.isShow = false;
+        }
         return true;
       } catch (err) {
         console.error(err);
         return false;
       }
     }
-    islogin()
+    islogin();
+    //检测用户改变
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
-      islogin()
-    });
-    const obj = reactive({
-      isShow: false,
+      console.log("这是账户更改输出的",accounts);
+      islogin();
     });
 
-    const change = () => {
-      obj.isShow = !obj.isShow;
-    };
-
+    //登陆
     const login = () => {
       if (typeof window.ethereum !== "undefined") {
         // 通过 MetaMask 访问用户地址
         window.ethereum
-          .request({ method: "eth_requestAccounts" })
-          .then(function (accounts) {
+          .request({ method: "eth_accounts" })
+          .then(async function (accounts) {
             // 获取用户地址
+            await ethereum.request({
+              method: "wallet_requestPermissions",
+              params: [
+                {
+                  eth_accounts: {},
+                },
+              ],
+            });
             const address = accounts[0];
             console.log("用户地址：", address);
-            obj.isShow = !obj.isShow;
-            console.log(obj.isShow)
+            const exampleMessage = Date.now();
+            console.log("时间戳", exampleMessage);
+            try {
+              // For historical reasons, you must submit the message to sign in hex-encoded UTF-8.
+              // This uses a Node.js-style buffer shim in the browser.
+              const msg = `0x${exampleMessage.toString()}`;
+              const sign = await ethereum.request({
+                method: "personal_sign",
+                params: [msg, address, "Example password"],
+              });
+              console.log("签名:", sign);
+            } catch (err) {
+              console.error(err);
+            }
+            setCookie(address, address, 30);
+            obj.loginAddress = address;
+            obj.isShow = true;
+            console.log(obj.isShow);
           })
           .catch(function (error) {
             if (
@@ -94,10 +126,20 @@ export default {
         console.log("请安装 MetaMask 插件");
       }
     };
+    //退出登陆
+    const logout = () => {
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then(async function (accounts) {
+          deleteCookie(accounts);
+        });
+      obj.isShow = false;
+      router.push({ name: "homepage" });
+    };
     return {
       ...toRefs(obj),
-      change,
       login,
+      logout,
     };
   },
 };
@@ -116,7 +158,7 @@ export default {
   flex-direction: row;
   justify-content: center; /*垂直居中*/
   align-items: center; /*水平居中*/
-  height: 20vh; /*占满整个浏览器高度*/
+  height: 15vh; /*占满整个浏览器高度*/
 }
 .logo,
 .user,
@@ -145,5 +187,13 @@ export default {
 }
 .mousehover:hover {
   color: red;
+  cursor: pointer;
+}
+.router-link {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
 }
 </style>

@@ -9,37 +9,54 @@
       </el-main>
     </el-container>
   </div>
+  <el-backtop :bottom="100" target=".common-layout" :visibility-height="0">
+    <div
+      style="
+        height: 100%;
+        width: 100%;
+        background-color: var(--el-bg-color-overlay);
+        box-shadow: var(--el-box-shadow-lighter);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
+        border-radius: 50%;
+      "
+    >
+      <img src="../img/toTop.png" style="height: 100%" />
+    </div>
+  </el-backtop>
 </template>
 
 <script lang="ts">
-import nav from ".//nav.vue"
+import nav from ".//nav.vue";
 export default {
   components: {
-      'my-nav': nav
-    },
+    "my-nav": nav,
+  },
   setup() {
-
-    return {
-
-    };  
-  }
+    return {};
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .common-layout {
   width: 80%;
+  display: flex;
   margin: auto;
   height: 100%;
+  min-height: 100vh;
 }
 
-.el-container{
+.el-container {
   height: 100%;
 }
 .el-header {
-  height: 20%;
+  height: 15%;
 }
 .el-main {
-  height: 80%;
+  height: 85%;
+  margin: 0;
+  width: 100%;
 }
 </style>
