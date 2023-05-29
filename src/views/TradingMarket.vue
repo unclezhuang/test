@@ -8,10 +8,8 @@
           :type="button.type"
           text
           style="display: block; width: 100%; margin: 0"
-          >{{ button.text }}</el-button
-        >
-      </div></el-aside
-    >
+          >{{ button.text }}</el-button>
+      </div></el-aside>
     <el-main><my-card></my-card></el-main>
   </el-container>
 </template>
@@ -26,7 +24,7 @@ export default defineComponent({
   },
   setup() {
     const buttons = [
-      { type: "", text: "帖子侧栏背景" },
+      { type: "", text: "帖子侧栏背景"  },
       { type: "", text: "帖子正文" },
       { type: "", text: "我的" },
     ] as const;

@@ -3,7 +3,10 @@
       <!-- 渲染主贴 -->
       <post :post="posts[0]" :postId="postId" />
       <!-- 渲染回复贴 -->
-      <post v-for="(reply, index) in posts.slice(1)" :key="index" :post="reply" :postId="postId + index" />
+      <post v-for="(reply, index) in posts.slice(1)"
+       :key="index" 
+       :post="reply"
+       :postId="postId + index" />
     </div>
   </template>
   
