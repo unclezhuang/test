@@ -1,6 +1,5 @@
 <template>
   <div class="top">
-
     <div class="tags-wrapper">
       <div style="width: 33.33%" class="tags">
         <router-link :to="{ name: 'posts' ,params: { serch: '区块链技术' }}">
@@ -19,6 +18,7 @@
       </div>
     </div>
     <div style="width: 33.33%; float: left" v-for="i in obj" :key="i">
+      
       <el-card
         v-for="item in i"
         :key="item.id"
@@ -30,6 +30,7 @@
           src="https://picsum.photos/300/150"
         ></el-image>
         <div style="padding: 14px">
+          {{ item }}
           <h3 style="font-size: 18px">帖子编号：{{ item.id }}</h3>
           <p>作者：{{ item.userId }}</p>
         </div>
@@ -55,14 +56,14 @@ export default {
     };
     const first = async function () {
       axios
-        .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => obj.dataBC.push(...res.data));
+        .get("http://192.168.43.88:8080/api/v1/post/like-content/测试")
+        .then((res) => console.log(res.data.data));
       axios
-        .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => obj.dataBD.push(...res.data));
+        .get("http://192.168.43.88:8080/api/v1/post/like-content/测试")
+        .then((res) => obj.dataBD.push(...res.data.data));
       axios
-        .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => obj.dataAI.push(...res.data));
+        .get("http://192.168.43.88:8080/api/v1/post/like-content/人工智能")
+        .then((res) => obj.dataAI.push(...res.data.data));
     };
     first();
     return {

@@ -68,4 +68,5 @@ export default {
 .postimg{
   background-image: url("../img/少女熊猫.jpg");
 }
+
 </style>
