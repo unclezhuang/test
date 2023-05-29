@@ -54,7 +54,7 @@ export default {
     serchbyid(){
       console.log("nihoa")
       axios
-        .get("http://jsonplaceholder.typicode.com/posts/55")
+        .get("http://jsonplaceholder.typicode.com/posts")
         .then((res) => this.posts.push(...res.data));
     }
   },

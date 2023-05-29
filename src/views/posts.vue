@@ -1,11 +1,12 @@
 <template>
+    {{ posts.params.serch }}
     <div v-for="item in pagein()" :key="item.id" style="margin:1%" @click="topostbyindex(item)">
         <div>标题：{{ item.title }}</div>
         <div>内容：{{ item.body }}</div>    
         <div>测试内容：{{ serch }}</div>
     </div>
     <div class="page"><el-pagination
-    :page-size="20"
+    :page-size="15"
     :pager-count="11"
     layout="prev, pager, next"
     :total="obj.posts.length"
@@ -17,7 +18,6 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import { title } from 'process';
 import { reactive, ref } from 'vue';
 import { useRoute,useRouter } from "vue-router";
 const obj = reactive({
@@ -37,7 +37,7 @@ const handleChange = (page:number)=>{
     pagein()
 }
 const pagein = ()=>{
-    return obj.posts.slice((currentPage.value-1)*20,currentPage.value*20)
+    return obj.posts.slice((currentPage.value-1)*15,currentPage.value*15)
     
 }
 const topostbyindex = (item) => {
@@ -47,4 +47,7 @@ const topostbyindex = (item) => {
 
 <style scoped>
 
+.el-pagination{
+    margin-left: 40%;
+}
 </style>

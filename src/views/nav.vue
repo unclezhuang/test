@@ -13,11 +13,12 @@
         <div class="userhead">
           <router-link to="/defo/user" class="mousehover">个人详情</router-link>
           <p class="mousehover" @click="logout">退出登陆</p>
-        </div><router-link to="/defo/user" class="mousehover">
-        <img
-          class="userhead"
-          src="../img/少女熊猫.jpg"
-          style="width: 10%; border-radius: 50%"
+        </div>
+        <router-link to="/defo/user" class="mousehover">
+          <img
+            class="userhead"
+            src="../img/少女熊猫.jpg"
+            style="width: 10%; border-radius: 50%"
         /></router-link>
       </span>
     </div>
@@ -26,12 +27,14 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
-import { state } from "./shared.js";
-import { dterm } from "./determine.js";
-import router from '../router/index.js';
+import router from "../router/index.js";
+import { setCookie, getCookie, deleteCookie } from "../help/cookie";
 export default {
   setup() {
-  
+    const obj = reactive({
+      isShow: false,
+      loginAddress: "",
+    });
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -53,8 +56,13 @@ export default {
           obj.isShow = false;
           return false;
         }
-        console.log("用户已登陆！");
-        obj.isShow = true;
+        console.log("获取的Cookie：", getCookie(accounts));
+        if (getCookie(accounts)) {
+          console.log("用户已登陆！");
+          obj.isShow = true;
+        } else {
+          obj.isShow = false;
+        }
         return true;
       } catch (err) {
         console.error(err);
@@ -62,50 +70,47 @@ export default {
       }
     }
     islogin();
+    //检测用户改变
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
+      console.log("这是账户更改输出的",accounts);
       islogin();
     });
-    const obj = reactive({
-      isShow: false,
-    });
 
+    //登陆
     const login = () => {
       if (typeof window.ethereum !== "undefined") {
         // 通过 MetaMask 访问用户地址
         window.ethereum
-          .request({ method: "eth_requestAccounts" })
+          .request({ method: "eth_accounts" })
           .then(async function (accounts) {
             // 获取用户地址
-            await ethereum
-              .request({
-                method: "wallet_requestPermissions",
-                params: [
-                  {
-                    eth_accounts: {},
-                  },
-                ],
-              })
+            await ethereum.request({
+              method: "wallet_requestPermissions",
+              params: [
+                {
+                  eth_accounts: {},
+                },
+              ],
+            });
             const address = accounts[0];
             console.log("用户地址：", address);
             const exampleMessage = Date.now();
-            console.log("时间", exampleMessage);
+            console.log("时间戳", exampleMessage);
             try {
-              const from = accounts[0];
               // For historical reasons, you must submit the message to sign in hex-encoded UTF-8.
               // This uses a Node.js-style buffer shim in the browser.
               const msg = `0x${exampleMessage.toString()}`;
               const sign = await ethereum.request({
                 method: "personal_sign",
-                params: [msg, from, "Example password"],
+                params: [msg, address, "Example password"],
               });
-              console.log("nihaohfaidfa", sign);
+              console.log("签名:", sign);
             } catch (err) {
               console.error(err);
             }
-            dterm.myValue = address;
-            state.myValue = address;
-            console.log("state的值更新",state.myValue);
+            setCookie(address, address, 30);
+            obj.loginAddress = address;
             obj.isShow = true;
             console.log(obj.isShow);
           })
@@ -121,17 +126,20 @@ export default {
         console.log("请安装 MetaMask 插件");
       }
     };
+    //退出登陆
     const logout = () => {
-      obj.isShow = !obj.isShow;
-      dterm.myValue = "";
-      console.log("值的状态",dterm.myValue);
-      router.push({name:"homepage"})
+      window.ethereum
+        .request({ method: "eth_requestAccounts" })
+        .then(async function (accounts) {
+          deleteCookie(accounts);
+        });
+      obj.isShow = false;
+      router.push({ name: "homepage" });
     };
     return {
       ...toRefs(obj),
       login,
       logout,
-     
     };
   },
 };

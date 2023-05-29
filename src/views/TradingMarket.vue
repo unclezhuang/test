@@ -24,13 +24,14 @@ import { reactive,h } from "vue";
 import Card from "./Card.vue";
 import axios from "axios";
 import { ElNotification } from 'element-plus';
+import { getCookie } from "../help/cookie";
 export default {
   components: {
     "my-card": Card,
   },
   setup() {
     const data = reactive([]);
-    const buyback = (index) => {
+    const buyback = async (index) => {
       if (index === 0) {
         console.log("点击事件", index);
         axios
@@ -42,8 +43,8 @@ export default {
           .get("http://jsonplaceholder.typicode.com/todos")
           .then((res) => data.push(...res.data));
       } else if (index === 2) {
-        console.log("值为", dterm.myValue);
-        if (dterm.myValue.length > 2) {
+        if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
+          console.log(await ethereum.request({ method: "eth_accounts" }))
           axios
             .get("http://jsonplaceholder.typicode.com/todos")
             .then((res) => data.push(...res.data));

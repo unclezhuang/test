@@ -1,6 +1,5 @@
 <template>
   <div class="common-layout">
-    
     <el-container>
       <el-header>
         <my-nav></my-nav>
@@ -10,20 +9,33 @@
       </el-main>
     </el-container>
   </div>
+  <el-backtop :bottom="100" target=".common-layout" :visibility-height="0">
+    <div
+      style="
+        height: 100%;
+        width: 100%;
+        background-color: var(--el-bg-color-overlay);
+        box-shadow: var(--el-box-shadow-lighter);
+        text-align: center;
+        line-height: 40px;
+        color: #1989fa;
+        border-radius: 50%;
+      "
+    >
+      <img src="../img/toTop.png" style="height: 100%" />
+    </div>
+  </el-backtop>
 </template>
 
 <script lang="ts">
-import nav from ".//nav.vue"
+import nav from ".//nav.vue";
 export default {
   components: {
-      'my-nav': nav
-    },
+    "my-nav": nav,
+  },
   setup() {
-
-    return {
-
-    };  
-  }
+    return {};
+  },
 };
 </script>
 
@@ -33,9 +45,10 @@ export default {
   display: flex;
   margin: auto;
   height: 100%;
+  min-height: 100vh;
 }
 
-.el-container{
+.el-container {
   height: 100%;
 }
 .el-header {

@@ -2,17 +2,17 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 const routes = [
     {
         path: '/',
-        redirect: {name:"homepage"}
+        redirect: { name: "homepage" }
     },
     {
         path: '/:defo',
-        redirect: {name:"homepage"}
+        redirect: { name: "homepage" }
     },
     {
         path: '/defo',
         name: 'defo',
         component: () => import('../views/Home.vue'),
-        redirect:{name:"homepage"},
+        redirect: { name: "homepage" },
         children: [
             {
                 path: 'deal',
@@ -32,11 +32,16 @@ const routes = [
             {
                 path: 'Post',
                 name: 'Post',
-                component: () => import('../views/PostView.vue')
+                component: () => import('../views/PostView.vue'),
             },
             {
                 path: 'posts?serch=":serch"',
                 name: 'posts',
+                component: () => import('../views/posts.vue')
+            },
+            {
+                path: 'Posts',
+                name: 'Posts',
                 component: () => import('../views/posts.vue')
             },
             {
@@ -53,5 +58,14 @@ const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
     routes
 })
-
+router.beforeEach((to, from, next) => {
+    console.log(to)
+    if(to.query.serch){
+       to.query.serch = to.query.serch.slice(1,-1)
+    to.params = to.query
+console.log(to.query)}
+    console.log(decodeURIComponent(to.fullPath))
+    console.log(from)
+    next()
+})
 export default router

@@ -16,6 +16,7 @@ body,
 #app {
   width: 100%;
   height: 100%;
+  min-height: 100vh;
 }
 body {
   background-image: url("./img/5b6281086eb1a.jpg");

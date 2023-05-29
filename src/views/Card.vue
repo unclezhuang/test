@@ -21,9 +21,10 @@
   
 
   <script lang="ts">
-import { dterm } from "./determine.js";
+import getCookie from '../help/cookie'
 import { h } from 'vue';
 import { ElNotification } from 'element-plus';
+import { getCookie } from '../help/cookie';
 export default {
   props: {
     data: {
@@ -32,8 +33,8 @@ export default {
     },
   },
   setup(){
-const buy = () => {
-  if (dterm.myValue.length > 0) {
+const buy = async () => {
+  if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
     console.log("这波the shy来全买了");
   } else {
     console.log("这波物资来全登录了。");

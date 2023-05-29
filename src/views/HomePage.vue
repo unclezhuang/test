@@ -8,8 +8,7 @@
         ref="serchtext"
         class="serachInput"
       />
-      <el-row class="mb-4"
-        >
+      <el-row class="mb-4">
         <el-button
           type="success"
           style="margin-left: 20%"
@@ -41,12 +40,12 @@ export default {
     const search = (event) => {
       if (event.keyCode === 13) {
         console.log(obj.serchtext.value);
-        router.push({ name: "posts", params: { serch:obj.serchtext.value } })
+        router.push({ name: "posts", params: { serch: obj.serchtext.value } });
       }
     };
     const serchbystring = (event) => {
       console.log(obj.serchtext.value);
-      router.push({ name: "posts", params: { serch:obj.serchtext.value } })
+      router.push({ name: "posts", params: { serch: obj.serchtext.value } });
     };
     return {
       ...toRefs(obj),
@@ -76,6 +75,5 @@ export default {
 .serch {
   text-align: center;
   height: 20%;
-
 }
 </style>
