@@ -1,11 +1,11 @@
 <template>
   <div class="login">
-    <div class="logo"><p>诚信论坛</p></div>
+    <div class="logo">
+      <p>诚信论坛</p>
+    </div>
     <nav class="navPage">
       <router-link to="/" class="home mousehover">首页</router-link>
-      <router-link to="/defo/deal" class="home mousehover"
-        >交易市场</router-link
-      >
+      <router-link to="/defo/deal" class="home mousehover">交易市场</router-link>
     </nav>
     <div class="user">
       <span class="userhead" v-show="!isShow" @click="login">登录</span>
@@ -15,11 +15,7 @@
           <p class="mousehover" @click="logout">退出登陆</p>
         </div>
         <router-link to="/defo/user" class="mousehover">
-          <img
-            class="userhead"
-            src="../img/少女熊猫.jpg"
-            style="width: 10%; border-radius: 50%"
-        /></router-link>
+          <img class="userhead" src="../img/少女熊猫.jpg" style="width: 10%; border-radius: 50%" /></router-link>
       </span>
     </div>
   </div>
@@ -27,6 +23,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
+import axios from "axios";
 import router from "../router/index.js";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
 export default {
@@ -73,7 +70,7 @@ export default {
     //检测用户改变
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
-      console.log("这是账户更改输出的",accounts);
+      console.log("这是账户更改输出的", accounts);
       islogin();
     });
 
@@ -106,6 +103,8 @@ export default {
                 params: [msg, address, "Example password"],
               });
               console.log("签名:", sign);
+              axios.post(`http://192.168.43.88:8080/api/v1/login`).then((res) => console.log(res));
+              console.log("haihao")
             } catch (err) {
               console.error(err);
             }
@@ -153,47 +152,60 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .login {
   display: flex;
   flex-direction: row;
-  justify-content: center; /*垂直居中*/
-  align-items: center; /*水平居中*/
-  height: 15vh; /*占满整个浏览器高度*/
+  justify-content: center;
+  /*垂直居中*/
+  align-items: center;
+  /*水平居中*/
+  height: 15vh;
+  /*占满整个浏览器高度*/
 }
+
 .logo,
 .user,
 .navPage {
-  width: 33.33%; /*占满父容器宽度*/
-  text-align: center; /*水平居中*/
+  width: 33.33%;
+  /*占满父容器宽度*/
+  text-align: center;
+  /*水平居中*/
   display: inline-block;
-  justify-content: center; /*水平居中*/
-  align-items: center; /*垂直居中*/
+  justify-content: center;
+  /*水平居中*/
+  align-items: center;
+  /*垂直居中*/
 }
 
 .logo {
   float: left;
 }
+
 .user,
 .navPage {
   float: right;
 }
+
 .userhead {
   display: inline-block;
   float: right;
   margin-right: 1;
 }
+
 .home {
   margin: 10%;
 }
+
 .mousehover:hover {
   color: red;
   cursor: pointer;
 }
+
 .router-link {
   display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
   color: #333;
   text-decoration: none;
-}
-</style>
+}</style>
