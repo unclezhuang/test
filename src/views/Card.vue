@@ -21,7 +21,7 @@
   
 
   <script lang="ts">
-import getCookie from '../help/cookie'
+
 import { h } from 'vue';
 import { ElNotification } from 'element-plus';
 import { getCookie } from '../help/cookie';

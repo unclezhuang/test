@@ -29,11 +29,13 @@
 
 <script lang="ts">
 import nav from ".//nav.vue";
+import { provider, blockNumber} from "../help/ether.ts"
 export default {
   components: {
     "my-nav": nav,
   },
   setup() {
+    console.log(blockNumber)
     return {};
   },
 };

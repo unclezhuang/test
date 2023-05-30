@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import axios from 'axios'
+import { service } from "../request/index.ts";
 import { reactive, ref } from 'vue';
 import { useRoute,useRouter } from "vue-router";
 const obj = reactive({
@@ -27,7 +27,7 @@ const posts = useRoute()
 const router = useRouter()
 const serch = posts.params.serch
 const first = async function () {
-      axios
+    service
         .get("http://jsonplaceholder.typicode.com/posts")
         .then((res) => obj.posts.push(...res.data));
     };

@@ -22,9 +22,10 @@
 import { dterm } from "./determine.js";
 import { reactive,h } from "vue";
 import Card from "./Card.vue";
-import axios from "axios";
+import { service } from "../request/index.ts";
 import { ElNotification } from 'element-plus';
 import { getCookie } from "../help/cookie";
+import axios from 'axios';
 export default {
   components: {
     "my-card": Card,

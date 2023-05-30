@@ -11,12 +11,12 @@
       :postId="postId + index"
     />
     {{ index }}
-    <div class="reply"><textarea></textarea><el-button type="info" round>Info</el-button></div>
+    <div class="reply"><textarea class="textreply"></textarea><el-button type="info" round>Info</el-button></div>
   </div>
 </template>
   
   <script lang="ts">
-import axios from "axios";
+import { service } from "../request/index.ts";
 import post from "./post.vue"
 import { useRoute } from "vue-router";
 export default {
@@ -26,6 +26,7 @@ export default {
   data() {
     const route = useRoute()
     const index = route.params.index
+
     return {
       index,
       route,
@@ -51,15 +52,21 @@ export default {
     };
   },
   methods: {
+    test() {
+      console.log("haihaohfi")
+      service.get("api/v1/post/getallpost/bypost_key").then((res) => console.log(res));
+      
+    },
     serchbyid(){
       console.log("nihoa")
-      axios
+      service
         .get("http://jsonplaceholder.typicode.com/posts")
         .then((res) => this.posts.push(...res.data));
     }
   },
   created() {
-      this.serchbyid()
+      this.serchbyid(),
+      this.test()
   },
 
 };
@@ -68,4 +75,15 @@ export default {
 .postimg{
   background-image: url("../img/少女熊猫.jpg");
 }
+.reply{
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+.textreply{
+  resize: none;
+  width:90%;
+
+}
+
 </style>

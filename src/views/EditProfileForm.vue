@@ -29,7 +29,7 @@
         <label for="notes">Notes:</label>
         <textarea id="notes" v-model="formData.notes"></textarea>
       </div>
-      <button type="submit">Save</button>
+      <button type="submit" @click="chuanshuju">Save</button>
       <button @click="cancel">Cancel</button>
     </form>
   </div>

@@ -1,11 +1,14 @@
 <template>
   <div class="login">
-    <div class="logo">
-      <p>诚信论坛</p>
+    <div class="Logo">
+      <img src="../img/logo.jpg" style="width: 10%" class="logo" />
+      <p class="logo">诚信论坛</p>
     </div>
     <nav class="navPage">
       <router-link to="/" class="home mousehover">首页</router-link>
-      <router-link to="/defo/deal" class="home mousehover">交易市场</router-link>
+      <router-link to="/defo/deal" class="home mousehover"
+        >交易市场</router-link
+      >
     </nav>
     <div class="user">
       <span class="userhead" v-show="!isShow" @click="login">登录</span>
@@ -15,7 +18,11 @@
           <p class="mousehover" @click="logout">退出登陆</p>
         </div>
         <router-link to="/defo/user" class="mousehover">
-          <img class="userhead" src="../img/少女熊猫.jpg" style="width: 10%; border-radius: 50%" /></router-link>
+          <img
+            class="userhead"
+            src="../img/少女熊猫.jpg"
+            style="width: 10%; border-radius: 50%"
+        /></router-link>
       </span>
     </div>
   </div>
@@ -23,7 +30,7 @@
 
 <script lang="ts">
 import { reactive, toRefs } from "vue";
-import axios from "axios";
+import { service } from "../request/index.ts";
 import router from "../router/index.js";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
 export default {
@@ -103,8 +110,8 @@ export default {
                 params: [msg, address, "Example password"],
               });
               console.log("签名:", sign);
-              axios.post(`http://192.168.43.88:8080/api/v1/login`).then((res) => console.log(res));
-              console.log("haihao")
+              service.post(`/api/v1/login`).then((res) => console.log(res));
+              console.log("haihao");
             } catch (err) {
               console.error(err);
             }
@@ -135,6 +142,7 @@ export default {
       obj.isShow = false;
       router.push({ name: "homepage" });
     };
+    
     return {
       ...toRefs(obj),
       login,
@@ -152,7 +160,11 @@ export default {
   width: 100%;
   height: 100%;
 }
-
+.Logo {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
 .login {
   display: flex;
   flex-direction: row;
@@ -163,8 +175,7 @@ export default {
   height: 15vh;
   /*占满整个浏览器高度*/
 }
-
-.logo,
+.Logo,
 .user,
 .navPage {
   width: 33.33%;
@@ -178,8 +189,11 @@ export default {
   /*垂直居中*/
 }
 
-.logo {
+.Logo {
   float: left;
+  text-align: center;
+  justify-content: center;
+  display: flex;
 }
 
 .user,
@@ -208,4 +222,8 @@ export default {
   font-size: 16px;
   color: #333;
   text-decoration: none;
-}</style>
+}
+.logo{
+  display: inline;
+}
+</style>
