@@ -55,7 +55,7 @@ export default {
     };
     const first = async function () {
       service
-        .get("api/v1/post/like-content/区块链技术")
+        .get("api/v1/post/like-content/区块链")
         .then((res) => obj.dataBC.push(...res.data.data));
       service
         .get("api/v1/post/like-content/大数据")
