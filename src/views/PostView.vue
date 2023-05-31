@@ -25,7 +25,7 @@ export default {
   },
   data() {
     const route = useRoute()
-    const index = JSON.parse(route.params.serch).id
+    const index = JSON.parse(route.params.serch)
     console.log(index)
 
     return {
@@ -55,7 +55,6 @@ export default {
     test() {
       console.log("haihaohfi")
       service.get("api/v1/post/getallpost/bypost_key").then((res) => console.log(res));
-      
     },
     serchbyid(){
       console.log("nihoa")

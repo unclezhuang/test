@@ -26,7 +26,7 @@
       >
         <el-image
           style="width: 100%; height: 150px"
-          :src="item.url"
+          :src="item.picture_url"
         ></el-image>
         <div style="padding: 14px">
           <h3 style="font-size: 18px">标题：{{ item.title.String }}</h3>
@@ -51,7 +51,7 @@ export default {
       dataAI: [],
     });
     const detail = (item) => {
-      router.push({ name: "post", params: { serch: item.title } });
+      router.push({ name: "post", params: { serch: JSON.stringify(item) } });
     };
     const first = async function () {
       service

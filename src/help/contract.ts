@@ -28,23 +28,6 @@ if (typeof window.ethereum !== "undefined") {
 
 const signer = await provider.getSigner();
 console.log("签名：：：",signer)
-export const blockNumber = await provider.getBlockNumber();
-const FTfactory = new ethers.ContractFactory(ft,  ftBy.code, signer);
-const SaveFilefactory = new ethers.ContractFactory(SaveFile,  SaveFileBy.code, signer);
-const Skinfactory = new ethers.ContractFactory(Skin,  SkinBy.code, signer);
-const SkinMarketfactory = new ethers.ContractFactory(SkinMarket,  SkinMarketBy.code, signer);
-export const FTcontract = await FTfactory.deploy("cxlt","CX");
-const FTAddress = await FTcontract.getAddress()
-console.log("ft的地址：",FTAddress)
-export const SaveFilecontract = await SaveFilefactory.deploy(FTAddress);
-const SaveFilecontractAddress = await SaveFilecontract.getAddress()
-console.log("SaveFile的地址::::",SaveFilecontractAddress)
-export const SkinMarketcontract = await SkinMarketfactory.deploy(FTAddress);
-const SkinMarketcontractAddress = await SkinMarketcontract.getAddress()
-console.log("SkinMarketcontract的地址::::",SkinMarketcontractAddress)
-export const Skincontract = await Skinfactory.deploy("https://vdposter.bdstatic.com/1ba71827844d84fdaf02cba2e3739473.jpeg");
-const SkincontractAddress = await Skincontract.getAddress()
-console.log("Skincontract的地址::::",SkincontractAddress)
-
-
-
+export const FTcontract = new Contract("0x2174fcdBa37b182d2958EF2e3b33438F273Ef950",ft,provider)
+export const FTcontractAddress = await FTcontract.getAddress()
+console.log("FT合于：：",FTcontractAddress)

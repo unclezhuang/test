@@ -60,10 +60,11 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
     console.log(to)
-    if(to.query.serch){
-       to.query.serch = to.query.serch.slice(1,-1)
-    to.params = to.query
-console.log(to.query)}
+    if (to.query.serch) {
+        to.query.serch = to.query.serch.slice(1, -1)
+        to.params = to.query
+        console.log(to.query)
+    }
     console.log(decodeURIComponent(to.fullPath))
     console.log(from)
     next()
