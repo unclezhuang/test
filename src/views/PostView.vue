@@ -1,7 +1,6 @@
 <template>
   <div>
     {{ index }}
-    jfadjfoai
     <!-- 渲染主贴 --><div class="postimg">
     <post :post="posts[0]" :postId="postId" /></div>
     <!-- 渲染回复贴 -->
@@ -27,7 +26,7 @@ export default {
     const route = useRoute()
     const index = JSON.parse(route.params.serch)
     console.log(index)
-
+    
     return {
       index,
       post:{},

@@ -25,7 +25,6 @@ import Card from "./Card.vue";
 import { service } from "../request/index.ts";
 import { ElNotification } from 'element-plus';
 import { getCookie } from "../help/cookie";
-import axios from 'axios';
 export default {
   components: {
     "my-card": Card,
@@ -35,20 +34,23 @@ export default {
     const buyback = async (index) => {
       if (index === 0) {
         console.log("点击事件", index);
-        axios
-          .get("http://jsonplaceholder.typicode.com/todos")
-          .then((res) => data.push(...res.data));
+        data.splice(0,data.length)
+        service
+          .get("api/v1/market/skins/0")
+          .then((res) => data.push(...res.data.data));
       } else if (index === 1) {
         console.log("点击事件", index);
-        axios
-          .get("http://jsonplaceholder.typicode.com/todos")
-          .then((res) => data.push(...res.data));
+        data.splice(0,data.length)
+        service
+          .get("api/v1/market/skins/1")
+          .then((res) => data.push(...res.data.data));
       } else if (index === 2) {
         if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
           console.log(await ethereum.request({ method: "eth_accounts" }))
-          axios
+          data.splice(0,data.length)
+          service
             .get("http://jsonplaceholder.typicode.com/todos")
-            .then((res) => data.push(...res.data));
+            .then((res) => data.push(...res.data.data));
         } else {
           console.log("请先登录！");
           ElNotification({
