@@ -28,6 +28,11 @@ if (typeof window.ethereum !== "undefined") {
 
 const signer = await provider.getSigner();
 console.log("签名：：：",signer)
-export const FTcontract = new Contract("0x2174fcdBa37b182d2958EF2e3b33438F273Ef950",ft,provider)
+export const FTcontract = new Contract("0x2174fcdBa37b182d2958EF2e3b33438F273Ef950",ft,signer)
 export const FTcontractAddress = await FTcontract.getAddress()
 console.log("FT合于：：",FTcontractAddress)
+const address = signer.address
+const sym = await FTcontract.symbol()
+console.log(sym)
+const mint = await FTcontract.mint(address,10)
+console.log(mint)
