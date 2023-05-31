@@ -11,16 +11,20 @@
       :notes="notes"
       @edit-profile="showEditForm"
     ></profile-card>
-   <div class="button1"> <edit-profile-form
-      v-if="isEditing"
-      @save-profile="saveProfile"
-      @cancel-edit-profile="hideEditForm"
-    ></edit-profile-form></div>
+    <div class="button1">
+      <edit-profile-form
+        v-if="isEditing"
+        @save-profile="saveProfile"
+        @cancel-edit-profile="hideEditForm"
+      ></edit-profile-form>
+    </div>
   </div>
   <div class="post-list">
     <div class="new-post">
       <my-form ref="myFormRef"></my-form>
-    <el-button class="write" type="success" @click="showForm">写帖子</el-button>
+      <el-button class="write" type="success" @click="showForm"
+        >写帖子</el-button
+      >
       <h2>历史发布的帖子</h2>
     </div>
 
@@ -32,17 +36,23 @@
       <!-- 如果用户已经发布过帖子则显示帖子列表 -->
       <ul v-else>
         <!-- 根据 v-for 循环遍历每个帖子并渲染 -->
-        <li v-for="post in postList" :key="post.id" @click="router.push({name:'post',params:{serch: post}})">{{ post.title }}</li>
+        <li
+          v-for="post in postList"
+          :key="post.id"
+          @click="router.push({ name: 'post', params: { serch: JSON.stringify(post) } })"
+        >
+          {{ post.title }}
+        </li>
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref } from "vue";
 import ProfileCard from "./ProfileCard.vue";
 import EditProfileForm from "./EditProfileForm.vue";
-import MyForm from './writeFrom.vue';
+import MyForm from "./writeFrom.vue";
 import { state } from "./shared.js";
 import { useRouter } from "vue-router";
 export default {
@@ -64,8 +74,8 @@ export default {
       notes: "",
       isEditing: false,
       hasPost: true, // 根据用户的历史发布是否存在来判断
-      postList: [] ,
-      router
+      postList: [],
+      router,
     };
   },
   created() {
@@ -94,12 +104,11 @@ export default {
           { id: 1, title: "Hello World" },
           { id: 2, title: "Vue.js" },
           { id: 3, title: "React" },
-          { id: 4, title: "Angular" }
+          { id: 4, title: "Angular" },
         ];
         this.hasPost = this.postList.length > 0;
       }, 1000);
     },
-  
   },
   setup() {
     const myFormRef = ref(null); // 引用子组件
@@ -115,7 +124,7 @@ export default {
 </script>
 
 <style>
-.persion{
+.persion {
   width: 33.33%;
   float: left;
 }
@@ -152,5 +161,4 @@ export default {
   text-align: center;
   margin-top: 20px;
 }
-
 </style>

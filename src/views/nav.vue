@@ -1,15 +1,14 @@
 <template>
   <div class="login">
-    <div class="logo">
-      <img src="../img/logo.png" style="width: 70px; height: 70px" />
+    <div class="Logo">
+      <img src="../img/logo.png" style="width: 10%" class="logo" />
+      <p class="logo">诚信论坛</p>
     </div>
     <nav class="navPage">
       <router-link to="/" class="home mousehover">首页</router-link>
       <router-link to="/defo/deal" class="home mousehover"
         >交易市场</router-link
       >
-      <a href="#" class="home mousehover">社区</a>
-      <a href="#" class="home mousehover">精华</a>
     </nav>
     <div class="user">
       <span class="userhead" v-show="!isShow" @click="login">登录</span>
@@ -111,9 +110,7 @@ export default {
                 params: [msg, address, "Example password"],
               });
               console.log("签名:", sign);
-              axios
-                .post(`http://192.168.43.88:8080/api/v1/login`)
-                .then((res) => console.log(res));
+              service.post(`/api/v1/login`).then((res) => console.log(res));
               console.log("haihao");
             } catch (err) {
               console.error(err);
@@ -171,45 +168,44 @@ export default {
 .login {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   /*垂直居中*/
   align-items: center;
   /*水平居中*/
   height: 15vh;
   /*占满整个浏览器高度*/
 }
-
-// .logo,
-// .user,
+.Logo,
+.user,
 .navPage {
-  width: 100%;
+  width: 33.33%;
   /*占满父容器宽度*/
-  // text-align: row;
+  text-align: center;
   /*水平居中*/
-  display: flex;
-  flex-direction: row;
-  // flex-wrap: nowrap;
-  justify-content: space-between;
+  display: inline-block;
+  justify-content: center;
   /*水平居中*/
-  // align-items: center;
+  align-items: center;
   /*垂直居中*/
 }
 
-.logo {
-  margin-left: 0;
-  width: 70px;
+.Logo {
+  float: left;
+  text-align: center;
+  justify-content: center;
+  display: flex;
 }
 
 .user,
-// .navPage {
-//   float: right;
-// }
+.navPage {
+  float: right;
+}
 
-// .userhead {
-//   display: inline-block;
-//   float: right;
-//   // margin-right: 100px;
-// }
+.userhead {
+  display: inline-block;
+  float: right;
+  margin-right: 1;
+}
 
 .home {
   margin: 10%;
@@ -227,20 +223,7 @@ export default {
   color: #333;
   text-decoration: none;
 }
-
-.login {
-  background-color: white;
-  width: 100%;
-  height: 70px;
-  margin-bottom: 50px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-}
-
-a {
-  color: black;
-  text-decoration: none;
+.logo{
+  display: inline;
 }
 </style>
