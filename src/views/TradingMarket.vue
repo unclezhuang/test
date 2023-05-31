@@ -46,10 +46,10 @@ export default {
           .then((res) => data.push(...res.data.data));
       } else if (index === 2) {
         if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
-          console.log(await ethereum.request({ method: "eth_accounts" }))
+          const address = await ethereum.request({ method: "eth_accounts" })
           data.splice(0,data.length)
           service
-            .get("http://jsonplaceholder.typicode.com/todos")
+            .get("api/v1/user/"+address+"/skinList")
             .then((res) => data.push(...res.data.data));
         } else {
           console.log("请先登录！");

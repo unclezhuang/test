@@ -1,8 +1,8 @@
 <template>
   <div class="post">
-    {{ post.title }}
+    {{ typeof post }}
     {{ post.content }}
-    {{ post.id }}
+    {{ post.author_name }}
   </div>
 </template>
 
@@ -20,7 +20,6 @@ export default {
   },
 
   setup() {
- 
 
     return {
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ index }}
+    {{  posts }}
     <!-- 渲染主贴 --><div class="postimg">
     <post :post="posts[0]" :postId="postId" /></div>
     <!-- 渲染回复贴 -->
@@ -24,6 +24,8 @@ export default {
   },
   data() {
     const route = useRoute()
+    console.log("数据测试：",route.params.serch)
+    console.log("haihao")
     const index = JSON.parse(route.params.serch)
     console.log(index)
     
@@ -31,40 +33,20 @@ export default {
       index,
       post:{},
       posts: [
-        {
-          title: "这是主贴",
-          content: `主贴的内容la。
-             这是第一行新的文字。
-             这是第二行新的文字。
-              这是第三行新的文字。`,
-        },
-        {
-          title: "这是回复贴1",
-          content: "回复贴1的内容",
-        },
-        {
-          title: "这是回复贴2",
-          content: "回复贴2的内容",
-        },
       ],
       postId: Date.now(),
     };
   },
   methods: {
-    test() {
-      console.log("haihaohfi")
-      service.get("api/v1/post/getallpost/bypost_key").then((res) => console.log(res));
-    },
     serchbyid(){
       console.log("nihoa")
       service
-        .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => this.posts.push(...res.data));
+        .get("api/v1/post/getpost/"+ this.index.post_id)
+        .then((res) => this.posts = res.data.data);
     }
   },
   created() {
-      this.serchbyid(),
-      this.test()
+      this.serchbyid()
   },
 
 };

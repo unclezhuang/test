@@ -35,4 +35,6 @@ const address = signer.address
 const sym = await FTcontract.symbol()
 console.log(sym)
 const mint = await FTcontract.mint(address,10)
-console.log(mint)
+const balance = await FTcontract.balanceOf(address)
+console.log(balance)
+console.log("mint:::",mint)
