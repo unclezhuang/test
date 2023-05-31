@@ -37,7 +37,7 @@ export default {
   },
   setup() {
     // console.log(SkinMarketcontract)
-    console.log(FTcontract)
+  //  console.log(FTcontract)
     return {};
   },
 };

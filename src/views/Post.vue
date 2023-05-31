@@ -1,8 +1,5 @@
 <template>
   <div class="post">
-    {{ post.title }}
-    {{ post.content }}
-    {{ post.id }}
   </div>
 </template>
 

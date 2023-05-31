@@ -1,16 +1,17 @@
 <template>
   <div>
-    {{ index }}
-    jfadjfoai
-    <!-- 渲染主贴 --><div class="postimg">
-    <post :post="posts[0]" :postId="postId" /></div>
+    {{ posts[0].title.String }}
+    <!-- {{ posts }} -->
+    <!-- 渲染主贴 -->
+ <div class="postimg">
+    <post :post="posts[0]" :postId="postId" /></div> 
     <!-- 渲染回复贴 -->
     <post
       v-for="(reply, index) in posts.slice(1)"
       :key="index"
       :post="reply"
       :postId="postId + index"
-    />
+    /> 
     <div class="reply"><textarea class="textreply"></textarea><el-button type="info" round>Info</el-button></div>
   </div>
 </template>
@@ -32,40 +33,24 @@ export default {
       index,
       post:{},
       posts: [
-        {
-          title: "这是主贴",
-          content: `主贴的内容la。
-             这是第一行新的文字。
-             这是第二行新的文字。
-              这是第三行新的文字。`,
-        },
-        {
-          title: "这是回复贴1",
-          content: "回复贴1的内容",
-        },
-        {
-          title: "这是回复贴2",
-          content: "回复贴2的内容",
-        },
+        
       ],
       postId: Date.now(),
     };
   },
   methods: {
-    test() {
-      console.log("haihaohfi")
-      service.get("api/v1/post/getallpost/bypost_key").then((res) => console.log(res));
-    },
+
     serchbyid(){
       console.log("nihoa")
       service
-        .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => this.posts.push(...res.data));
+        .get("api/v1/post/getpost/1227418933137408")
+        .then((res) => this.posts = res.data.data);
+        
     }
   },
   created() {
-      this.serchbyid(),
-      this.test()
+      this.serchbyid()
+
   },
 
 };
