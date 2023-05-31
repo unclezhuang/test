@@ -121,6 +121,8 @@ export default {
 .middle-part{
   position: fixed;
   right:50px;
+  height: 100%;
+  overflow: auto; 
 }
 .postimg {
   background-color: white;
@@ -132,7 +134,7 @@ export default {
   width: 650px;
   height: 300px;
 }
-.middle-part reply{
+.middle-partreply{
   height:20px;
 }
 .reply-border {

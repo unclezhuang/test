@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="logo">
-      <img src="../img/logo.png" style="width: 70px; height: 70px" />
+      <img src="../img/logo.png" style="width: 70px; height: 75px;" />
     </div>
     <nav class="navPage">
       <router-link to="/" class="home mousehover">首页</router-link>
@@ -158,20 +158,14 @@ export default {
 .common-layout,
 .el-container,
 .login {
-  display: table;
-  width: 100%;
-  height: 100%;
-}
-
-.login {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /*垂直居中*/
   align-items: center;
-  /*水平居中*/
-  height: 15vh;
-  /*占满整个浏览器高度*/
+  width: 100%;
+  height: 15px;
+  background-image: url("../img/底图1.jpg");
+  background-size: 20%;
 }
 
 // .logo,
@@ -233,9 +227,12 @@ export default {
   align-items: center;
   justify-content: space-between;
 }
+.userhead {
+  color:white;
+}
 
 a {
-  color: black;
+  color: white;
   text-decoration: none;
 }
 </style>
