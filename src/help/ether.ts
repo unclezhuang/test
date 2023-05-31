@@ -10,13 +10,12 @@ import ftBy from '../../contracts/byte/FTby.json'
 import ft from '../../contracts/abi/FT.json'
 export let provider: any;
 const url = ref('http://localhost:8545')
-console.log("这是直接输出", SkinMarket)
 
 // 检查是否安装了 Metamask
 if (typeof window.ethereum !== "undefined") {
     try {
         // 创建 Web3Provider 对象
-        provider = new ethers.JsonRpcProvider(url.value);
+        provider = new ethers.BrowserProvider(window.ethereum)
         provider.pollingInterval = 1000000; // 设置以太坊节点轮询间隔
         provider._getENSAddress = function () { } // 禁用ENS
         console.log("Web3Provider successfully created:", provider);
@@ -27,7 +26,9 @@ if (typeof window.ethereum !== "undefined") {
 } else {
     console.error("Metamask not detected!");
 }
+
 const signer = await provider.getSigner();
+console.log("签名：：：",signer)
 export const blockNumber = await provider.getBlockNumber();
 const FTfactory = new ethers.ContractFactory(ft,  ftBy.code, signer);
 const SaveFilefactory = new ethers.ContractFactory(SaveFile,  SaveFileBy.code, signer);

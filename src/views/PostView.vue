@@ -1,6 +1,5 @@
 <template>
   <div>
-    fdafadfaf
     <!-- 渲染主贴 --><div class="postimg">
     <post :post="posts[0]" :postId="postId" /></div>
     <!-- 渲染回复贴 -->

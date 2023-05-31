@@ -32,7 +32,7 @@
       <!-- 如果用户已经发布过帖子则显示帖子列表 -->
       <ul v-else>
         <!-- 根据 v-for 循环遍历每个帖子并渲染 -->
-        <li v-for="post in postList" :key="post.id" @click="router.push({name:'post',})">{{ post.title }}</li>
+        <li v-for="post in postList" :key="post.id" @click="router.push({name:'post',params:{serch: post}})">{{ post.title }}</li>
       </ul>
     </div>
   </div>
