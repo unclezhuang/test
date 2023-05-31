@@ -9,7 +9,6 @@ import SaveFile from '../../contracts/abi/SaveFile.json'
 import ftBy from '../../contracts/byte/FTby.json'
 import ft from '../../contracts/abi/FT.json'
 export let provider: any;
-const url = ref('http://localhost:8545')
 
 // 检查是否安装了 Metamask
 if (typeof window.ethereum !== "undefined") {
