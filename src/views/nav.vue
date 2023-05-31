@@ -1,14 +1,13 @@
 <template>
   <div class="login">
     <div class="logo">
-      <img src="../img/logo.png" style="width: 70px; height: 70px" />
+      <img src="../img/logo.png" style="width: 70px; height: 75px" />
     </div>
     <nav class="navPage">
       <router-link to="/" class="home mousehover">首页</router-link>
       <router-link to="/defo/deal" class="home mousehover"
         >交易市场</router-link
       >
-      <a href="#" class="home mousehover">社区</a>
       <a href="#" class="home mousehover">精华</a>
     </nav>
     <div class="user">
@@ -161,6 +160,8 @@ export default {
   display: table;
   width: 100%;
   height: 100%;
+  background-image: url("../img/2.jpg");
+  background-size:30%;
 }
 
 .login {
@@ -177,7 +178,7 @@ export default {
 // .logo,
 // .user,
 .navPage {
-  width: 100%;
+  width: 60%;
   /*占满父容器宽度*/
   // text-align: row;
   /*水平居中*/
@@ -195,17 +196,12 @@ export default {
   width: 70px;
 }
 
-.user,
-// .navPage {
-//   float: right;
-// }
+.userhead{
+  position: relative;
+  left:-20px;
+  color:white;
 
-// .userhead {
-//   display: inline-block;
-//   float: right;
-//   // margin-right: 100px;
-// }
-
+}
 .home {
   margin: 10%;
 }
@@ -235,7 +231,7 @@ export default {
 }
 
 a {
-  color: black;
+  color:white;
   text-decoration: none;
 }
 </style>

@@ -22,10 +22,11 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" >
 import { reactive, toRefs, ref } from "vue";
 import MyComponent from "./PreviewCard.vue";
 import { useRouter } from "vue-router";
+
 export default {
   components: {
     "my-component": MyComponent,
@@ -57,6 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .serch {
   display: flex;
   flex-direction: row;

@@ -7,9 +7,9 @@
         style="width: 100%"
       />
       <div class="author">
-        <p4>昵称</p4>
-        <p4>账号</p4>
-        <p4>粉丝数</p4>
+        <p>昵称</p>
+        <p>账号</p>
+        <p>粉丝数</p>
         <button>关注</button>
       </div>
     </div>
@@ -18,11 +18,6 @@
       <!-- 渲染主贴 -->
       <div class="postimg post-border">
         <post :post="posts[0]" :postId="postId" />
-        <div class="comment">
-          <span><button>点赞</button></span>
-          <span><button>评论</button></span>
-          <span><button>分享</button></span>
-        </div>
       </div>
       <!-- 渲染回复贴 -->
       <post
@@ -38,7 +33,13 @@
       </div>
     </div>
 
-    <div class="right-part"></div>
+    <div class="right-part">
+      <ul>
+        <p><button id="one">点赞</button></p>
+        <p><button id="two">收藏</button></p>
+        <p><button id="three">分享</button></p>
+      </ul>
+    </div>
   </div>
 </template>
   
@@ -46,6 +47,7 @@
 import axios from "axios";
 import post from "./post.vue";
 import { useRoute } from "vue-router";
+
 export default {
   components: {
     post,
@@ -101,11 +103,16 @@ export default {
 display: inline-block;
 }
 .middle-part{
-margin-left: 20%;
+  margin-left: 17%;
+  margin-right: 5%;
 }
 .left-part {
   width: 10%;
+  height:100%;
   position: fixed;
+}
+.right-part {
+  position:fixed;
 }
 .photo {
   display: block;
@@ -114,15 +121,15 @@ margin-left: 20%;
 }
 .author {
   display: flex;
-  flex-direction: column;
   margin-top: 20px;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-around;
+
 }
 
 .middle-part{
   min-height: 500px;
-  width: 80%;
+  width: 70%;
 }
 .postimg {
   background-color: white;
@@ -138,20 +145,42 @@ margin-left: 20%;
   margin-top: 10px;
   height: 20%;
 }
+/*
 .comment {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  /*垂直居中*/
   align-items: center;
+*/
+.left-part p{
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: space-around;
+  height:25%;
 }
-.comment button {
 
-  background-color: rgb(50, 162, 237);
+.left-part button {
+  width: 100%;
+  height:60px;
+  border:none;
+  background-color:rgb(35, 225, 162);
+  border-radius: 50%;
+  margin-top:20px;
+}
+.right-part button{
+  margin: auto;
+  width:4rem;
+  height:4rem;
+  border-radius: 50%;
+  border:none;
+}
+#one{
+color:pink;
 }
 
-button {
-  width: 10rem;
-  height: 4rem;
+.right-part p{
+margin-top:25px;
 }
+
 </style>
