@@ -15,7 +15,6 @@
     </div>
 
     <div class="middle-part">
-      fdafadfaf
       <!-- 渲染主贴 -->
       <div class="postimg post-border">
         <post :post="posts[0]" :postId="postId" />
@@ -92,21 +91,21 @@ export default {
 
 <style>
 .total{
-  display: flex;
-  flex-direction: row;
+  /* display: flex; */
+  position: relative;
   justify-content: space-between;
-  /*垂直居中*/
-  align-items: center;
-  /*水平居中*/
-  height: 15vh;
-  /*占满整个浏览器高度*/
+  width: 100%;
+  /* 距离上一行的距离，可自行调整 */
 }
 .left-part,.middle-part,.right-part{
 display: inline-block;
 }
-
+.middle-part{
+margin-left: 20%;
+}
 .left-part {
   width: 10%;
+  position: fixed;
 }
 .photo {
   display: block;
@@ -122,8 +121,8 @@ display: inline-block;
 }
 
 .middle-part{
-
-  right:80%;
+  min-height: 500px;
+  width: 80%;
 }
 .postimg {
   background-color: white;
@@ -132,39 +131,27 @@ display: inline-block;
 .post-border {
   border: solid black 1px;
   padding: 10px;
-  width: 650px;
-  height: 300px;
-}
-.middle-part reply{
-  height:20px;
 }
 .reply-border {
   border: solid black 1px;
-  padding: 10px;
   background-color: white;
-  width: 650px;
   margin-top: 10px;
+  height: 20%;
 }
 .comment {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  /*垂直居中*/
   align-items: center;
-  justify-content: space-around;
-  padding: 20px;
-  width: 550px;
-  height: 20px;
-  border: 1;
-  position: absolute;
-  bottom: 0;
 }
 .comment button {
-  width: 80px;
-  height: 40px;
+
   background-color: rgb(50, 162, 237);
 }
 
 button {
-  width: 150px;
-  height: 50px;
+  width: 10rem;
+  height: 4rem;
 }
 </style>
