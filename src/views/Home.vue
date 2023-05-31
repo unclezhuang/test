@@ -29,13 +29,13 @@
 
 <script lang="ts">
 import nav from ".//nav.vue";
-
+import { SkinMarketcontract } from '../help/ether'
 export default {
   components: {
     "my-nav": nav,
   },
   setup() {
-
+    console.log(SkinMarketcontract)
     return {};
   },
 };

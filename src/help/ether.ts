@@ -33,10 +33,13 @@ const FTfactory = new ethers.ContractFactory(ft,  ftBy.code, signer);
 const SaveFilefactory = new ethers.ContractFactory(SaveFile,  SaveFileBy.code, signer);
 const Skinfactory = new ethers.ContractFactory(Skin,  SkinBy.code, signer);
 const SkinMarketfactory = new ethers.ContractFactory(SkinMarket,  SkinMarketBy.code, signer);
-export const FTcontract = await FTfactory.deploy();
-const FTAddress =FTcontract.getAddress
+export const FTcontract = await FTfactory.deploy("cxlt","CX");
+const FTAddress = await FTcontract.getAddress()
 console.log("ft的地址：",FTAddress)
-export const SaveFilecontract = await SaveFilefactory.deploy();
+export const SaveFilecontract = await SaveFilefactory.deploy(FTAddress);
+const SaveFilecontractAddress = await SaveFilecontract.getAddress()
+console.log("SaveFile的地址::::",SaveFilecontractAddress)
 export const Skincontract = await Skinfactory.deploy();
+console.log()
 export const SkinMarketcontract = await SkinMarketfactory.deploy();
 
