@@ -44,6 +44,7 @@ import ProfileCard from "./ProfileCard.vue";
 import EditProfileForm from "./EditProfileForm.vue";
 import MyForm from './writeFrom.vue';
 import { state } from "./shared.js";
+import { useRouter } from "vue-router";
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -51,6 +52,7 @@ export default {
     MyForm,
   },
   data() {
+    const router = useRouter();
     return {
       avatar: "https://picsum.photos/200",
       nickname: "myValue",
@@ -63,7 +65,7 @@ export default {
       isEditing: false,
       hasPost: true, // 根据用户的历史发布是否存在来判断
       postList: [] ,
-      
+      router
     };
   },
   created() {
