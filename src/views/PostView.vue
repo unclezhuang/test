@@ -25,7 +25,7 @@ export default {
   },
   data() {
     const route = useRoute()
-    const index = route.params.serch
+    const index = JSON.parse(route.params.serch).id
     console.log(index)
 
     return {
