@@ -7,9 +7,6 @@
 </template>
 
 <script  lang="ts">
-import { ref } from "vue";
-import { service } from "../request/index.ts";
-import axios from 'axios';
 export default {
   props: {
     post: {

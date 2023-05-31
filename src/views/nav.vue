@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="Logo">
-      <img src="../img/logo.jpg" style="width: 10%" class="logo" />
+      <img src="../img/logo.png" style="width: 10%" class="logo" />
       <p class="logo">诚信论坛</p>
     </div>
     <nav class="navPage">

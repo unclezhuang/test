@@ -1,5 +1,7 @@
 <template>
   <div>
+    {{ index }}
+    jfadjfoai
     <!-- 渲染主贴 --><div class="postimg">
     <post :post="posts[0]" :postId="postId" /></div>
     <!-- 渲染回复贴 -->
@@ -9,7 +11,6 @@
       :post="reply"
       :postId="postId + index"
     />
-    {{ index }}
     <div class="reply"><textarea class="textreply"></textarea><el-button type="info" round>Info</el-button></div>
   </div>
 </template>
@@ -24,11 +25,11 @@ export default {
   },
   data() {
     const route = useRoute()
-    const index = route.params.index
+    const index = route.params.serch
+    console.log(index)
 
     return {
       index,
-      route,
       post:{},
       posts: [
         {
