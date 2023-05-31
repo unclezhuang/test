@@ -4,7 +4,7 @@
       <img
         class="photo"
         src="../img/少女熊猫.jpg"
-        style="width: 150px; height: 150px"
+        style="width: 100%"
       />
       <div class="author">
         <p4>昵称</p4>
@@ -93,17 +93,20 @@ export default {
 <style>
 .total{
   display: flex;
-  flex-wrap: wrap;
-  overflow: auto;
+  flex-direction: row;
+  justify-content: space-between;
+  /*垂直居中*/
+  align-items: center;
+  /*水平居中*/
+  height: 15vh;
+  /*占满整个浏览器高度*/
+}
+.left-part,.middle-part,.right-part{
+display: inline-block;
 }
 
 .left-part {
-  position: fixed;
-  left: 50px;
-  top: 30px;
-  width: 200px;
-  height: 300px;
-  margin-top: 100px;
+  width: 10%;
 }
 .photo {
   display: block;
@@ -119,8 +122,8 @@ export default {
 }
 
 .middle-part{
-  position: fixed;
-  right:50px;
+
+  right:80%;
 }
 .postimg {
   background-color: white;

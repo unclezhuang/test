@@ -41,7 +41,7 @@ export default {
 
 <style lang="scss" scoped>
 .common-layout {
-  width:100%;
+  width:80%;
   display: flex;
   margin: auto;
   height: 100%;
