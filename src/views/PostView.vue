@@ -1,17 +1,39 @@
 <template>
-  <div>
+  <div class="total">
+  <div class="left-part">
     fdafadfaf
-    <!-- 渲染主贴 --><div class="postimg">
-    <post :post="posts[0]" :postId="postId" /></div>
+    <!-- 渲染主贴 -->
+    <div class="postimg post-border">
+    <post :post="posts[0]" :postId="postId" />
+    <div class="comment">
+        <span><button>点赞</button></span>
+        <span><button>评论</button></span>
+        <span><button>分享</button></span>
+    </div>
+    </div>
+
     <!-- 渲染回复贴 -->
-    <post
+    <post class="reply-border"
       v-for="(reply, index) in posts.slice(1)"
       :key="index"
       :post="reply"
       :postId="postId + index"
     />
     {{ index }}
+</div>
     <div class="reply"><textarea></textarea><el-button type="info" round>Info</el-button></div>
+<div class="right-part">
+  <img class="photo" src="../img/少女熊猫.jpg" style="width:150px; height:150px;"/>
+  <div class="author">
+ 
+      <p4>昵称</p4>
+      <p4>账号</p4>
+      <p4>粉丝数</p4>
+      <button>关注</button>
+   
+  </div>
+</div>
+
   </div>
 </template>
   
@@ -33,11 +55,9 @@ export default {
       posts: [
         {
           title: "这是主贴",
-          content: `主贴的内容la。
-             这是第一行新的文字。
-             这是第二行新的文字。
-              这是第三行新的文字。`,
+          content: `主贴的内容la。`,
         },
+
         {
           title: "这是回复贴1",
           content: "回复贴1的内容",
@@ -66,7 +86,75 @@ export default {
 </script>
 <style>
 .postimg{
-  background-image: url("../img/少女熊猫.jpg");
+  background-color:white;
+  /*width: 50%; 
+  max-height: 400px;*/
 }
+.post-border {
+  border: solid black 1px;
+  padding: 10px;
+  width: 650px;
+  height: 300px;
+}
+
+.reply-border {
+  border: solid black 1px;
+  padding: 10px;
+  background-color:white;
+  width:650px;
+  margin-top:20px;
+}
+
+
+.comment {
+  display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            padding: 20px;
+            width: 550px;
+            height: 20px;
+            border: 1;
+            margin-top:130px;
+}
+
+.comment button{
+  width:80px;
+  height:40px;
+  background-color:rgb(50, 162, 237);
+}
+
+
+
+.right-part{
+  position: fixed;
+            right: 50px;
+            top: 30px;
+            width: 200px;
+            height: 300px;
+            margin-top:100px;
+}
+
+.author{
+  display: flex;
+  flex-direction: column;
+    margin-top:20px;
+    align-items: center;
+       
+        justify-content: space-around;
+}
+
+.photo{
+  display:block;
+  margin:auto;
+  border-radius: 50%;
+}
+
+button{
+  width:150px;
+  height:50px;
+
+}
+
 
 </style>

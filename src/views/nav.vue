@@ -1,11 +1,15 @@
 <template>
   <div class="login">
     <div class="logo">
-      <p>诚信论坛</p>
+      <img src="../img/logo.png" style="width: 70px; height: 70px" />
     </div>
     <nav class="navPage">
       <router-link to="/" class="home mousehover">首页</router-link>
-      <router-link to="/defo/deal" class="home mousehover">交易市场</router-link>
+      <router-link to="/defo/deal" class="home mousehover"
+        >交易市场</router-link
+      >
+      <a href="#" class="home mousehover">社区</a>
+      <a href="#" class="home mousehover">精华</a>
     </nav>
     <div class="user">
       <span class="userhead" v-show="!isShow" @click="login">登录</span>
@@ -15,7 +19,11 @@
           <p class="mousehover" @click="logout">退出登陆</p>
         </div>
         <router-link to="/defo/user" class="mousehover">
-          <img class="userhead" src="../img/少女熊猫.jpg" style="width: 10%; border-radius: 50%" /></router-link>
+          <img
+            class="userhead"
+            src="../img/少女熊猫.jpg"
+            style="width: 10%; border-radius: 50%"
+        /></router-link>
       </span>
     </div>
   </div>
@@ -103,8 +111,10 @@ export default {
                 params: [msg, address, "Example password"],
               });
               console.log("签名:", sign);
-              axios.post(`http://192.168.43.88:8080/api/v1/login`).then((res) => console.log(res));
-              console.log("haihao")
+              axios
+                .post(`http://192.168.43.88:8080/api/v1/login`)
+                .then((res) => console.log(res));
+              console.log("haihao");
             } catch (err) {
               console.error(err);
             }
@@ -156,7 +166,7 @@ export default {
 .login {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   /*垂直居中*/
   align-items: center;
   /*水平居中*/
@@ -164,34 +174,37 @@ export default {
   /*占满整个浏览器高度*/
 }
 
-.logo,
-.user,
+// .logo,
+// .user,
 .navPage {
-  width: 33.33%;
+  width: 100%;
   /*占满父容器宽度*/
-  text-align: center;
+  // text-align: row;
   /*水平居中*/
-  display: inline-block;
-  justify-content: center;
+  display: flex;
+  flex-direction: row;
+  // flex-wrap: nowrap;
+  justify-content: space-between;
   /*水平居中*/
-  align-items: center;
+  // align-items: center;
   /*垂直居中*/
 }
 
 .logo {
-  float: left;
+  margin-left: 0;
+  width: 70px;
 }
 
 .user,
-.navPage {
-  float: right;
-}
+// .navPage {
+//   float: right;
+// }
 
-.userhead {
-  display: inline-block;
-  float: right;
-  margin-right: 1;
-}
+// .userhead {
+//   display: inline-block;
+//   float: right;
+//   // margin-right: 100px;
+// }
 
 .home {
   margin: 10%;
@@ -208,4 +221,21 @@ export default {
   font-size: 16px;
   color: #333;
   text-decoration: none;
-}</style>
+}
+
+.login {
+  background-color: white;
+  width: 100%;
+  height: 70px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+</style>
