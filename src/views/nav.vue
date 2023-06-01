@@ -20,7 +20,7 @@
         <router-link to="/defo/user" class="mousehover">
           <img
             class="userhead"
-            src="../img/少女熊猫.jpg"
+            :src="temp"
             style="width: 10%; border-radius: 50%"
         /></router-link>
       </span>
@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs,ref } from "vue";
 import { service } from "../request/index.ts";
 import router from "../router/index.js";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
@@ -39,6 +39,7 @@ export default {
       isShow: false,
       loginAddress: "",
     });
+    const temp = ref('../../src/img/少女熊猫.jpg')
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -142,9 +143,10 @@ export default {
       obj.isShow = false;
       router.push({ name: "homepage" });
     };
-    
+
     return {
       ...toRefs(obj),
+      temp,
       login,
       logout,
     };
@@ -223,7 +225,7 @@ export default {
   color: #333;
   text-decoration: none;
 }
-.logo{
+.logo {
   display: inline;
 }
 </style>
