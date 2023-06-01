@@ -1,10 +1,8 @@
 <template>
   <div>
-    {{ posts[0].title.String }}
-    <!-- {{ posts }} -->
-    <!-- 渲染主贴 -->
- <div class="postimg">
-    <post :post="posts[0]" :postId="postId" /></div> 
+    {{  posts }}
+    <!-- 渲染主贴 --><div class="postimg">
+    <post :post="posts[0]" :postId="postId" /></div>
     <!-- 渲染回复贴 -->
     <post
       v-for="(reply, index) in posts.slice(1)"
@@ -26,31 +24,29 @@ export default {
   },
   data() {
     const route = useRoute()
+    console.log("数据测试：",route.params.serch)
+    console.log("haihao")
     const index = JSON.parse(route.params.serch)
     console.log(index)
-
+    
     return {
       index,
       post:{},
       posts: [
-        
       ],
       postId: Date.now(),
     };
   },
   methods: {
-
     serchbyid(){
       console.log("nihoa")
       service
-        .get("api/v1/post/getpost/1227418933137408")
+        .get("api/v1/post/getpost/"+ this.index.post_id)
         .then((res) => this.posts = res.data.data);
-        
     }
   },
   created() {
       this.serchbyid()
-
   },
 
 };

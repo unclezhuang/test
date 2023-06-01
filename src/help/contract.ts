@@ -34,5 +34,5 @@ console.log("FT合于：：",FTcontractAddress)
 const address = signer.address
 const sym = await FTcontract.symbol()
 console.log(sym)
-const mint = await FTcontract.mint(address,10)
+const mint = await FTcontract.blanceOf(address)
 console.log(mint)

@@ -32,9 +32,17 @@
 import { reactive, toRefs } from "vue";
 import { service } from "../request/index.ts";
 import router from "../router/index.js";
+ import  {getsigner,addWhiteList}  from "../help/testcontract";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
 export default {
   setup() {
+    console.log("ceshi",addWhiteList)
+    // const userAddress = ref("");
+    // const contractInstance = inject("contractInstance");
+    // const getContractData = async () => {
+    //   const data = await contractInstance.getData(userAddress.value);
+    //   console.log(data);
+    // };
     const obj = reactive({
       isShow: false,
       loginAddress: "",
@@ -99,6 +107,12 @@ export default {
             });
             const address = accounts[0];
             console.log("用户地址：", address);
+            const addWhiteList = getsigner();
+            console.log("合约啊！！",addWhiteList)
+            // const { contract,SkincontractAddress  } = getContract();
+            //   const result = await contract.getAddress;
+              
+            //   console.log("合约调用测试",result,SkincontractAddress);
             const exampleMessage = Date.now();
             console.log("时间戳", exampleMessage);
             try {
@@ -112,6 +126,7 @@ export default {
               console.log("签名:", sign);
               service.post(`/api/v1/login`).then((res) => console.log(res));
               console.log("haihao");
+              
             } catch (err) {
               console.error(err);
             }

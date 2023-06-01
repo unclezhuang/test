@@ -31,13 +31,16 @@
 import nav from ".//nav.vue";
 import { SkinMarketcontract } from '../help/ether'
 import { FTcontract } from '../help/contract'
+import { Skincontract } from '../help/testcontract'
 export default {
   components: {
     "my-nav": nav,
   },
   setup() {
     // console.log(SkinMarketcontract)
-  //  console.log(FTcontract)
+    // console.log(FTcontract)
+    // console.log(Skincontract)
+    
     return {};
   },
 };
