@@ -29,6 +29,7 @@
 </template>
   
   <script>
+import { v4 as uuidv4 } from "uuid";
 export default {
   props: {
     avatar: {
@@ -65,12 +66,30 @@ export default {
     },
   },
   computed: {
-    avatarUrl() {
+    async avatarUrl() {
       if (typeof this.avatar === "string") {
         return this.avatar;
       } else if (this.avatar instanceof Blob || this.avatar instanceof File) {
-        const url = decodeURIComponent(URL.createObjectURL(this.avatar))
-        console.log("这是测试的url：：：",url)
+        console.log(this.avatar)
+        const url = uuidv4() + '.' + this.avatar.name.split('.').pop();
+        console.log("这是测试的url：：：", url);
+        if (!this.avatar) {
+        console.error('No file selected');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', this.avatar, url);
+
+      try {
+        const response = await fetch('/upload', {
+          method: 'POST',
+          body: formData
+        });
+        console.log('Upload successful', response);
+      } catch (error) {
+        console.error('Upload failed', error);
+      }
         return url;
       } else {
         return "https://picsum.photos/200";

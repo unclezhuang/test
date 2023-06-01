@@ -35,9 +35,9 @@ const posts = useRoute();
 const router = useRouter();
 const serch = posts.params.serch;
 const first = async function () {
-  service
-    .get("http://jsonplaceholder.typicode.com/posts")
-    .then((res) => obj.posts.push(...res.data));
+    service
+        .get("api/v1/post/like-content/"+serch)
+        .then((res) => obj.posts.push(...res.data.data));
 };
 first();
 const handleChange = (page: number) => {
