@@ -11,7 +11,7 @@ export function FTcontract(signer) {
     return FTcontract;
 }
 export function SaveFilecontract(signer) {
-    const SaveFilecontract = new Contract("0x41Ac4058bbd72221D7bdE3e107183643857A5322", SaveFile, signer)
+    const SaveFilecontract = new Contract("0xd18B0B539DA5D650E8B356b5383cd52082cC0741", SaveFile, signer)
     return SaveFilecontract;
 }
 export function Skincontract(signer) {
