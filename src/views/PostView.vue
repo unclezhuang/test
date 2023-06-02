@@ -13,13 +13,14 @@
       :postId="postId + index"
     />
     <div class="reply">
-      <textarea class="textreply"></textarea
-      ><el-button type="info" round>Info</el-button>
+      <textarea class="textreply" v-model="reply"></textarea
+      ><el-button type="info" round @click="replyPostByPostId">Info</el-button>
     </div>
   </div>
 </template>
   
   <script lang="ts">
+  import { ref, reactive } from 'vue'
 import { service } from "../request/index.ts";
 import post from "./Post.vue";
 import { useRoute } from "vue-router";
@@ -28,14 +29,20 @@ export default {
     post,
   },
   data() {
+    const reply = ref('')
     const route = useRoute();
     console.log("数据测试：", route.params.serch);
     console.log("haihao");
     const index = JSON.parse(route.params.serch);
     console.log(index);
-
+    const toBack = reactive({
+      content:'',
+      author_address:''
+    })
     return {
+      toBack,
       index,
+      reply,
       post: {},
       posts: [],
       postId: Date.now(),
@@ -43,11 +50,17 @@ export default {
   },
   methods: {
     serchbyid() {
-      console.log("nihoa");
       service
         .get("api/v1/post/getpost/" + this.index.post_id)
         .then((res) => (this.posts = res.data.data));
     },
+    replyPostByPostId() {
+      console.log(this.reply)
+      this.toBack.content = this.reply;
+      this.toBack.author_address = this.post[0].author_address
+      this.reply = ''
+      service.post('api/v1/post/'+this.posts[0].post_id+'/response/', JSON.stringify(this.toBack))
+    }
   },
   created() {
     this.serchbyid();
