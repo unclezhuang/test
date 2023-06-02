@@ -7,7 +7,7 @@
     </div>
     <!-- 渲染回复贴 -->
     <post
-      v-for="(reply, index) in posts.slice(1)"
+      v-for="(reply, index) in postReply()"
       :key="index"
       :post="reply"
       :postId="postId + index"
@@ -57,9 +57,15 @@ export default {
     replyPostByPostId() {
       console.log(this.reply)
       this.toBack.content = this.reply;
-      this.toBack.author_address = this.post[0].author_address
+      this.toBack.author_address = this.posts[0].author_address
       this.reply = ''
       service.post('api/v1/post/'+this.posts[0].post_id+'/response/', JSON.stringify(this.toBack))
+      service
+        .get("api/v1/post/getpost/" + this.index.post_id)
+        .then((res) => (this.posts = res.data.data));
+    },
+    postReply(){
+    return this.posts.slice(1)
     }
   },
   created() {

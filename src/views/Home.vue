@@ -29,11 +29,13 @@
 
 <script lang="ts">
 import nav from ".//nav.vue";
+
 export default {
   components: {
     "my-nav": nav,
   },
   setup() {
+
     return {};
   },
 };

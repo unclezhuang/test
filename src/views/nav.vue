@@ -139,7 +139,7 @@ export default {
               const signer = await provider.getSigner();
               const SaveFilecontrac = await SaveFilecontract(signer);
               console.log("hiahao",SaveFilecontrac)
-              // await SaveFilecontrac.initUser(signer.address);
+              await SaveFilecontrac.initUser(signer.address);
               const SaveFile = await SaveFilecontrac.getUserInfo(
                 signer.address
               );
