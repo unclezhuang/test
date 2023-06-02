@@ -65,7 +65,7 @@ export default {
       await service.post('api/v1/post/'+this.posts[0].post_id+'/response/', JSON.stringify(this.toBack))
       service
         .get("api/v1/post/getpost/" + this.index.post_id)
-        .then((res) => (this.post = res.data.data));
+        .then((res) => (this.posts = res.data.data));
     },
     postReply(){
     return this.posts.filter((num,index) => index > 0)
