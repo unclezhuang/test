@@ -29,6 +29,9 @@
 </template>
   
   <script>
+import { v4 as uuidv4 } from "uuid";
+import fs from 'fs';
+import path from 'path';
 export default {
   props: {
     avatar: {
@@ -65,13 +68,31 @@ export default {
     },
   },
   computed: {
-    avatarUrl() {
+    async avatarUrl() {
       if (typeof this.avatar === "string") {
+        console.log(this.avatar)
         return this.avatar;
+       
       } else if (this.avatar instanceof Blob || this.avatar instanceof File) {
-        const url = decodeURIComponent(URL.createObjectURL(this.avatar))
-        console.log("这是测试的url：：：",url)
+        
+        if(['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(this.avatar.name.split('.').pop())){
+        const url = uuidv4() + '.' + this.avatar.name.split('.').pop();
+        console.log("这是测试的url：：：", url);
+
+
+        const reader = new FileReader();
+    reader.readAsDataURL(this.avatar);
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      // 在这里可以将 data URL 作为图片的 src 属性，显示图片
+      console.log('Image data URL:', dataUrl);
+      
+    };
+
+
+
         return url;
+      }
       } else {
         return "https://picsum.photos/200";
       }

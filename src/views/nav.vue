@@ -29,10 +29,12 @@
 </template>
 
 <script lang="ts">
+import { SaveFilecontract,FTcontract } from '../help/contract.ts'
 import { reactive, toRefs,ref } from "vue";
 import { service } from "../request/index.ts";
 import router from "../router/index.js";
- import  {getsigner,addWhiteList,getcontract}  from "../help/testcontract";
+import { ethers } from 'ethers'
+//  import  {getsigner,addWhiteList,getcontract}  from "../help/testcontract";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
 export default {
   setup() {
@@ -55,12 +57,11 @@ export default {
           typeof window.ethereum !== "undefined" ||
           (typeof window.web3 !== "undefined" &&
             window.web3.currentProvider.isMetaMask);
-
+            let provider :any;
         if (!isMetaMaskInstalled) {
           console.log("请安装 MetaMask");
           return false;
         }
-
         // 检查用户是否已登录
         const accounts = await ethereum.request({ method: "eth_accounts" });
         const isLoggedIn = accounts.length > 0;
@@ -91,7 +92,8 @@ export default {
     });
 
     //登陆
-    const login = () => {
+    const login = async() => {
+      let provider :any;
       if (typeof window.ethereum !== "undefined") {
         // 通过 MetaMask 访问用户地址
         window.ethereum
@@ -108,9 +110,7 @@ export default {
             });
             const address = accounts[0];
             console.log("用户地址：", address);
-            const addWhiteList = getcontract();
-            
-            console.log("合约啊！！",addWhiteList)
+            // const addWhiteList = getcontract();
             
             // const { contract,SkincontractAddress  } = getContract();
             //   const result = await contract.getAddress;
@@ -121,6 +121,12 @@ export default {
             try {
               // For historical reasons, you must submit the message to sign in hex-encoded UTF-8.
               // This uses a Node.js-style buffer shim in the browser.
+              // 创建 Web3Provider 对象
+        provider = new ethers.BrowserProvider(window.ethereum);
+        provider.pollingInterval = 1000000; // 设置以太坊节点轮询间隔
+        provider._getENSAddress = function () {}; // 禁用ENS
+        console.log("Web3Provider successfully created:", provider);
+        // 执行您的应用程序逻辑...
               const msg = `0x${exampleMessage.toString()}`;
               const sign = await ethereum.request({
                 method: "personal_sign",
@@ -129,7 +135,13 @@ export default {
               console.log("签名:", sign);
               service.post(`/api/v1/login`).then((res) => console.log(res));
               console.log("haihao");
-              
+              const signer = await provider.getSigner();
+              const SaveFilecontrac = await SaveFilecontract(signer)
+            const SaveFile = await SaveFilecontrac.getUserInfo(signer.address)
+            const FTcontarct1 = await FTcontract(signer)
+            const balance = await FTcontarct1.balanceOf(signer.address)
+             console.log("合约啊！！",SaveFile)
+             console.log("余额：：：",balance)
             } catch (err) {
               console.error(err);
             }
