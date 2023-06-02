@@ -1,5 +1,4 @@
-<template>
-  {{ data }}
+<template>  
   <el-row>
     <el-col
       v-for="(item, index) in data"

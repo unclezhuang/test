@@ -30,6 +30,8 @@
   
   <script>
 import { v4 as uuidv4 } from "uuid";
+import fs from 'fs';
+import path from 'path';
 export default {
   props: {
     avatar: {
@@ -68,29 +70,29 @@ export default {
   computed: {
     async avatarUrl() {
       if (typeof this.avatar === "string") {
-        return this.avatar;
-      } else if (this.avatar instanceof Blob || this.avatar instanceof File) {
         console.log(this.avatar)
+        return this.avatar;
+       
+      } else if (this.avatar instanceof Blob || this.avatar instanceof File) {
+        
+        if(['jpg', 'jpeg', 'png', 'gif', 'bmp'].includes(this.avatar.name.split('.').pop())){
         const url = uuidv4() + '.' + this.avatar.name.split('.').pop();
         console.log("这是测试的url：：：", url);
-        if (!this.avatar) {
-        console.error('No file selected');
-        return;
-      }
 
-      const formData = new FormData();
-      formData.append('file', this.avatar, url);
 
-      try {
-        const response = await fetch('/upload', {
-          method: 'POST',
-          body: formData
-        });
-        console.log('Upload successful', response);
-      } catch (error) {
-        console.error('Upload failed', error);
-      }
+        const reader = new FileReader();
+    reader.readAsDataURL(this.avatar);
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      // 在这里可以将 data URL 作为图片的 src 属性，显示图片
+      console.log('Image data URL:', dataUrl);
+      
+    };
+
+
+
         return url;
+      }
       } else {
         return "https://picsum.photos/200";
       }

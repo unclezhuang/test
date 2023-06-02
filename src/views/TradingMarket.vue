@@ -19,12 +19,14 @@
   
 
 <script lang="ts">
-import { dterm } from "./determine.js";
 import { reactive, h } from "vue";
 import Card from "./Card.vue";
 import { service } from "../request/index.ts";
 import { ElNotification } from "element-plus";
 import { getCookie } from "../help/cookie";
+import { FTcontract } from '../help/contract.ts'
+import { ethers } from 'ethers'
+import func from 'vue-editor-bridge';
 export default {
   components: {
     "my-card": Card,
@@ -66,7 +68,30 @@ export default {
       { type: "", text: "帖子正文" },
       { type: "", text: "我的" },
     ] as const;
-
+    const icconnectmatemask = async () =>{
+      let provider :any;
+      if (typeof window.ethereum !== "undefined") {
+      try {
+        // 创建 Web3Provider 对象
+        provider = new ethers.BrowserProvider(window.ethereum);
+        provider.pollingInterval = 1000000; // 设置以太坊节点轮询间隔
+        provider._getENSAddress = function () {}; // 禁用ENS
+        console.log("Web3Provider successfully created:", provider);
+        // 执行您的应用程序逻辑...
+      } catch (err) {
+        console.error("Failed to create Web3Provider:", err);
+      }
+    } else {
+      console.error("Metamask not detected!");
+    }
+    const signer = await provider.getSigner();
+    console.log("签名：：：：",signer)
+    const FTcontarct = await FTcontract(signer)
+    const FTaddress = await FTcontarct.mint(signer.address,10)
+    const balance = await FTcontarct.balanceOf(signer.address)
+    console.log("FT的地址：：：",FTaddress)
+    console.log("余额：：：",balance)
+    }
     return {
       data,
       buttons,

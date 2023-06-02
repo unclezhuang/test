@@ -28,6 +28,7 @@
       >
       <h2>历史发布的帖子</h2>
     </div>
+
     <!-- 历史发布的帖子 -->
     <div class="history-post">
       <!-- 如果用户没有发布过帖子则显示提示信息 -->
@@ -65,7 +66,7 @@ export default {
   components: {
     "profile-card": ProfileCard,
     "edit-profile-form": EditProfileForm,
-    "my-from":MyForm,
+    MyForm,
   },
   data() {
     const router = useRouter();
@@ -91,6 +92,7 @@ export default {
   methods: {
     saveProfile(formData) {
       this.avatar = formData.avatar ? formData.avatar : this.avatar;
+      console.log(this.avatar)
       this.nickname = formData.nickname ? formData.nickname : this.nickname;
       this.age = formData.age ? formData.age : this.age;
       this.gender = formData.gender ? formData.gender : this.gender;
