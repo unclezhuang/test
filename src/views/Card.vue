@@ -56,8 +56,8 @@ export default {
       if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
         const signer = await getSigner();
         console.log("签名：：：：", signer);
-        const SkinMarketcontract = await SkinMarketcontract(signer);
-        const SkinMarketcontractaddress = await SkinMarketcontract.mint(signer.address, 10);
+        // const SkinMarketcontract = await SkinMarketcontract(signer);
+        // const SkinMarketcontractaddress = await SkinMarketcontract.mint(signer.address, 10);
       } else {
         ElNotification({
           title: "请登录",

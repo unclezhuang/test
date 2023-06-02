@@ -79,6 +79,7 @@ export default {
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
       console.log("这是账户更改输出的", accounts);
+      router.push({name:'homepage'})
       islogin();
     });
 
