@@ -7,7 +7,7 @@
         style="width: 150px; height: 150px"
       />
       <div class="author">
-        <p4>昵称</p4>
+        <p4>昵称1111111</p4>
         <p4>账号</p4>
         <p4>粉丝数</p4>
         <button>关注</button>
@@ -166,4 +166,5 @@ button {
   width: 150px;
   height: 50px;
 }
+
 </style>
