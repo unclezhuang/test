@@ -135,18 +135,12 @@ export default {
               });
               console.log("签名:", sign);
               service.post(`/api/v1/login`).then((res) => console.log(res));
-              console.log("haihao");
               const signer = await provider.getSigner();
               const SaveFilecontrac = await SaveFilecontract(signer);
-              console.log("hiahao",SaveFilecontrac)
-              await SaveFilecontrac.initUser(signer.address);
-              const SaveFile = await SaveFilecontrac.getUserInfo(
-                signer.address
-              );
-              const FTcontarct1 = await FTcontract(signer);
-              const balance = await FTcontarct1.balanceOf(signer.address);
-              console.log("合约啊！！", SaveFile);
-              console.log("余额：：：", balance);
+              const addre = await SaveFilecontrac.getUserInfo(signer.address)
+              console.log("hiahao", addre);
+              const test = await SaveFilecontrac.checkDailyLog(signer.address)
+              console.log(test)
             } catch (err) {
               console.error(err);
             }

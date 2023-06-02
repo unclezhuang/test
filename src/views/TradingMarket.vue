@@ -44,6 +44,7 @@ export default {
         service
           .get("api/v1/market/skins/1")
           .then((res) => data.push(...res.data.data));
+          // document.body.style.backgroundImage = "url('../../src/img/test.jpg')"
           data.push(0)
       } else if (index === 2) {
         if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {

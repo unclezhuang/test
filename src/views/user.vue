@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import ProfileCard from "./ProfileCard.vue";
 import EditProfileForm from "./EditProfileForm.vue";
 import MyForm from "./writeFrom.vue";
@@ -92,19 +92,19 @@ export default {
   methods: {
     saveProfile(formData) {
       this.avatar = formData.avatar ? formData.avatar : this.avatar;
-      console.log(this.avatar)
+      console.log(this.avatar);
       this.nickname = formData.nickname ? formData.nickname : this.nickname;
       this.age = formData.age ? formData.age : this.age;
       this.gender = formData.gender ? formData.gender : this.gender;
       this.email = formData.email ? formData.email : this.email;
       this.notes = formData.notes ? formData.notes : this.notes;
-      this.isEditing = false
+      this.isEditing = false;
     },
     async loadPosts() {
       const accounts = await ethereum.request({ method: "eth_accounts" });
       service
         .get(
-          "api/v1/user/0xD5b631d1F9189E7393a0e155E02C0d3513f6AFA8/getuserInformation"
+          "api/v1/user/"+accounts+"/getuserInformation"
         )
         .then((res) => {
           this.avatar = res.data.data.head_picture;
@@ -117,8 +117,23 @@ export default {
         });
       service.get("api/v1/user/" + accounts + "/PostFromUser").then((res) => {
         this.postList.push(res.data.data);
-        this.posts = this.postList.length
+        this.posts = this.postList.length;
       });
+      const data = reactive({
+        user_address: ""+accounts,
+        user_name: "闪电侠",
+        email: "12345@qq.com",
+        age: "23",
+        gender: "0",
+        signature: "生活不止苟且",
+        head_picture: "ceshi.com",
+      });
+      service
+        .post(
+          "api/v1/user/" + accounts + "/changeUserInformation",
+          JSON.stringify(data)
+        )
+        .then(console.log(111));
     },
   },
   setup() {

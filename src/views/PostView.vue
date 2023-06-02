@@ -44,7 +44,7 @@ export default {
       index,
       reply,
       post: {},
-      posts: [],
+      posts: reactive([]),
       postId: Date.now(),
     };
   },
@@ -54,18 +54,21 @@ export default {
         .get("api/v1/post/getpost/" + this.index.post_id)
         .then((res) => (this.posts = res.data.data));
     },
-    replyPostByPostId() {
+    async replyPostByPostId() {
       console.log(this.reply)
       this.toBack.content = this.reply;
-      this.toBack.author_address = this.posts[0].author_address
+      console.log(await ethereum.request({ method: "eth_accounts" }))
+      const address = await ethereum.request({ method: "eth_accounts" })
+      this.toBack.author_address = address.toString()
       this.reply = ''
-      service.post('api/v1/post/'+this.posts[0].post_id+'/response/', JSON.stringify(this.toBack))
+      console.log(this.toBack.author_address)
+      await service.post('api/v1/post/'+this.posts[0].post_id+'/response/', JSON.stringify(this.toBack))
       service
         .get("api/v1/post/getpost/" + this.index.post_id)
-        .then((res) => (this.posts = res.data.data));
+        .then((res) => (this.post = res.data.data));
     },
     postReply(){
-    return this.posts.slice(1)
+    return this.posts.filter((num,index) => index > 0)
     }
   },
   created() {
