@@ -9,13 +9,14 @@
       :score="score"
       :posts="posts"
       :notes="notes"
-      @edit-profile="showEditForm"
+      @edit-profile="this.isEditing = !this.isEditing"
     ></profile-card>
     <div class="button1">
       <edit-profile-form
         v-if="isEditing"
+        :formData="null"
         @save-profile="saveProfile"
-        @cancel-edit-profile="hideEditForm"
+        @cancel-edit-profile="this.isEditing = false"
       ></edit-profile-form>
     </div>
   </div>
@@ -39,9 +40,14 @@
         <li
           v-for="post in postList"
           :key="post.id"
-          @click="router.push({ name: 'post', params: { serch: JSON.stringify(post) } })"
+          @click="
+            router.push({
+              name: 'post',
+              params: { serch: JSON.stringify(post) },
+            })
+          "
         >
-          {{ post.title }}
+          {{ post.title }} {{ post.post_id }}
         </li>
       </ul>
     </div>
@@ -55,6 +61,7 @@ import EditProfileForm from "./EditProfileForm.vue";
 import MyForm from "./writeFrom.vue";
 import { state } from "./shared.js";
 import { useRouter } from "vue-router";
+import { service } from "../request/index";
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -83,31 +90,35 @@ export default {
     this.loadPosts();
   },
   methods: {
-    showEditForm() {
-      this.isEditing = true;
-    },
-    hideEditForm() {
-      this.isEditing = false;
-    },
     saveProfile(formData) {
       this.avatar = formData.avatar ? formData.avatar : this.avatar;
+      console.log(this.avatar)
       this.nickname = formData.nickname ? formData.nickname : this.nickname;
       this.age = formData.age ? formData.age : this.age;
       this.gender = formData.gender ? formData.gender : this.gender;
       this.email = formData.email ? formData.email : this.email;
       this.notes = formData.notes ? formData.notes : this.notes;
-      this.hideEditForm();
+      this.isEditing = false
     },
-    loadPosts() {
-      setTimeout(() => {
-        this.postList = [
-          { id: 1, title: "Hello World" },
-          { id: 2, title: "Vue.js" },
-          { id: 3, title: "React" },
-          { id: 4, title: "Angular" },
-        ];
-        this.hasPost = this.postList.length > 0;
-      }, 1000);
+    async loadPosts() {
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      service
+        .get(
+          "api/v1/user/0xD5b631d1F9189E7393a0e155E02C0d3513f6AFA8/getuserInformation"
+        )
+        .then((res) => {
+          this.avatar = res.data.data.head_picture;
+          this.nickname = res.data.data.user_name;
+          this.age = res.data.data.age;
+          this.gender = res.data.data.gender;
+          this.email = res.data.data.eamil;
+          this.score = res.data.data.balance;
+          this.notes = res.data.data.signature;
+        });
+      service.get("api/v1/user/" + accounts + "/PostFromUser").then((res) => {
+        this.postList.push(res.data.data);
+        this.posts = this.postList.length
+      });
     },
   },
   setup() {

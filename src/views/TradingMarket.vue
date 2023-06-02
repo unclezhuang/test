@@ -20,10 +20,10 @@
 
 <script lang="ts">
 import { dterm } from "./determine.js";
-import { reactive,h } from "vue";
+import { reactive, h } from "vue";
 import Card from "./Card.vue";
 import { service } from "../request/index.ts";
-import { ElNotification } from 'element-plus';
+import { ElNotification } from "element-plus";
 import { getCookie } from "../help/cookie";
 export default {
   components: {
@@ -34,22 +34,22 @@ export default {
     const buyback = async (index) => {
       if (index === 0) {
         console.log("点击事件", index);
-        data.splice(0,data.length)
+        data.splice(0, data.length);
         service
           .get("api/v1/market/skins/0")
           .then((res) => data.push(...res.data.data));
       } else if (index === 1) {
         console.log("点击事件", index);
-        data.splice(0,data.length)
+        data.splice(0, data.length);
         service
           .get("api/v1/market/skins/1")
           .then((res) => data.push(...res.data.data));
       } else if (index === 2) {
         if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
-          const address = await ethereum.request({ method: "eth_accounts" })
-          data.splice(0,data.length)
+          const address = await ethereum.request({ method: "eth_accounts" });
+          data.splice(0, data.length);
           service
-            .get("api/v1/user/"+address+"/skinList")
+            .get("api/v1/user/" + address + "/skinList")
             .then((res) => data.push(...res.data.data));
         } else {
           console.log("请先登录！");

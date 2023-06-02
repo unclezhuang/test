@@ -25,8 +25,9 @@ if (typeof window.ethereum !== "undefined") {
 }
 export async function getsigner() {
     const signer = await provider.getSigner();
-    console.log("jfjaifjajfaf",signer);
-    return signer;
+    const address = signer.address;
+    console.log("jfjaifjajfaf",address);
+    return address;
 }
 const signer = await provider.getSigner();
 // console.log("签名：：：",signer);
@@ -34,22 +35,26 @@ const signer = await provider.getSigner();
 // export const Skincontract = await Skinfactory.deploy("https://img0.baidu.com/it/u=3569732215,468234533&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500");
 // export const SkincontractAddress = await Skincontract.getAddress()
 // console.log("上架的皮肤合约",SkincontractAddress)
- export const Skincontract = new Contract("0x729f1a7a87CC31A826621242e8E76B9B5736c951",Skin,signer);
-export const SkincontractAddress = await Skincontract.getAddress();
-console.log("尝试连接合约地址",SkincontractAddress);
- const address = signer.address;
-export const addWhiteList = await Skincontract.addWhiteList(address)
- console.log("tianjiachenggong",addWhiteList)
+// export  const SaveFilecontract = new Contract("0x41Ac4058bbd72221D7bdE3e107183643857A5322",SaveFile,signer);
+// export const SkincontractAddress = await SaveFilecontract.getAddress();
+// console.log("尝试连接合约地址",SkincontractAddress);
+//  const address = signer.address;
+// export const addWhiteList = await SaveFilecontract.getUserInfo(address)
+//  console.log("tianjiachenggong",addWhiteList)
 //  const addWhiteListHash = addWhiteList.hash;
 // console.log("Transaction Hash: ", addWhiteList.hash);
 
 //  const addWhiteListReceipt = await provider.getTransactionReceipt(addWhiteListHash);
 // console.log("合约这算查了成",addWhiteListReceipt);
 
-   export function getcontract(){
-    const signer = provider.getsigner;
-    const contract = new Contract("0x729f1a7a87CC31A826621242e8E76B9B5736c951",Skin,signer);
-    console.log("81ueu12eueu2ue1u9",contract)
+   export async function getcontract(signer){
+   
+    
+    const SaveFilecontract = new Contract("0x41Ac4058bbd72221D7bdE3e107183643857A5322",SaveFile,signer);
+    
+    return
+    SaveFilecontract
+    
 }
     // export default contract;
     

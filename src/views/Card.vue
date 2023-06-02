@@ -22,10 +22,9 @@
   
 
   <script lang="ts">
-
-import { h } from 'vue';
-import { ElNotification } from 'element-plus';
-import { getCookie } from '../help/cookie';
+import { h } from "vue";
+import { ElNotification } from "element-plus";
+import { getCookie } from "../help/cookie";
 export default {
   props: {
     data: {
@@ -33,23 +32,23 @@ export default {
       required: true,
     },
   },
-  setup(){
-const buy = async () => {
-  if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
-    console.log("这波the shy来全买了");
-  } else {
-    console.log("这波物资来全登录了。");
-    ElNotification({
-    title: '请登录',
-    message: h('i', { style: 'color: red' }, '购买前请先登陆！！！！'),
-  })
-  }
-  
-}
-return{
-buy}
-}
-}
+  setup() {
+    const buy = async () => {
+      if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
+        console.log("这波the shy来全买了");
+      } else {
+        console.log("这波物资来全登录了。");
+        ElNotification({
+          title: "请登录",
+          message: h("i", { style: "color: red" }, "购买前请先登陆！！！！"),
+        });
+      }
+    };
+    return {
+      buy,
+    };
+  },
+};
 </script>
   
   <style>

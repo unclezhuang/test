@@ -20,7 +20,7 @@
         <router-link to="/defo/user" class="mousehover">
           <img
             class="userhead"
-            src="../img/少女熊猫.jpg"
+            :src="temp"
             style="width: 10%; border-radius: 50%"
         /></router-link>
       </span>
@@ -29,14 +29,14 @@
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from "vue";
+import { reactive, toRefs,ref } from "vue";
 import { service } from "../request/index.ts";
 import router from "../router/index.js";
- import  {getsigner,addWhiteList}  from "../help/testcontract";
+ import  {getsigner,addWhiteList,getcontract}  from "../help/testcontract";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
 export default {
   setup() {
-    console.log("ceshi",addWhiteList)
+    // console.log("ceshi",addWhiteList)
     // const userAddress = ref("");
     // const contractInstance = inject("contractInstance");
     // const getContractData = async () => {
@@ -47,6 +47,7 @@ export default {
       isShow: false,
       loginAddress: "",
     });
+    const temp = ref('../../src/img/少女熊猫.jpg')
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -107,8 +108,10 @@ export default {
             });
             const address = accounts[0];
             console.log("用户地址：", address);
-            const addWhiteList = getsigner();
+            const addWhiteList = getcontract();
+            
             console.log("合约啊！！",addWhiteList)
+            
             // const { contract,SkincontractAddress  } = getContract();
             //   const result = await contract.getAddress;
               
@@ -157,9 +160,10 @@ export default {
       obj.isShow = false;
       router.push({ name: "homepage" });
     };
-    
+
     return {
       ...toRefs(obj),
+      temp,
       login,
       logout,
     };
@@ -238,7 +242,7 @@ export default {
   color: #333;
   text-decoration: none;
 }
-.logo{
+.logo {
   display: inline;
 }
 </style>
