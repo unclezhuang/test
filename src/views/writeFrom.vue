@@ -1,13 +1,13 @@
 <template>
   <div class="form" ref="formRef">
     <el-form-item label="帖子标题">
-      <el-input v-model="form.name" />
+      <el-input v-model="form.title" />
     </el-form-item>
     <el-form-item label="帖子内容">
-      <textarea v-model="form.desc" style="resize:none"></textarea>
+      <textarea v-model="form.content" style="resize: none"></textarea>
     </el-form-item>
     <el-form-item label="给你的帖子选个封面吧">
-      <el-input v-model="form.url" />
+      <el-input v-model="form.picture_url" />
     </el-form-item>
 
     <el-button type="primary" @click="handleSubmit">提交</el-button>
@@ -18,16 +18,18 @@
 import { state } from "./shared.js";
 import { ref } from "vue";
 import { reactive } from "vue";
-
+import { service } from '../request/index.ts'
 export default {
   setup() {
     const myValue = state.myValue;
     const formRef = ref(null);
     const inputValue = ref("");
-
-    const handleSubmit = () => {
-      console.log("提交成功，用户地址为 ", myValue);
-      console.log("表单数据为：", JSON.stringify(form));
+    const handleSubmit = async () => {
+      const address = await ethereum.request({ method: "eth_accounts" })
+      form.author_address = "" + address
+      service
+      .post("api/v1/post/create",JSON.stringify(form))
+      console.log("提交成功，用户地址为 ", address);
       handleCancel()
       // 处理表单提交操作
     };
@@ -41,9 +43,10 @@ export default {
       formRef.value?.classList.remove("show");
     };
     const form = reactive({
-      desc: "",
-      name: "",
-      url: "https://picsum.photos/300/150",
+      content: "",
+      title: "",
+      picture_url: "",
+      author_address: ""
     });
     return {
       formRef,

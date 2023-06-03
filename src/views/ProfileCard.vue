@@ -10,7 +10,7 @@
       <div class="wrapper">
         <div class="column1">
           <p>Age: {{ age }}</p>
-          <p>Gender: {{ gender }}</p>
+          <p>Gender: {{ gender ? '男': '女' }}</p>
         </div>
         <div class="column2">
           <p>Email: {{ email }}</p>
