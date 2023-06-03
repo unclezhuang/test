@@ -62,7 +62,8 @@ export default {
       this.toBack.author_address = address.toString()
       this.reply = ''
       console.log(this.toBack.author_address)
-      await service.post('api/v1/post/'+this.posts[0].post_id+'/response/', JSON.stringify(this.toBack))
+      await service.post('api/v1/post/'+this.posts[0].post_id+'/response/', JSON.stringify(this.toBack)).then(console.log(111111111))
+
       service
         .get("api/v1/post/getpost/" + this.index.post_id)
         .then((res) => (this.posts = res.data.data));
