@@ -48,7 +48,9 @@ const pagein = () => {
   return obj.posts.slice((currentPage.value - 1) * 15, currentPage.value * 15);
 };
 const topostbyindex = (item) => {
-  router.push({ name: "post", params: { serch: item } });
+
+    router.push({ name: "post", params: { serch: JSON.stringify(item) } });
+
 };
 </script>
 
