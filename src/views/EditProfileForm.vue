@@ -56,6 +56,7 @@ export default {
     },
     submitForm() {
       this.$emit("save-profile", this.formData);
+      //提交表单数据到父组件
     },
     cancel() {
       this.$emit("cancel-edit-profile");
