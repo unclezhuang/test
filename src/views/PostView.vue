@@ -1,8 +1,5 @@
 <template>
-  <div>
-    {{ posts }}
-    {{ postAutor }}
-    <el-container>
+    <el-container v-if="posts[0] && postAutor">
       <el-aside width="20%"
         ><img
           :src="posts[0].picture_url"
@@ -17,21 +14,31 @@
           等级：{{ postAutor.level }} <br />
           <div class="demo-progress">
             经验：{{ postAutor.experience }}
-            <el-progress :percentage="postAutor.experience" :text-inside="true" :stroke-width="26"  />
+            <el-progress
+              :percentage="postAutor.experience"
+              :text-inside="true"
+              :stroke-width="26"
+            />
           </div>
         </div>
       </el-aside>
       <el-container>
-        <el-main
-          ><div class="post">
-            第 {{ 1 }} 楼
-            {{ posts[0].content }}
-            {{ posts[0].author_name }}
-          </div>
-          <div class="post" v-for="(reply, index) in postReply()" :key="index">
-            第 {{ index + 2 }} 楼
-            {{ reply.content }}
-            {{ reply.author_name }}
+        <el-main>
+          <div>
+            <div class="post">
+              第 {{ 1 }} 楼
+              {{ posts[0].content }}
+              {{ posts[0].author_name }}
+            </div>
+            <div
+              class="post"
+              v-for="(reply, index) in postReply()"
+              :key="index"
+            >
+              第 {{ index + 2 }} 楼
+              {{ reply.content }}
+              {{ reply.author_name }}
+            </div>
           </div></el-main
         >
         <el-footer
@@ -44,7 +51,6 @@
         >
       </el-container>
     </el-container>
-  </div>
 </template>
   
   <script lang="ts">
@@ -83,7 +89,7 @@ export default {
       await service
         .get("api/v1/post/getpost/" + this.index.post_id)
         .then((res) => (this.posts = res.data.data));
-      service
+      await service
         .get(
           "api/v1/user/" + this.posts[0].author_address + "/getuserInformation"
         )
@@ -141,5 +147,9 @@ export default {
 .demo-progress .el-progress--line {
   margin-bottom: 15px;
   width: 350px;
+}
+el-aside {
+  position: absolute;
+  top: 20%;
 }
 </style>
