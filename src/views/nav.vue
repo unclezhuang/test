@@ -8,10 +8,8 @@
       <router-link to="/defo/deal" class="home mousehover"
         >交易市场</router-link
       >
-      <a href="#" class="home mousehover">社区</a>
-      <a href="#" class="home mousehover">精华</a>
     </nav>
-    <div class="user">
+    <div class="user userright">
       <span class="userhead" v-show="!isShow" @click="login">登录</span>
       <span v-show="isShow">
         <div class="userhead">
@@ -194,11 +192,13 @@ export default {
 //   float: right;
 // }
 
-// .userhead {
-//   display: inline-block;
-//   float: right;
-//   // margin-right: 100px;
-// }
+.userhead {
+  display: inline-block;
+  float: right;
+}
+.userright{
+ margin-right: 100px;
+}
 
 .home {
   margin: 10%;
