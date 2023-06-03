@@ -119,21 +119,6 @@ export default {
         this.postList.push(res.data.data);
         this.posts = this.postList.length;
       });
-      const data = reactive({
-        user_address: ""+accounts,
-        user_name: "闪电侠",
-        email: "12345@qq.com",
-        age: "23",
-        gender: "0",
-        signature: "生活不止苟且",
-        head_picture: "ceshi.com",
-      });
-      service
-        .post(
-          "api/v1/user/" + accounts + "/changeUserInformation",
-          JSON.stringify(data)
-        )
-        .then(console.log(111));
     },
   },
   setup() {

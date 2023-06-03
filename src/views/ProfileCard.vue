@@ -1,12 +1,12 @@
 <template>
-  <div>
+  <div  >
     <div class="profile">
       <img
         :src="avatarUrl"
         style="border-radius: 50%; width: 25%"
         alt="avatar"
       />
-      <h3>{{ nickname }}</h3>
+      <h3>{{ nickname}}</h3>
       <div class="wrapper">
         <div class="column1">
           <p>Age: {{ age }}</p>
@@ -22,13 +22,16 @@
         </div>
       </div>
       <div style="width:20% float: left;">
-        <button @click="editProfile">Edit Profile</button>
+        <button @click="editProfile">Edit </button>
       </div>
     </div>
   </div>
 </template>
   
   <script>
+  import { setCookie, getCookie, deleteCookie } from "../help/cookie";
+  import { ref, reactive, h } from "vue";
+  import { service } from "../request/index.ts";
 import { v4 as uuidv4 } from "uuid";
 import fs from 'fs';
 import path from 'path';
@@ -67,6 +70,7 @@ export default {
       required: false,
     },
   },
+
   computed: {
     async avatarUrl() {
       if (typeof this.avatar === "string") {
@@ -88,9 +92,6 @@ export default {
       console.log('Image data URL:', dataUrl);
       
     };
-
-
-
         return url;
       }
       } else {
@@ -99,11 +100,14 @@ export default {
     },
   },
   methods: {
-    editProfile() {
+     editProfile() {
       this.$emit("edit-profile");
+     //展示编写帖子页面
     },
-  },
-};
+   
+    },
+  };
+
 </script>
   
   <style scoped>

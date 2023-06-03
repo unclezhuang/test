@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Edit Profile</h2>
+    <h2>Edit </h2>
     <form @submit.prevent="submitForm">
       <div>
         <label for="avatar">Avatar:</label>
@@ -29,7 +29,7 @@
         <label for="notes">Notes:</label>
         <textarea id="notes" style="resize: none;" v-model="formData.notes"></textarea>
       </div>
-      <button type="submit" @click="chuanshuju">Save</button>
+      <button type="submit" @click="handleFileChange">Save</button>
       <button @click="cancel">Cancel</button>
     </form>
   </div>
