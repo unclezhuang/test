@@ -1,20 +1,20 @@
 <template>
   <div class="persion">
     <profile-card
-      :avatar="avatar"
-      :nickname="nickname"
-      :age="age"
-      :gender="gender"
-      :email="email"
+      :avatar="this.formData.avatar"
+      :nickname="this.formData.nickname"
+      :age="this.formData.age"
+      :gender="this.formData.gender"
+      :email="this.formData.email"
       :score="score"
       :posts="posts"
-      :notes="notes"
+      :notes="this.formData.notes"
       @edit-profile="this.isEditing = !this.isEditing"
     ></profile-card>
     <div class="button1">
       <edit-profile-form
         v-if="isEditing"
-        :formData="null"
+        :formData="this.formData"
         @save-profile="saveProfile"
         @cancel-edit-profile="this.isEditing = false"
       ></edit-profile-form>
@@ -71,14 +71,16 @@ export default {
   data() {
     const router = useRouter();
     return {
-      avatar: "https://picsum.photos/200",
-      nickname: "myValue",
-      age: 25,
-      gender: "male",
-      email: "john@example.com",
+      formData: reactive({
+        avatar: null,
+        nickname: "",
+        age: null,
+        gender: "",
+        email: "",
+        notes: "",
+      }),
       score: 100,
       posts: 0,
-      notes: "",
       isEditing: false,
       hasPost: true, // 根据用户的历史发布是否存在来判断
       postList: [],
@@ -91,34 +93,36 @@ export default {
   },
   methods: {
     saveProfile(formData) {
-      this.avatar = formData.avatar ? formData.avatar : this.avatar;
-      console.log(this.avatar);
-      this.nickname = formData.nickname ? formData.nickname : this.nickname;
-      this.age = formData.age ? formData.age : this.age;
-      this.gender = formData.gender ? formData.gender : this.gender;
-      this.email = formData.email ? formData.email : this.email;
-      this.notes = formData.notes ? formData.notes : this.notes;
+      this.formData.avatar = formData.avatar ? formData.avatar : this.avatar;
+      this.formData.nickname = formData.nickname
+        ? formData.nickname
+        : this.nickname;
+      this.formData.age = formData.age ? formData.age : this.age;
+      this.formData.gender = formData.gender ? formData.gender : this.gender;
+      this.formData.email = formData.email ? formData.email : this.email;
+      this.formData.notes = formData.notes ? formData.notes : this.notes;
       this.isEditing = false;
     },
     async loadPosts() {
       const accounts = await ethereum.request({ method: "eth_accounts" });
       service
-        .get(
-          "api/v1/user/"+accounts+"/getuserInformation"
-        )
+        .get("api/v1/user/" + accounts + "/getuserInformation")
         .then((res) => {
-          this.avatar = res.data.data.head_picture;
-          this.nickname = res.data.data.user_name;
-          this.age = res.data.data.age;
-          this.gender = res.data.data.gender;
-          this.email = res.data.data.eamil;
-          this.score = res.data.data.balance;
-          this.notes = res.data.data.signature;
+          console.log(res.data.data);
+          this.formData.avatar = res.data.data.head_picture;
+          this.formData.nickname = res.data.data.user_name;
+          this.formData.age = res.data.data.age;
+          this.formData.gender = res.data.data.gender;
+          this.formData.email = res.data.data.eamil;
+          this.formData.score = res.data.data.balance;
+          this.formData.notes = res.data.data.signature;
         });
-      service.get("api/v1/user/" + accounts + "/PostFromUser").then((res) => {
-        this.postList.push(res.data.data);
-        this.posts = this.postList.length;
-      });
+      await service
+        .get("api/v1/user/" + accounts + "/PostFromUser")
+        .then((res) => {
+          this.postList.push(...res.data.data);
+          this.posts = this.postList.length;
+        });
     },
   },
   setup() {

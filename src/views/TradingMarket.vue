@@ -66,8 +66,8 @@ export default {
     };
     buyback(0);
     const buttons = [
-      { type: "", text: "帖子侧栏背景" },
-      { type: "", text: "帖子正文" },
+      { type: "", text: "网页背景图" },
+      { type: "", text: "帖子背景图" },
       { type: "", text: "我的" },
     ] as const;
     return {

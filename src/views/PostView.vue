@@ -18,6 +18,7 @@
               :percentage="postAutor.experience"
               :text-inside="true"
               :stroke-width="26"
+              :indeterminate="true"
             />
           </div>
         </div>
@@ -45,7 +46,7 @@
           ><div class="reply">
             <textarea class="textreply" v-model="reply"></textarea
             ><el-button type="info" round @click="replyPostByPostId"
-              >Info</el-button
+              >评论</el-button
             >
           </div></el-footer
         >
