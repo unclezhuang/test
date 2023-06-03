@@ -111,12 +111,6 @@ export default {
             });
             const address = accounts[0];
             console.log("用户地址：", address);
-            // const addWhiteList = getcontract();
-
-            // const { contract,SkincontractAddress  } = getContract();
-            //   const result = await contract.getAddress;
-
-            //   console.log("合约调用测试",result,SkincontractAddress);
             const exampleMessage = Date.now();
             console.log("时间戳", exampleMessage);
             try {
@@ -133,7 +127,7 @@ export default {
                 method: "personal_sign",
                 params: [msg, address, "Example password"],
               });
-              console.log("签名:", sign);
+              // console.log("签名:", sign);
               service.post(`/api/v1/login`).then((res) => console.log(res));
               const signer = await provider.getSigner();
               const SaveFilecontrac = await SaveFilecontract(signer);

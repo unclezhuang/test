@@ -4,7 +4,7 @@
       <el-input v-model="form.name" />
     </el-form-item>
     <el-form-item label="帖子内容">
-      <el-input v-model="form.desc" type="textarea" />
+      <textarea v-model="form.desc" style="resize:none"></textarea>
     </el-form-item>
     <el-form-item label="给你的帖子选个封面吧">
       <el-input v-model="form.url" />
@@ -28,7 +28,7 @@ export default {
     const handleSubmit = () => {
       console.log("提交成功，用户地址为 ", myValue);
       console.log("表单数据为：", JSON.stringify(form));
-
+      handleCancel()
       // 处理表单提交操作
     };
     const handleCancel = () => {
