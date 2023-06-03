@@ -1,8 +1,26 @@
 <template>
   <div>
     {{ posts }}
+    {{ postAutor }}
     <el-container>
-      <el-aside width="20%"><img :src="posts[0].picture_url" style="border-radius: 50%;width:100%"> </el-aside>
+      <el-aside width="20%"
+        ><img
+          :src="posts[0].picture_url"
+          style="border-radius: 50%; width: 100%"
+        />
+        <div>
+          姓名： {{ postAutor.user_name }} <br />
+          年龄：{{ postAutor.age }} <br />
+          邮箱：{{ postAutor.eamil }} <br />
+          性别：{{ postAutor.gender ? "男" : "女" }}<br />
+          签名：{{ postAutor.signature }} <br />
+          等级：{{ postAutor.level }} <br />
+          <div class="demo-progress">
+            经验：{{ postAutor.experience }}
+            <el-progress :percentage="postAutor.experience" :text-inside="true" :stroke-width="26"  />
+          </div>
+        </div>
+      </el-aside>
       <el-container>
         <el-main
           ><div class="post">
@@ -47,7 +65,11 @@ export default {
       content: "",
       author_address: "",
     });
+    const format = (percentage) =>
+      percentage === 100 ? "Full" : `${percentage}%`;
     return {
+      format,
+      postAutor: ref(),
       toBack,
       index,
       reply,
@@ -57,10 +79,15 @@ export default {
     };
   },
   methods: {
-    serchbyid() {
-      service
+    async serchbyid() {
+      await service
         .get("api/v1/post/getpost/" + this.index.post_id)
         .then((res) => (this.posts = res.data.data));
+      service
+        .get(
+          "api/v1/user/" + this.posts[0].author_address + "/getuserInformation"
+        )
+        .then((res) => (this.postAutor = res.data.data));
     },
     async replyPostByPostId() {
       if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
@@ -107,8 +134,12 @@ export default {
 }
 .post {
   flex-grow: 1;
-  height: calc(100% / 3);
+  height: calc(100% / 20);
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 0%;
+}
+.demo-progress .el-progress--line {
+  margin-bottom: 15px;
+  width: 350px;
 }
 </style>

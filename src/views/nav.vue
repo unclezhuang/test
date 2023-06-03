@@ -49,6 +49,11 @@ export default {
       isShow: false,
       loginAddress: "",
     });
+    const loginInformation = reactive({
+      user_address:'',
+      time:'',
+      hash:''
+    })
     const temp = ref("../../src/img/少女熊猫.jpg");
     async function islogin() {
       try {
@@ -114,27 +119,17 @@ export default {
             const exampleMessage = Date.now();
             console.log("时间戳", exampleMessage);
             try {
-              // For historical reasons, you must submit the message to sign in hex-encoded UTF-8.
-              // This uses a Node.js-style buffer shim in the browser.
-              // 创建 Web3Provider 对象
-              provider = new ethers.BrowserProvider(window.ethereum);
-              provider.pollingInterval = 1000000; // 设置以太坊节点轮询间隔
-              provider._getENSAddress = function () {}; // 禁用ENS
-              console.log("Web3Provider successfully created:", provider);
               // 执行您的应用程序逻辑...
               const msg = `0x${exampleMessage.toString()}`;
               const sign = await ethereum.request({
                 method: "personal_sign",
                 params: [msg, address, "Example password"],
               });
-              // console.log("签名:", sign);
-              service.post(`/api/v1/login`).then((res) => console.log(res));
-              const signer = await provider.getSigner();
-              const SaveFilecontrac = await SaveFilecontract(signer);
-              const addre = await SaveFilecontrac.getUserInfo(signer.address)
-              console.log("hiahao", addre);
-              const test = await SaveFilecontrac.checkDailyLog(signer.address)
-              console.log(test)
+              console.log("签名:", sign);
+              loginInformation.user_address= address;
+              loginInformation.time = exampleMessage.toString();
+              loginInformation.hash = sign
+              service.post(`/api/v1/login`,JSON.stringify(loginInformation)).then((res) => temp.value = res.data.data.head_picture);
             } catch (err) {
               console.error(err);
             }
