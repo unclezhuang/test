@@ -57,9 +57,9 @@ import { service } from "../request/index";
 export default {
   props: {
     formData: reactive({
-      avatar: null,
+      avatar: "",
       nickname: "",
-      age: null,
+      age: "",
       gender: "",
       email: "",
       notes: "",
@@ -92,13 +92,13 @@ export default {
     },
     async changeinfo() {
       const address = await ethereum.request({ method: "eth_accounts" });
-      this.userInfo.user_address = address;
-      this.userInfo.user_name = this.formData.user_name;
+      this.userInfo.user_address = ""+address;
+      this.userInfo.user_name = this.formData.nickname;
       this.userInfo.email = this.formData.email;
-      this.userInfo.age = this.formData.age;
+      this.userInfo.age = ""+this.formData.age;
       this.userInfo.gender = this.formData.gender;
-      this.userInfo.signature = this.formData.signature;
-      this.userInfo.head_picture = this.formData.head_picture;
+      this.userInfo.signature = this.formData.notes;
+      this.userInfo.head_picture = this.formData.avatar;
       console.log(JSON.stringify(this.userInfo));
       service.post(
         "api/v1/user/" + address + "/changeUserInformation",
