@@ -1,71 +1,114 @@
 <template>
   <div>
-    fdafadfaf
-    <!-- 渲染主贴 --><div class="postimg">
-    <post :post="posts[0]" :postId="postId" /></div>
-    <!-- 渲染回复贴 -->
-    <post
-      v-for="(reply, index) in posts.slice(1)"
-      :key="index"
-      :post="reply"
-      :postId="postId + index"
-    />
-    {{ index }}
-    <div class="reply"><textarea></textarea><el-button type="info" round>Info</el-button></div>
+    <!-- {{ posts }} -->
+    <el-container>
+      <el-aside width="20%"><img :src="posts[0].picture_url" style="border-radius: 50%;width:100%"> </el-aside>
+      <el-container>
+        <el-main
+          ><div class="post">
+            第 {{ 1 }} 楼
+            {{ posts[0].content }}
+            {{ posts[0].author_name }}
+          </div>
+          <div class="post" v-for="(reply, index) in postReply()" :key="index">
+            第 {{ index + 2 }} 楼
+            {{ reply.content }}
+            {{ reply.author_name }}
+          </div></el-main
+        >
+        <el-footer
+          ><div class="reply">
+            <textarea class="textreply" v-model="reply"></textarea
+            ><el-button type="info" round @click="replyPostByPostId"
+              >Info</el-button
+            >
+          </div></el-footer
+        >
+      </el-container>
+    </el-container>
   </div>
 </template>
   
   <script lang="ts">
-import axios from "axios";
-import post from "./post.vue"
+import { ref, reactive, h } from "vue";
+import { service } from "../request/index.ts";
 import { useRoute } from "vue-router";
+import { getCookie } from "../help/cookie.ts";
+import { ElNotification } from "element-plus";
 export default {
-  components: {
-    post
-  },
   data() {
-    const route = useRoute()
-    const index = route.params.index
+    const reply = ref("");
+    const route = useRoute();
+    console.log("数据测试：", route.params.serch);
+    console.log("haihao");
+    const index = JSON.parse(route.params.serch);
+    console.log(index);
+    const toBack = reactive({
+      content: "",
+      author_address: "",
+    });
     return {
+      toBack,
       index,
-      route,
-      post:{},
-      posts: [
-        {
-          title: "这是主贴",
-          content: `主贴的内容la。
-             这是第一行新的文字。
-             这是第二行新的文字。
-              这是第三行新的文字。`,
-        },
-        {
-          title: "这是回复贴1",
-          content: "回复贴1的内容",
-        },
-        {
-          title: "这是回复贴2",
-          content: "回复贴2的内容",
-        },
-      ],
+      reply,
+      post: {},
+      posts: reactive([]),
       postId: Date.now(),
     };
   },
   methods: {
-    serchbyid(){
-      console.log("nihoa")
-      axios
-        .get("http://jsonplaceholder.typicode.com/posts")
-        .then((res) => this.posts.push(...res.data));
-    }
+    serchbyid() {
+      service
+        .get("api/v1/post/getpost/" + this.index.post_id)
+        .then((res) => (this.posts = res.data.data));
+    },
+    async replyPostByPostId() {
+      if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
+        console.log(this.reply);
+        this.toBack.content = this.reply;
+        console.log(await ethereum.request({ method: "eth_accounts" }));
+        const address = await ethereum.request({ method: "eth_accounts" });
+        this.toBack.author_address = address.toString();
+        this.reply = "";
+        console.log(this.toBack.author_address);
+        await service.post(
+          "api/v1/post/" + this.posts[0].post_id + "/response/",
+          JSON.stringify(this.toBack)
+        );
+        service
+          .get("api/v1/post/getpost/" + this.index.post_id)
+          .then((res) => (this.posts = res.data.data));
+      } else {
+        console.log("请先登录！");
+        ElNotification({
+          title: "请登录",
+          message: h("i", { style: "color: red" }, "回复前请先登陆！！！！"),
+        });
+      }
+    },
+    postReply() {
+      return this.posts.filter((num, index) => index > 0);
+    },
   },
   created() {
-      this.serchbyid()
+    this.serchbyid();
   },
-
 };
 </script>
 <style>
-.postimg{
-  background-image: url("../img/少女熊猫.jpg");
+.reply {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
+.textreply {
+  resize: none;
+  width: 90%;
+}
+.post {
+  flex-grow: 1;
+  height: calc(100% / 3);
+  padding: 10px;
+  margin-bottom: 10px;
 }
 </style>

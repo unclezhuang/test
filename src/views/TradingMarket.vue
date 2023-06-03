@@ -19,11 +19,10 @@
   
 
 <script lang="ts">
-import { dterm } from "./determine.js";
-import { reactive,h } from "vue";
+import { reactive, h } from "vue";
 import Card from "./Card.vue";
-import axios from "axios";
-import { ElNotification } from 'element-plus';
+import { service } from "../request/index.ts";
+import { ElNotification } from "element-plus";
 import { getCookie } from "../help/cookie";
 export default {
   components: {
@@ -34,20 +33,28 @@ export default {
     const buyback = async (index) => {
       if (index === 0) {
         console.log("点击事件", index);
-        axios
-          .get("http://jsonplaceholder.typicode.com/todos")
-          .then((res) => data.push(...res.data));
+        data.splice(0, data.length);
+        service
+          .get("api/v1/market/skins/0")
+          .then((res) => data.push(...res.data.data));
+          data.push(0)
       } else if (index === 1) {
         console.log("点击事件", index);
-        axios
-          .get("http://jsonplaceholder.typicode.com/todos")
-          .then((res) => data.push(...res.data));
+        data.splice(0, data.length);
+        service
+          .get("api/v1/market/skins/1")
+          .then((res) => data.push(...res.data.data));
+          // document.body.style.backgroundImage = "url('../../src/img/test.jpg')"
+          data.push(0)
       } else if (index === 2) {
         if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
-          console.log(await ethereum.request({ method: "eth_accounts" }))
-          axios
-            .get("http://jsonplaceholder.typicode.com/todos")
-            .then((res) => data.push(...res.data));
+          console.log("点击事件", index);
+          const address = await ethereum.request({ method: "eth_accounts" });
+          data.splice(0, data.length);
+          service
+            .get("api/v1/user/" + address + "/skinList")
+            .then((res) => data.push(...res.data.data));
+          data.push(1)
         } else {
           console.log("请先登录！");
           ElNotification({
@@ -63,7 +70,6 @@ export default {
       { type: "", text: "帖子正文" },
       { type: "", text: "我的" },
     ] as const;
-
     return {
       data,
       buttons,

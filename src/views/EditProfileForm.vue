@@ -4,15 +4,15 @@
     <form @submit.prevent="submitForm">
       <div>
         <label for="avatar">Avatar:</label>
-        <input type="file" id="avatar" @change="handleFileChange">
+        <input type="file" accept="image/*" id="avatar" @change="handleFileChange" />
       </div>
       <div>
         <label for="nickname">Nickname:</label>
-        <input type="text" id="nickname" v-model="formData.nickname">
+        <input type="text" id="nickname" v-model="formData.nickname" />
       </div>
       <div>
         <label for="age">Age:</label>
-        <input type="number" id="age" v-model="formData.age">
+        <input type="number" id="age" v-model="formData.age" />
       </div>
       <div>
         <label for="gender">Gender:</label>
@@ -23,13 +23,13 @@
       </div>
       <div>
         <label for="email">Email:</label>
-        <input type="email" id="email" v-model="formData.email">
+        <input type="email" id="email" v-model="formData.email" />
       </div>
       <div>
         <label for="notes">Notes:</label>
-        <textarea id="notes" v-model="formData.notes"></textarea>
+        <textarea id="notes" style="resize: none;" v-model="formData.notes"></textarea>
       </div>
-      <button type="submit">Save</button>
+      <button type="submit" @click="chuanshuju">Save</button>
       <button @click="cancel">Cancel</button>
     </form>
   </div>
@@ -41,13 +41,13 @@ export default {
     return {
       formData: {
         avatar: null,
-        nickname: '',
+        nickname: "",
         age: null,
-        gender: '',
-        email: '',
-        notes: ''
-      }
-    }
+        gender: "",
+        email: "",
+        notes: "",
+      },
+    };
   },
   methods: {
     handleFileChange(event) {
@@ -55,13 +55,13 @@ export default {
       this.formData.avatar = file;
     },
     submitForm() {
-      this.$emit('save-profile', this.formData)
+      this.$emit("save-profile", this.formData);
     },
     cancel() {
-      this.$emit('cancel-edit-profile')
-    }
-  }
-}
+      this.$emit("cancel-edit-profile");
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -72,7 +72,7 @@ form {
 label {
   margin-right: 10px;
 }
-input[type='file'],
+input[type="file"],
 select,
 textarea {
   margin-bottom: 10px;

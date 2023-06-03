@@ -1,11 +1,14 @@
 <template>
   <div class="login">
-    <div class="logo">
-      <p>诚信论坛</p>
+    <div class="Logo">
+      <img src="../img/logo.png" style="width: 10%" class="logo" />
+      <p class="logo">诚信论坛</p>
     </div>
     <nav class="navPage">
       <router-link to="/" class="home mousehover">首页</router-link>
-      <router-link to="/defo/deal" class="home mousehover">交易市场</router-link>
+      <router-link to="/defo/deal" class="home mousehover"
+        >交易市场</router-link
+      >
     </nav>
     <div class="user">
       <span class="userhead" v-show="!isShow" @click="login">登录</span>
@@ -15,23 +18,38 @@
           <p class="mousehover" @click="logout">退出登陆</p>
         </div>
         <router-link to="/defo/user" class="mousehover">
-          <img class="userhead" src="../img/少女熊猫.jpg" style="width: 10%; border-radius: 50%" /></router-link>
+          <img
+            class="userhead"
+            :src="temp"
+            style="width: 10%; border-radius: 50%"
+        /></router-link>
       </span>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { reactive, toRefs } from "vue";
-import axios from "axios";
+import { SaveFilecontract, FTcontract } from "../help/contract.ts";
+import { reactive, toRefs, ref } from "vue";
+import { service } from "../request/index.ts";
 import router from "../router/index.js";
+import { ethers } from "ethers";
+//  import  {getsigner,addWhiteList,getcontract}  from "../help/testcontract";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
 export default {
   setup() {
+    // console.log("ceshi",addWhiteList)
+    // const userAddress = ref("");
+    // const contractInstance = inject("contractInstance");
+    // const getContractData = async () => {
+    //   const data = await contractInstance.getData(userAddress.value);
+    //   console.log(data);
+    // };
     const obj = reactive({
       isShow: false,
       loginAddress: "",
     });
+    const temp = ref("../../src/img/少女熊猫.jpg");
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -39,12 +57,11 @@ export default {
           typeof window.ethereum !== "undefined" ||
           (typeof window.web3 !== "undefined" &&
             window.web3.currentProvider.isMetaMask);
-
+        let provider: any;
         if (!isMetaMaskInstalled) {
           console.log("请安装 MetaMask");
           return false;
         }
-
         // 检查用户是否已登录
         const accounts = await ethereum.request({ method: "eth_accounts" });
         const isLoggedIn = accounts.length > 0;
@@ -71,11 +88,13 @@ export default {
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
       console.log("这是账户更改输出的", accounts);
+      router.push({ name: "homepage" });
       islogin();
     });
 
     //登陆
-    const login = () => {
+    const login = async () => {
+      let provider: any;
       if (typeof window.ethereum !== "undefined") {
         // 通过 MetaMask 访问用户地址
         window.ethereum
@@ -97,14 +116,25 @@ export default {
             try {
               // For historical reasons, you must submit the message to sign in hex-encoded UTF-8.
               // This uses a Node.js-style buffer shim in the browser.
+              // 创建 Web3Provider 对象
+              provider = new ethers.BrowserProvider(window.ethereum);
+              provider.pollingInterval = 1000000; // 设置以太坊节点轮询间隔
+              provider._getENSAddress = function () {}; // 禁用ENS
+              console.log("Web3Provider successfully created:", provider);
+              // 执行您的应用程序逻辑...
               const msg = `0x${exampleMessage.toString()}`;
               const sign = await ethereum.request({
                 method: "personal_sign",
                 params: [msg, address, "Example password"],
               });
-              console.log("签名:", sign);
-              axios.post(`http://192.168.43.88:8080/api/v1/login`).then((res) => console.log(res));
-              console.log("haihao")
+              // console.log("签名:", sign);
+              service.post(`/api/v1/login`).then((res) => console.log(res));
+              const signer = await provider.getSigner();
+              const SaveFilecontrac = await SaveFilecontract(signer);
+              const addre = await SaveFilecontrac.getUserInfo(signer.address)
+              console.log("hiahao", addre);
+              const test = await SaveFilecontrac.checkDailyLog(signer.address)
+              console.log(test)
             } catch (err) {
               console.error(err);
             }
@@ -135,8 +165,10 @@ export default {
       obj.isShow = false;
       router.push({ name: "homepage" });
     };
+
     return {
       ...toRefs(obj),
+      temp,
       login,
       logout,
     };
@@ -152,7 +184,11 @@ export default {
   width: 100%;
   height: 100%;
 }
-
+.Logo {
+  text-align: center;
+  justify-content: center;
+  display: flex;
+}
 .login {
   display: flex;
   flex-direction: row;
@@ -163,8 +199,7 @@ export default {
   height: 15vh;
   /*占满整个浏览器高度*/
 }
-
-.logo,
+.Logo,
 .user,
 .navPage {
   width: 33.33%;
@@ -178,8 +213,11 @@ export default {
   /*垂直居中*/
 }
 
-.logo {
+.Logo {
   float: left;
+  text-align: center;
+  justify-content: center;
+  display: flex;
 }
 
 .user,
@@ -208,4 +246,8 @@ export default {
   font-size: 16px;
   color: #333;
   text-decoration: none;
-}</style>
+}
+.logo {
+  display: inline;
+}
+</style>
