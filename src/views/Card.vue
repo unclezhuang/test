@@ -1,5 +1,5 @@
 <template>
-  {{ data }}
+
   <el-row v-show="data[0] == 0">
     <el-col
       v-for="(item, index) in data.slice(1)"
@@ -18,9 +18,29 @@
       </el-card>
     </el-col>
   </el-row>
-  <el-row v-show="data[0] == 1">
+  <div style="margin-bottom: 10%;" v-show="data[0] == 1">
+    网页背景图：
+  <el-row>
+
     <el-col
-      v-for="(item, index) in data.slice(1)"
+      v-for="(item, index) in data.slice(1).filter(rem => rem.status == 0)"
+      :key="item.id"
+      :span="6"
+      :offset="index % 3 > 0 ? 2 : 0"
+    >
+      <el-card style="margin: 5%" :body-style="{ padding: '10%' }">
+        <img :src="item.skin_Url" class="image" />
+        <div style="padding: 14px">
+          <span>{{ item.price }} CX</span>
+          <el-row class="mb-4">
+            <el-button plain type="primary" @click="use">use</el-button>
+          </el-row>
+        </div>
+      </el-card>
+    </el-col></el-row></div><div  v-show="data[0] == 1">帖子背景图：
+<el-row>
+    <el-col
+      v-for="(item, index) in data.slice(1).filter((rem) => rem.status ==  1)"
       :key="item.id"
       :span="6"
       :offset="index % 3 > 0 ? 2 : 0"
@@ -35,7 +55,7 @@
         </div>
       </el-card>
     </el-col>
-  </el-row>
+  </el-row></div>
 </template>
   
 
@@ -56,7 +76,8 @@ export default {
       if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
         const signer = await getSigner();
         console.log("签名：：：：", signer);
- 
+        // const SkinMarketcontract = await SkinMarketcontract(signer);
+        // const SkinMarketcontractaddress = await SkinMarketcontract.mint(signer.address, 10);
       } else {
         ElNotification({
           title: "请登录",
