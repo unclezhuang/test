@@ -1,12 +1,12 @@
 <template>
-  {{ posts.params.serch }}
+  {{ obj.posts }}
   <div
     v-for="item in pagein()"
-    :key="item.id"
+    :key="item.post_id"
     style="margin: 1%"
     @click="topostbyindex(item)"
   >
-    <div>标题：{{ item.title }}</div>
+    <div>标题：{{ item.title.String }}</div>
     <div>内容：{{ item.body }}</div>
     <div>测试内容：{{ serch }}</div>
   </div>
@@ -35,9 +35,9 @@ const posts = useRoute();
 const router = useRouter();
 const serch = posts.params.serch;
 const first = async function () {
-    service
-        .get("api/v1/post/like-content/"+serch)
-        .then((res) => obj.posts.push(...res.data.data));
+  service
+    .get("api/v1/post/like-content/" + serch)
+    .then((res) => obj.posts.push(...res.data.data));
 };
 first();
 const handleChange = (page: number) => {
@@ -48,9 +48,7 @@ const pagein = () => {
   return obj.posts.slice((currentPage.value - 1) * 15, currentPage.value * 15);
 };
 const topostbyindex = (item) => {
-
-    router.push({ name: "post", params: { serch: JSON.stringify(item) } });
-
+  router.push({ name: "post", params: { serch: JSON.stringify(item) } });
 };
 </script>
 

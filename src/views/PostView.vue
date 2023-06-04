@@ -1,8 +1,10 @@
 <template>
+
+  {{ index }}
     <el-container v-if="posts[0] && postAutor">
       <el-aside width="20%"
         ><img
-          :src="posts[0].picture_url"
+          :src="postAutor.head_picture"
           style="border-radius: 50%; width: 100%"
         />
         <div>
@@ -17,8 +19,11 @@
             <el-progress
               :percentage="postAutor.experience"
               :text-inside="true"
-              :stroke-width="26"
-              :indeterminate="true"
+                :stroke-width="26"
+                :duration="6"
+                color="#b1b3b8"
+                :striped="true"
+                :striped-flow="true"
             />
           </div>
         </div>
@@ -64,8 +69,7 @@ export default {
   data() {
     const reply = ref("");
     const route = useRoute();
-    console.log("数据测试：", route.params.serch);
-    console.log("haihao");
+    console.log("这是刷新的测试",route.params.serch)
     const index = JSON.parse(route.params.serch);
     console.log(index);
     const toBack = reactive({
@@ -129,6 +133,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .reply {
   text-align: center;
