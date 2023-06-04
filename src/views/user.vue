@@ -26,6 +26,9 @@
       <el-button class="write" type="success" @click="showForm"
         >写帖子</el-button
       >
+      <div class="demo-progress">
+      <el-progress :percentage="50" />
+      </div>
       <h2>历史发布的帖子</h2>
     </div>
 
@@ -62,6 +65,7 @@ import MyForm from "./writeFrom.vue";
 import { state } from "./shared.js";
 import { useRouter } from "vue-router";
 import { service } from "../request/index";
+const format = (percentage) => (percentage === 100 ? 'Full' : `${percentage}%`)
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -156,7 +160,10 @@ export default {
   align-items: center;
   padding-left: 10px;
 }
-
+.demo-progress .el-progress--line {
+  margin-bottom: 15px;
+  width: 350px;
+}
 .new-post a {
   font-size: 20px;
   color: #333;

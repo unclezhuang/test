@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import nav from ".//nav.vue";
-import {FTcontract} from '../help/ether.ts'
+// import {FTcontract} from '../help/ether.ts'
 export default {
   components: {
     "my-nav": nav,

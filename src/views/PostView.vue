@@ -26,6 +26,7 @@
       <el-container>
         <el-main>
           <div>
+          
             <div class="post">
               第 {{ 1 }} 楼
               {{ posts[0].content }}
@@ -47,7 +48,7 @@
             <textarea class="textreply" v-model="reply"></textarea
             ><el-button type="info" round @click="replyPostByPostId"
               >评论</el-button
-            >
+            >  
           </div></el-footer
         >
       </el-container>
@@ -96,6 +97,7 @@ export default {
         )
         .then((res) => (this.postAutor = res.data.data));
     },
+ 
     async replyPostByPostId() {
       if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
         console.log(this.reply);
@@ -141,8 +143,8 @@ export default {
 }
 .post {
   flex-grow: 1;
-  height: calc(100% / 20);
-  padding: 10px;
+  height: calc(100% / 3);
+  padding: 5%;
   margin-bottom: 0%;
 }
 .demo-progress .el-progress--line {

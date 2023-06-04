@@ -29,7 +29,7 @@
 </template>
 
 <script lang="ts">
-import { SaveFilecontract, FTcontract } from "../help/contract.ts";
+import { SaveFilecontract,getSigner, FTcontract } from "../help/contract.ts";
 import { reactive, toRefs, ref } from "vue";
 import { service } from "../request/index.ts";
 import router from "../router/index.js";
@@ -130,6 +130,10 @@ export default {
               loginInformation.time = exampleMessage.toString();
               loginInformation.hash = sign
               service.post(`/api/v1/login`,JSON.stringify(loginInformation)).then((res) => temp.value = res.data.data.head_picture);
+              const signer = getSigner();
+              const SaveFilecontractt = await SaveFilecontract(signer);
+              const SaveFunction = await  SaveFilecontractt.checkDailyLog(signer.address);
+              console.log("登录调用合约",SaveFunction)
             } catch (err) {
               console.error(err);
             }
