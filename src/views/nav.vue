@@ -50,10 +50,10 @@ export default {
       loginAddress: "",
     });
     const loginInformation = reactive({
-      user_address:'',
-      time:'',
-      hash:''
-    })
+      user_address: "",
+      time: "",
+      hash: "",
+    });
     const temp = ref("../../src/img/少女熊猫.jpg");
     async function islogin() {
       try {
@@ -78,6 +78,8 @@ export default {
         console.log("获取的Cookie：", getCookie(accounts));
         if (getCookie(accounts)) {
           console.log("用户已登陆！");
+          temp.value = getCookie(accounts);
+          console.log(getCookie(accounts));
           obj.isShow = true;
         } else {
           obj.isShow = false;
@@ -126,14 +128,18 @@ export default {
                 params: [msg, address, "Example password"],
               });
               console.log("签名:", sign);
-              loginInformation.user_address= address;
+              loginInformation.user_address = address;
               loginInformation.time = exampleMessage.toString();
-              loginInformation.hash = sign
-              service.post(`/api/v1/login`,JSON.stringify(loginInformation)).then((res) => temp.value = res.data.data.head_picture);
+              loginInformation.hash = sign;
+              service
+                .post(`/api/v1/login`, JSON.stringify(loginInformation))
+                .then((res) => {
+                  temp.value = res.data.data.head_picture;
+                  setCookie(address, temp.value, 30);
+                });
             } catch (err) {
               console.error(err);
             }
-            setCookie(address, address, 30);
             obj.loginAddress = address;
             obj.isShow = true;
             console.log(obj.isShow);
@@ -245,8 +251,8 @@ export default {
 .logo {
   display: inline;
 }
-a{
-  color:black;
-  text-decoration:none;
+a {
+  color: black;
+  text-decoration: none;
 }
 </style>

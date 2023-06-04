@@ -48,14 +48,39 @@
 			}
 		],
 		"name": "buy",
-		"outputs": [
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
 			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
 			}
 		],
-		"stateMutability": "nonpayable",
+		"name": "getOwnedSkin",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "contractAddr",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct SkinMarket.SkinInfo",
+				"name": "",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -142,6 +167,35 @@
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "skinsByUser",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "contractAddr",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "newOwner",
 				"type": "address"
 			}
@@ -149,6 +203,25 @@
 		"name": "transferOwnership",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "userSkinCount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{

@@ -59,14 +59,10 @@ const router = createRouter({
     routes
 })
 router.beforeEach((to, from, next) => {
-    console.log(to)
     if (to.query.serch) {
-        to.query.serch = to.query.serch.slice(1, -1)
+        to.query.serch = decodeURIComponent(to.href).substring(decodeURIComponent(to.href).indexOf('=')+1).slice(1,-1)
         to.params = to.query
-        console.log("这是route获取的query",to.query)
     }
-    console.log(decodeURIComponent(to.fullPath))
-    console.log(from)
     next()
 })
 export default router

@@ -1,5 +1,4 @@
 <template>
-
   <el-row v-show="data[0] == 0">
     <el-col
       v-for="(item, index) in data.slice(1)"
@@ -12,58 +11,65 @@
         <div style="padding: 14px">
           <span>{{ item.price }} CX</span>
           <el-row class="mb-4">
-            <el-button plain type="primary" @click="buy">buy</el-button>
+            <el-button plain type="primary" @click="buy(item)">buy</el-button>
           </el-row>
         </div>
       </el-card>
     </el-col>
   </el-row>
-  <div style="margin-bottom: 10%;" v-show="data[0] == 1">
+  <div style="margin-bottom: 10%" v-show="data[0] == 1">
     网页背景图：
-  <el-row>
-
-    <el-col
-      v-for="(item, index) in data.slice(1).filter(rem => rem.status == 0)"
-      :key="item.id"
-      :span="6"
-      :offset="index % 3 > 0 ? 2 : 0"
+    <el-row>
+      <el-col
+        v-for="(item, index) in data.slice(1).filter((rem) => rem.status == 0)"
+        :key="item.id"
+        :span="6"
+        :offset="index % 3 > 0 ? 2 : 0"
+      >
+        <el-card style="margin: 5%" :body-style="{ padding: '10%' }">
+          <img :src="item.skin_Url" class="image" />
+          <div style="padding: 14px">
+            <span>{{ item.price }} CX</span>
+            <el-row class="mb-4">
+              <el-button plain type="primary" @click="use">use</el-button>
+            </el-row>
+          </div>
+        </el-card>
+      </el-col></el-row
     >
-      <el-card style="margin: 5%" :body-style="{ padding: '10%' }">
-        <img :src="item.skin_Url" class="image" />
-        <div style="padding: 14px">
-          <span>{{ item.price }} CX</span>
-          <el-row class="mb-4">
-            <el-button plain type="primary" @click="use">use</el-button>
-          </el-row>
-        </div>
-      </el-card>
-    </el-col></el-row></div><div  v-show="data[0] == 1">帖子背景图：
-<el-row>
-    <el-col
-      v-for="(item, index) in data.slice(1).filter((rem) => rem.status ==  1)"
-      :key="item.id"
-      :span="6"
-      :offset="index % 3 > 0 ? 2 : 0"
-    >
-      <el-card style="margin: 5%" :body-style="{ padding: '10%' }">
-        <img :src="item.skin_Url" class="image" />
-        <div style="padding: 14px">
-          <span>{{ item.price }} CX</span>
-          <el-row class="mb-4">
-            <el-button plain type="primary" @click="use">use</el-button>
-          </el-row>
-        </div>
-      </el-card>
-    </el-col>
-  </el-row></div>
+  </div>
+  <div v-show="data[0] == 1">
+    帖子背景图：
+    <el-row>
+      <el-col
+        v-for="(item, index) in data.slice(1).filter((rem) => rem.status == 1)"
+        :key="item.id"
+        :span="6"
+        :offset="index % 3 > 0 ? 2 : 0"
+      >
+        <el-card style="margin: 5%" :body-style="{ padding: '10%' }">
+          <img :src="item.skin_Url" class="image" />
+          <div style="padding: 14px">
+            <span>{{ item.price }} CX</span>
+            <el-row class="mb-4">
+              <el-button plain type="primary" @click="use(item)">use</el-button>
+            </el-row>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
+  </div>
 </template>
   
 
   <script lang="ts">
-import { h } from "vue";
+import { h,reactive } from "vue";
 import { ElNotification } from "element-plus";
 import { getCookie } from "../help/cookie";
-import { FTcontract, getSigner } from "../help/contract.ts";
+import Skin from "../../contracts/abi/Skin.json";
+import { SkinMarketcontract, FTcontract, getSigner } from "../help/contract.ts";
+import { Contract } from "ethers";
+import { service } from "../request";
 export default {
   props: {
     data: {
@@ -72,10 +78,40 @@ export default {
     },
   },
   setup() {
-    const buy = async () => {
+    const buy = async (item) => {
       if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
         const signer = await getSigner();
-        console.log("签名：：：：", signer);
+        console.log(item)
+        const buyInfo = reactive({
+          user_address:"",
+          skin_id:'',
+          skin_Url:'',
+          createTime:'',
+          status:'',
+          price:'',
+          skin_address:''
+        })
+        buyInfo.user_address = signer.address
+        buyInfo.skin_Url = item.skin_Url
+        buyInfo.skin_id = item.skin_id
+        buyInfo.createTime = item.createTime
+        buyInfo.status = item.status
+        buyInfo.price = item.price
+        buyInfo.skin_address = item.skin_address
+        const Skincontractt = new Contract(item.skin_address, Skin, signer);
+        const SkinMarketcontractt = SkinMarketcontract(signer);
+        // const Skincontractt = Skincontract(signer);
+        // const FTcontractt = FTcontract(signer)
+        // const SkinMarketcontractaddress = await SkinMarketcontractt.getAddress()
+        // console.log("签名：：：：", signer);
+        await Skincontractt.addWhiteList(signer.address);
+        await SkinMarketcontractt.buy(
+          signer.address,
+          item.skin_address,
+          item.skin_id
+        )
+        console.log(JSON.stringify(buyInfo))
+        service.post("api/v1/market/skins/shop",JSON.stringify(buyInfo))
         // const SkinMarketcontract = await SkinMarketcontract(signer);
         // const SkinMarketcontractaddress = await SkinMarketcontract.mint(signer.address, 10);
       } else {
@@ -85,8 +121,20 @@ export default {
         });
       }
     };
+    const use = async (item) => {
+      if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
+        if (item.status == 0) {
+          console.log(item.skin_Url);
+          document.body.style.backgroundImage = "url(" + item.skin_Url + ")";
+        }else{
+        console.log(item)
+        document.body.style.backgroundImage = "url(" + item.skin_Url + ")";
+        }
+      }
+    };
     return {
       buy,
+      use,
     };
   },
 };

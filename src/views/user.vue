@@ -132,10 +132,11 @@
           <div class="center">
             <span>总数：{{ posts }}</span>
             <span
-              >经验：30
+              >经验：{{formData.exp}}
               </span>
               <el-progress
-                :percentage="50"
+                :percentage="formData.exp === 500*this.formData.gender ? 'Full' : '${percentage*(500*this.formData.gender)}%'"
+                :format="format"
                 :text-inside="true"
                 :stroke-width="26"
                 :duration="6"
@@ -195,6 +196,7 @@ import MyForm from "./writeFrom.vue";
 import { state } from "./shared.js";
 import { useRouter } from "vue-router";
 import { service } from "../request/index";
+import { SaveFilecontract,getSigner } from "../help/contract"
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -202,8 +204,11 @@ export default {
     MyForm,
   },
   data() {
+    const format = (percentage) =>
+      percentage === 500*this.formData.gender ? "Full" : `${percentage*(500*this.formData.gender)}%`;
     const router = useRouter();
     return {
+      format,
       formData: reactive({
         avatar: "",
         nickname: "",
@@ -211,8 +216,9 @@ export default {
         gender: "",
         email: "",
         notes: "",
+        exp:0
       }),
-      score: 100,
+      score: 0,
       posts: 0,
       isEditing: false,
       hasPost: true, // 根据用户的历史发布是否存在来判断
@@ -238,6 +244,12 @@ export default {
     },
     async loadPosts() {
       const accounts = await ethereum.request({ method: "eth_accounts" });
+      const signer = await getSigner()
+      const SaveFilecontractt = SaveFilecontract(signer)
+      await SaveFilecontractt.getUserInfo(""+accounts).then((res) => {
+        this.formData.gender = res[0]
+        this.formData.exp = res[1]
+      })
       service
         .get("api/v1/user/" + accounts + "/getuserInformation")
         .then((res) => {
