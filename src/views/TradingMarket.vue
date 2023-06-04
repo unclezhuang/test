@@ -24,6 +24,7 @@ import Card from "./Card.vue";
 import { service } from "../request/index.ts";
 import { ElNotification } from "element-plus";
 import { getCookie } from "../help/cookie";
+import { getSigner, SkinMarketcontract, } from '../help/contract.ts';
 export default {
   components: {
     "my-card": Card,

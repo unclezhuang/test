@@ -35,7 +35,7 @@ export default {
     "my-nav": nav,
   },
   setup() { 
-
+    // console.log(FTcontract)
     return {};
   },
 };

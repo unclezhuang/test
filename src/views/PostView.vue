@@ -18,6 +18,7 @@
             经验：{{ postAutor.experience }}
             <el-progress
               :percentage="postAutor.experience"
+              :format="format"
               :text-inside="true"
                 :stroke-width="26"
                 :duration="6"

@@ -2,10 +2,10 @@
   <div>
     <h2>Edit </h2>
     <form @submit.prevent="submitForm">
-      <div>
+      <!-- <div>
         <label for="avatar">头像: </label>
         <input type="text" id="avatar" v-model="formData.avatar" />
-      </div>
+      </div> -->
       <div>
         <label for="nickname">名称: </label>
         <input type="text" id="nickname" v-model="formData.nickname" />
@@ -98,7 +98,7 @@ export default {
       this.userInfo.age = ""+this.formData.age;
       this.userInfo.gender = this.formData.gender;
       this.userInfo.signature = this.formData.notes;
-      this.userInfo.head_picture = this.formData.avatar;
+      // this.userInfo.head_picture = this.formData.avatar;
       console.log(JSON.stringify(this.userInfo));
       service.post(
         "api/v1/user/" + address + "/changeUserInformation",
