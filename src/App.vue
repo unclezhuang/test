@@ -19,7 +19,7 @@ body,
   min-height: 100vh;
 }
 body {
-  background-image: url("./img/5b6281086eb1a.jpg");
+  background-color:#EBEDF0;
   background-size: cover;
   background-position: center;
 }

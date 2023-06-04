@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
     if (to.query.serch) {
         to.query.serch = to.query.serch.slice(1, -1)
         to.params = to.query
-        console.log(to.query)
+        console.log("这是route获取的query",to.query)
     }
     console.log(decodeURIComponent(to.fullPath))
     console.log(from)

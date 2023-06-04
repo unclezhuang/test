@@ -1,8 +1,8 @@
 <template>
-  <div class="top">
+  <div class="top" style="border:none;">
     <div class="tags-wrapper">
       <div style="width: 33.33%" class="tags">
-        <router-link :to="{ name: 'posts', params: { serch: '区块链技术' } }">
+        <router-link :to="{ name: 'posts', params: { serch: '区块链' } }">
           <el-button text>区块链技术</el-button></router-link
         >
       </div>
@@ -18,6 +18,7 @@
       </div>
     </div>
     <div style="width: 33.33%; float: left" v-for="i in obj" :key="i">
+      
       <el-card
         v-for="item in i"
         :key="item.id"

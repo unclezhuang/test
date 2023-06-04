@@ -10,7 +10,7 @@
         >交易市场</router-link
       >
     </nav>
-    <div class="user">
+    <div class="user userright">
       <span class="userhead" v-show="!isShow" @click="login">登录</span>
       <span v-show="isShow">
         <div class="userhead">
@@ -244,5 +244,9 @@ export default {
 }
 .logo {
   display: inline;
+}
+a{
+  color:black;
+  text-decoration:none;
 }
 </style>
