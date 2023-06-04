@@ -1,14 +1,15 @@
 <template>
   {{ posts.params.serch }}
-  <div
+  <div class="serchposts"
     v-for="item in pagein()"
     :key="item.id"
     style="margin: 1%"
     @click="topostbyindex(item)"
   >
-    <div>标题：{{ item.title }}</div>
-    <div>内容：{{ item.body }}</div>
-    <div>测试内容：{{ serch }}</div>
+    <el-image style="width: 10%; height: 5%" :src="item.picture_url"></el-image>
+    <div>标题：{{ item.title.String }}</div>
+    <div>内容：{{ item.content }}......</div>
+    <div>作者：{{ item.author_name }}</div>
   </div>
   <div class="page">
     <el-pagination
@@ -55,5 +56,9 @@ const topostbyindex = (item) => {
 <style scoped>
 .el-pagination {
   margin-left: 40%;
+}
+.serchposts {
+  min-height:calc(100% / 4) !important; 
+  
 }
 </style>

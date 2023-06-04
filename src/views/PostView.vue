@@ -66,8 +66,9 @@ export default {
     const route = useRoute();
     console.log("数据测试：", route.params.serch);
     console.log("haihao");
-    const index = JSON.parse(route.params.serch);
-    console.log(index);
+     const index = JSON.parse(route.params.serch);
+    
+    // console.log(index);
     const toBack = reactive({
       content: "",
       author_address: "",
