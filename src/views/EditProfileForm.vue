@@ -3,10 +3,6 @@
     <h2>Edit Profile</h2>
     <form @submit.prevent="submitForm">
       <div>
-        <label for="avatar">头像: </label>
-        <input type="text" id="avatar" v-model="formData.avatar" />
-      </div>
-      <div>
         <label for="nickname">名称: </label>
         <input type="text" id="nickname" v-model="formData.nickname" />
       </div>

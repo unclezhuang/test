@@ -125,7 +125,7 @@ export default {
       if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
         if (item.status == 0) {
           console.log(item.skin_Url);
-          document.body.style.backgroundImage = "url(" + item.skin_Url + ")";
+          
         }else{
         console.log(item)
         document.body.style.backgroundImage = "url(" + item.skin_Url + ")";

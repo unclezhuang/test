@@ -119,6 +119,9 @@
         <my-form ref="myFormRef"></my-form>
         <button class="post-button" @click="showForm">写帖子</button>
       </div>
+      <div class="button1">
+        <button class="post-button" @click="showForm"></button>
+      </div>
     </el-aside>
     <el-container>
       <el-header class="top">

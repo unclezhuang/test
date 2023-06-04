@@ -41,16 +41,20 @@ export default {
       form.author_address = "" + address;
       const postInfo = reactive({
         post_key:"",
-        num:0
       })
       await service
         .post("api/v1/post/create", JSON.stringify(form))
-        .then((res) => postInfo.post_key = res.data.data);
-      await SaveFilecontractt.storeFileHash(
-        post_key,
+        .then((res) => postInfo.post_key = res.data.data.post_key);
+      const test = await SaveFilecontractt.storeFileHash(
+        postInfo.post_key,
         "" + address,
-        1
+        postInfo.post_key
       );
+      try{
+      await SaveFilecontractt.checkDailyactivity(""+address)
+    }catch(err){
+      console.log("错了错了")
+    }
       console.log("提交成功，用户地址为 ", address);
       handleCancel();
       const info = await SaveFilecontractt.getUserInfo("" + address);

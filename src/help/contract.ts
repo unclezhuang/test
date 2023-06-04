@@ -7,11 +7,11 @@ import { getCookie }  from './cookie.ts'
 import { ethers } from 'ethers'
 
 export function FTcontract(signer) {
-    const FTcontract = new Contract("0x3Df3aC546de712A319A55afcE94772381406C2C4", ft, signer)
+    const FTcontract = new Contract("0xA70021BD50801E9b26e2B6becCAbe7069c500Ca4", ft, signer)
     return FTcontract;
 }
 export function SaveFilecontract(signer) {
-    const SaveFilecontract = new Contract("0xc59123e6577452E1F335C5DB20De054f0d220B99", SaveFile, signer)
+    const SaveFilecontract = new Contract("0x70Fc24Cd616B8e7e8272C9e6feA551EbF22540d7", SaveFile, signer)
     return SaveFilecontract;
 }
 export function Skincontract(signer) {
@@ -19,7 +19,7 @@ export function Skincontract(signer) {
     return Skincontract;
 }
 export function SkinMarketcontract(signer) {
-    const SkinMarketcontract = new Contract("0xDE02899fD5d0B982317F7Fc5042a23B2D7f9C325", SkinMarket, signer)
+    const SkinMarketcontract = new Contract("0xa5C6bB8E0ea912be7613d3dd269ed104E0Edb0B3", SkinMarket, signer)
     return SkinMarketcontract;
 }
 export async function getSigner() {

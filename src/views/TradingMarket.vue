@@ -42,6 +42,7 @@ export default {
       } else if (index === 1) {
         console.log("点击事件", index);
         data.splice(0, data.length);
+        document.body.style.backgroundImage = "url(" + "../../src/img/少女熊猫.jpg" + ")";
         service
           .get("api/v1/market/skins/1")
           .then((res) => data.push(...res.data.data));

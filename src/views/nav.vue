@@ -29,13 +29,13 @@
 </template>
 
 <script lang="ts">
-import { SaveFilecontract, FTcontract } from "../help/contract.ts";
+import { SaveFilecontract, FTcontract,getSigner } from "../help/contract.ts";
 import { reactive, toRefs, ref } from "vue";
 import { service } from "../request/index.ts";
 import router from "../router/index.js";
 import { ethers } from "ethers";
-//  import  {getsigner,addWhiteList,getcontract}  from "../help/testcontract";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
+import { sign } from "crypto";
 export default {
   setup() {
     // console.log("ceshi",addWhiteList)
@@ -140,6 +140,9 @@ export default {
             } catch (err) {
               console.error(err);
             }
+            const signer = await getSigner()
+            const SaveFilecontractt = SaveFilecontract(signer)
+            // await SaveFilecontractt.checkDailyLog(signer.address)
             obj.loginAddress = address;
             obj.isShow = true;
             console.log(obj.isShow);
