@@ -138,7 +138,7 @@
               >经验：{{formData.exp}}
               </span>
               <el-progress
-                :percentage="formData.exp === 500*this.formData.level ? 'Full' : '${this.formData.exp/(500*formData.level)*100}'"
+                :percentage="formData.exp"
                 :format="format"
                 :text-inside="true"
                 :stroke-width="26"
@@ -175,7 +175,7 @@
                   })
                 "
               >
-                <img class="postImage" :src="item.picture_url" />
+                <img class="postImage" :src="item.picture_url" alt="没有图片啊" />
                 <h3 text="2xl" justify="center">{{ item.title }}</h3>
               </div>
             </el-carousel-item>
@@ -216,7 +216,7 @@ export default {
   },
   data() {
     const format = (percentage) =>
-      percentage === 100 ? "Full" : `${(this.formData.exp/(500*this.formData.gender))*100}%`;
+      percentage === 500 ? "Full" : `${this.formData.exp / (500 * this.formData.level)*100}%`;
     const router = useRouter();
     return {
       format,
