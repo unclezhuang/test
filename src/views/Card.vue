@@ -70,12 +70,22 @@ import Skin from "../../contracts/abi/Skin.json";
 import { SkinMarketcontract, FTcontract, getSigner } from "../help/contract.ts";
 import { Contract } from "ethers";
 import { service } from "../request";
+import { ethers } from 'ethers'
 export default {
   props: {
     data: {
       type: Array,
       required: true,
     },
+    userInfo: reactive({
+        user_address: "",
+        user_name: "",
+        email: "",
+        age: "",
+        gender: "",
+        signature: "",
+        head_picture: "",
+      }),
   },
   setup() {
     const buy = async (item) => {
@@ -124,12 +134,22 @@ export default {
     const use = async (item) => {
       if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
         if (item.status == 0) {
+       
+         
           console.log(item.skin_Url);
           document.body.style.backgroundImage = "url(" + item.skin_Url + ")";
         }else{
+
+          
           //toux
+          let provider: any;
         console.log(item)
         document.body.style.backgroundImage = "url(" + item.skin_Url + ")";
+        const address = await ethereum.request({ method: "eth_accounts" });
+        service.post(
+        "api/v1/user/" + address + "/changeUserInformation",
+        JSON.stringify(this.userInfo)
+      );
         }
       }
     };

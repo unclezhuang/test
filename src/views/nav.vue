@@ -135,6 +135,8 @@ export default {
                 .post(`/api/v1/login`, JSON.stringify(loginInformation))
                 .then((res) => {
                   temp.value = res.data.data.head_picture;
+                  document.body.style.backgroundImage ="url("+res.data.data.bcg_url+")";
+                  
                   setCookie(address, temp.value, 30);
                 });
             } catch (err) {
