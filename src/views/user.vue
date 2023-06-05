@@ -150,9 +150,9 @@
             <span>等級: {{ formData.level }}</span>
           </div>
           <div class="right-side">
-            <span>note: {{ formData.notes }}</span>
-            <br />
-           <div> <span>余额： {{ formData.level }}</span></div>
+            <span style="height: 50%;">note: {{ formData.notes }}</span>
+           
+           <div> <span style="height: 50%;">余额： {{ formData.level }}</span></div>
           </div>
           
             
@@ -204,7 +204,7 @@ import MyForm from "./writeFrom.vue";
 import { state } from "./shared.js";
 import { useRouter } from "vue-router";
 import { service } from "../request/index";
-import { SaveFilecontract,getSigner } from "../help/contract"
+import { SaveFilecontract,getSigner,FTcontract } from "../help/contract"
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -226,7 +226,8 @@ export default {
         notes: "",
         exp:0,
         bcg_url:"",
-        level:''
+        level:'',
+      
       }),
       score: 0,
       posts: 0,
@@ -256,6 +257,9 @@ export default {
       const accounts = await ethereum.request({ method: "eth_accounts" });
       const signer = await getSigner()
       const SaveFilecontractt = SaveFilecontract(signer)
+      const FTcontractt = FTcontract(signer);
+      const balanceOfs = FTcontractt.balanceOf(signer.address);
+      console.log("余额为",balanceOfs)
       await SaveFilecontractt.getUserInfo(""+accounts).then((res) => {
         this.formData.level = res[0].toString()
         this.formData.exp = res[1].toString()
@@ -338,6 +342,8 @@ export default {
   display: flex;
   justify-content: flex-end;
   margin-right: 11rem;
+  flex-direction: column;
+  justify-content: center;
 }
 .info1 .left-side > span {
   margin-top: 22px;
