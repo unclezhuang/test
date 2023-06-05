@@ -150,9 +150,12 @@
             <span>等級: {{ formData.level }}</span>
           </div>
           <div class="right-side">
-            <span style="height: 50%;">note: {{ formData.notes }}</span>
+            <span>note: {{ formData.notes }}
+
+            </span>
+           <span>CX： {{ formData.balance / 1e18 }}</span>
+           <span>ETH: {{ formData.ethbalance / 1e18 }}</span>
            
-           <div> <span style="height: 50%;">余额： {{ 1 }}</span></div>
           </div>
           
             
@@ -213,11 +216,13 @@ export default {
   },
   data() {
     const format = (percentage) =>
-      percentage === 500*this.formData.gender ? "Full" : `${(this.formData.exp/(500*this.formData.gender))*100}%`;
+      percentage === 100 ? "Full" : `${(this.formData.exp/(500*this.formData.gender))*100}%`;
     const router = useRouter();
     return {
       format,
       formData: reactive({
+        ethbalance:"",
+        balance:"",
         avatar: "",
         nickname: "",
         age: "",
@@ -259,7 +264,8 @@ export default {
       const SaveFilecontractt = SaveFilecontract(signer)
       const FTcontractt = FTcontract(signer);
       const balanceOfs = await FTcontractt.balanceOf(signer.address);
-      // this.balance = balanceOfs
+      this.formData.balance = balanceOfs.toString()
+      ethereum.request({method:'eth_getBalance',params:[signer.address,'latest']}).then(res => this.formData.ethbalance = parseInt(res,16))
       await SaveFilecontractt.getUserInfo(""+accounts).then((res) => {
         this.formData.level = res[0].toString()
         this.formData.exp = res[1].toString()
@@ -275,7 +281,6 @@ export default {
           this.formData.age = res.data.data.age;
           this.formData.gender = res.data.data.gender;
           this.formData.email = res.data.data.eamil;
-          this.formData.score = res.data.data.balance;
           this.formData.notes = res.data.data.signature;
           this.formData.bcg_url = res.data.data.bcg_url;
         });
