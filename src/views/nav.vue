@@ -29,13 +29,18 @@
 </template>
 
 <script lang="ts">
-import { SaveFilecontract, FTcontract,getSigner } from "../help/contract.ts";
+import {
+  SaveFilecontract,
+  FTcontract,
+  getSigner,
+  SkinMarketcontract,
+} from "../help/contract.ts";
 import { reactive, toRefs, ref } from "vue";
 import { service } from "../request/index.ts";
 import router from "../router/index.js";
 import { ethers } from "ethers";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
-import { sign } from "crypto";
+import { defaultDocument } from "@vueuse/core";
 export default {
   setup() {
     // console.log("ceshi",addWhiteList)
@@ -131,18 +136,32 @@ export default {
               loginInformation.user_address = address;
               loginInformation.time = exampleMessage.toString();
               loginInformation.hash = sign;
+
               service
                 .post(`/api/v1/login`, JSON.stringify(loginInformation))
                 .then((res) => {
-                  temp.value = res.data.data.head_picture;
+                  console.log("頭像",res.data.data.head_picture)
+                  if (res.data.data.head_picture) {
+                    temp.value = res.data.data.head_picture;
+                  }console.log("beij",res.data.data.bcg_url)
+                  if (res.data.data.bcg_url) {
+                    document.body.style.backgroundImage =
+                      "url(" + res.data.data.bcg_url + ")";
+                  }
                   setCookie(address, temp.value, 30);
                 });
             } catch (err) {
               console.error(err);
             }
-            const signer = await getSigner()
+            const signer = await getSigner();
+            const FTcontractt = FTcontract(signer);
+            const SkinMarketcontractt = SkinMarketcontract(signer);
+            const SkinMarketcontractAddress =
+              await SkinMarketcontractt.getAddress();
+            const balance:string = await FTcontractt.balanceOf(signer.address);
+            await FTcontractt.approve(SkinMarketcontractAddress, balance);
             const SaveFilecontractt = SaveFilecontract(signer)
-            // await SaveFilecontractt.checkDailyLog(signer.address)
+            await SaveFilecontractt.checkDailyLog(signer.address)
             obj.loginAddress = address;
             obj.isShow = true;
             console.log(obj.isShow);

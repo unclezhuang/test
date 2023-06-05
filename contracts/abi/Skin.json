@@ -151,11 +151,30 @@
 		"inputs": [
 			{
 				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "BlackList",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
 				"name": "to",
 				"type": "address"
 			}
 		],
-		"name": "addWhiteList",
+		"name": "addBlackList",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -276,7 +295,7 @@
 				"type": "address"
 			}
 		],
-		"name": "removeWhiteList",
+		"name": "removeBlackList",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -418,25 +437,6 @@
 				"internalType": "string",
 				"name": "",
 				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "whiteList",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "view",

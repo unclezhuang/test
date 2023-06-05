@@ -1,14 +1,5 @@
 import { ethers, Contract } from "ethers";
-import { ref } from "vue";
-import SkinMarketBy from '../../contracts/byte/SkinMarketby.json'
-import SkinMarket from '../../contracts/abi/SkinMarket.json'
-import SkinBy from '../../contracts/byte/Skin.json'
-import Skin from '../../contracts/abi/Skin.json'
-import SaveFileBy from '../../contracts/byte/SaveFile.json'
-import SaveFile from '../../contracts/abi/SaveFile.json'
-import ftBy from '../../contracts/byte/FTby.json'
-import ft from '../../contracts/abi/FT.json'
-import {FTcontract,SkinMarketcontract,SaveFilecontract, FTcontract} from './contract'
+import {FTcontract,SkinMarketcontract,SaveFilecontract} from './contract'
 export let provider: any;
 
 // 检查是否安装了 Metamask
@@ -30,6 +21,26 @@ const signer =await provider.getSigner();
 const FTcontractt = FTcontract(signer)
 const SaveFilecontractt = SaveFilecontract(signer)
 const SaveFilecontractAddress = await SaveFilecontractt.getAddress()
-await FTcontractt.approve(SaveFilecontractAddress,'1e25')
+// console.log("SaceFilecontractAddress：：：",SaveFilecontractAddress)
+await FTcontractt.approve(SaveFilecontractAddress,'10000000000000000000000000')
+const SkinMarketcontractt = SkinMarketcontract(signer)
+
+import axios from 'axios'
+const getData = () => {
+    return axios.get('../../src/help/ceshi.json')
+      .then((response) => {
+        return response.data
+      })
+  }
+
+export async function test() {
+    const transAddr = await getData()
+    for(let i =0; i < transAddr.length;i++){
+        await SkinMarketcontractt.setPrice(transAddr[i].address,transAddr[i].id,transAddr[i].price)
+        console.log("地址"+transAddr[i].address);
+        console.log("价格",transAddr[i].price)
+        console.log("id",transAddr[i].id)
+    }
+}
 
 

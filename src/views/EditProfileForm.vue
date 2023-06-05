@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Edit Profile</h2>
+    <h2>Edit </h2>
     <form @submit.prevent="submitForm">
       <div>
         <label for="nickname">名称: </label>
@@ -54,11 +54,13 @@ export default {
   props: {
     formData: reactive({
       avatar: "",
-      nickname: "",
-      age: "",
-      gender: "",
-      email: "",
-      notes: "",
+        nickname: "",
+        age: "",
+        gender: "",
+        email: "",
+        notes: "",
+        exp:0,
+        bcg_url:"",
     }),
   },
   data() {
@@ -81,6 +83,7 @@ export default {
     },
     submitForm() {
       this.$emit("save-profile", this.formData);
+      //提交表单数据到父组件
     },
     cancel() {
       this.$emit("cancel-edit-profile");
@@ -94,6 +97,8 @@ export default {
       this.userInfo.gender = this.formData.gender;
       this.userInfo.signature = this.formData.notes;
       this.userInfo.head_picture = this.formData.avatar;
+      this.userInfo.bcg_url = this.formData.bcg_url;
+      // this.userInfo.head_picture = this.formData.avatar;
       console.log(JSON.stringify(this.userInfo));
       service.post(
         "api/v1/user/" + address + "/changeUserInformation",

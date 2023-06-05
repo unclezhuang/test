@@ -159,4 +159,7 @@ el-aside {
   position: absolute;
   top: 20%;
 }
+el-aside {
+  position: absolute;
+}
 </style>
