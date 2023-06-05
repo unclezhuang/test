@@ -69,7 +69,7 @@ router.beforeEach((to, from, next) => {
         to.params = to.query
     }
     if (to.name === 'user' && !getcook()) {
-        console.log(11111111111111)
+        console.log(getcook())
         next({name:'homepage'})
     } else {
         next()

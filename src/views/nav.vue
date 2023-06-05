@@ -59,7 +59,7 @@ export default {
       time: "",
       hash: "",
     });
-    const temp = ref("../../src/img/少女熊猫.jpg");
+    const temp = ref("");
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -157,7 +157,7 @@ export default {
               
               service
                 .post(`/api/v1/login`, JSON.stringify(loginInformation))
-                .then((res) => {
+                .then((res) => {   
                   console.log("头像",res.data.data.head_picture)
                   if (res.data.data.head_picture) {
                     temp.value = res.data.data.head_picture;
@@ -166,6 +166,7 @@ export default {
                     document.body.style.backgroundImage =
                       "url(" + res.data.data.bcg_url + ")";
                   }
+                  console.log("頭像",temp.value)
                   setCookie(address, temp.value, 30);
                 });
             } catch (err) {
@@ -201,7 +202,8 @@ export default {
       window.ethereum
         .request({ method: "eth_requestAccounts" })
         .then(async function (accounts) {
-          deleteCookie(accounts);
+          console.log(1111)
+          deleteCookie("" + accounts);
         });
       obj.isShow = false;
       router.push({ name: "homepage" });
