@@ -119,13 +119,16 @@
         <my-form ref="myFormRef"></my-form>
         <button class="post-button" @click="showForm">写帖子</button>
       </div>
+      <div class="button1">
+        <button class="post-button" @click="showForm"></button>
+      </div>
     </el-aside>
     <el-container>
       <el-header class="top">
         <div class="info1">
           <div class="left-side">
             <span>name: {{ formData.nickname }}</span>
-            <span>gender:{{ formData.gender }}</span>
+            <span>gender:{{ formData.gender ? '女' : '男' }}</span>
             <span>email:{{ formData.email }}</span>
             <span>age:{{ formData.age }}</span>
           </div>
@@ -135,7 +138,7 @@
               >经验：{{formData.exp}}
               </span>
               <el-progress
-                :percentage="formData.exp === 500*this.formData.gender ? 'Full' : '${this.formData.exp/(500*formData.gender)*100}'"
+                :percentage="formData.exp === 500*this.formData.level ? 'Full' : '${this.formData.exp/(500*formData.level)*100}'"
                 :format="format"
                 :text-inside="true"
                 :stroke-width="26"
@@ -144,10 +147,15 @@
                 :striped="true"
                 :striped-flow="true"
             />
+            <span>等級: {{ formData.level }}</span>
           </div>
           <div class="right-side">
             <span>note: {{ formData.notes }}</span>
+            <br />
+           <div> <span>余额： {{ formData.level }}</span></div>
           </div>
+          
+            
         </div>
       </el-header>
       <el-main class="main" style="height: 100%"
@@ -216,7 +224,9 @@ export default {
         gender: "",
         email: "",
         notes: "",
-        exp:0
+        exp:0,
+        bcg_url:"",
+        level:''
       }),
       score: 0,
       posts: 0,
@@ -247,8 +257,10 @@ export default {
       const signer = await getSigner()
       const SaveFilecontractt = SaveFilecontract(signer)
       await SaveFilecontractt.getUserInfo(""+accounts).then((res) => {
-        this.formData.gender = res[0]
-        this.formData.exp = res[1]
+        this.formData.level = res[0].toString()
+        this.formData.exp = res[1].toString()
+        console.log(res[0])
+        console.log(res[1])
       })
       service
         .get("api/v1/user/" + accounts + "/getuserInformation")
@@ -261,6 +273,7 @@ export default {
           this.formData.email = res.data.data.eamil;
           this.formData.score = res.data.data.balance;
           this.formData.notes = res.data.data.signature;
+          this.formData.bcg_url = res.data.data.bcg_url;
         });
       await service
         .get("api/v1/user/" + accounts + "/PostFromUser")

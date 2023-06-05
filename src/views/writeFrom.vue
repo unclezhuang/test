@@ -29,33 +29,37 @@ export default {
     const handleSubmit = async () => {
       const address = await ethereum.request({ method: "eth_accounts" });
       const signer = await getSigner();
-      const SaveFilecontractt = SaveFilecontract(signer);
-      const SaveFilecontractAddress = await SaveFilecontractt.getAddress();
-      const FTcontractt = FTcontract(signer);
+      // const SaveFilecontractt = SaveFilecontract(signer);
+      // const SaveFilecontractAddress = await SaveFilecontractt.getAddress();
+      // const FTcontractt = FTcontract(signer);
       // await FTcontractt.approve(SaveFilecontractAddress,'10000000000000000000000000')
-      const balance = await FTcontractt.allowance(
-        signer.address,
-        SaveFilecontractAddress
-      );
-      console.log(balance);
+      // const balance = await FTcontractt.allowance(
+      //   signer.address,
+      //   SaveFilecontractAddress
+      // );
+      // FTcontractt.balanceOf(signer.address).then(res => console.log(res))
+      // console.log(balance);
+      const SaveFilecontractt = SaveFilecontract(signer)
       form.author_address = "" + address;
       const postInfo = reactive({
-        post_key:"",
-        num:0
-      })
+        post_key: "",
+      });
+      console.log(JSON.stringify(form));
       await service
         .post("api/v1/post/create", JSON.stringify(form))
-        .then((res) => postInfo.post_key = res.data.data);
-      await SaveFilecontractt.storeFileHash(
-        post_key,
+        .then((res) => (postInfo.post_key = res.data.data.post_key));
+      const test = await SaveFilecontractt.storeFileHash(
+        postInfo.post_key,
         "" + address,
-        1
+        postInfo.post_key
       );
+      try {
+        await SaveFilecontractt.checkDailyactivity("" + address);
+      } catch (err) {
+        console.log("错了错了");
+      }
       console.log("提交成功，用户地址为 ", address);
       handleCancel();
-      const info = await SaveFilecontractt.getUserInfo("" + address);
-      console.log(info);
-      // 处理表单提交操作
     };
     const handleCancel = () => {
       formRef.value?.classList.remove("show");

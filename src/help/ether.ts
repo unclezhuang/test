@@ -15,8 +15,9 @@ if (typeof window.ethereum !== "undefined") {
     try {
         // 创建 Web3Provider 对象
         provider = new ethers.BrowserProvider(window.ethereum)
-        provider.pollingInterval = 1000000; // 设置以太坊节点轮询间隔
         provider._getENSAddress = function () { } // 禁用ENS
+        provider.pollingInterval = 1000000; // 设置以太坊节点轮询间隔
+        
         console.log("Web3Provider successfully created:", provider);
         // 执行您的应用程序逻辑...
     } catch (err) {
@@ -29,11 +30,16 @@ if (typeof window.ethereum !== "undefined") {
 const signer = await provider.getSigner();
 console.log("签名：：：",signer)
 export const blockNumber = await provider.getBlockNumber();
+console.log(blockNumber)
 const FTfactory = new ethers.ContractFactory(ft,  ftBy.code, signer);
+console.log(1)
 const SaveFilefactory = new ethers.ContractFactory(SaveFile,  SaveFileBy.code, signer);
+console.log(1)
 const Skinfactory = new ethers.ContractFactory(Skin,  SkinBy.code, signer);
 const SkinMarketfactory = new ethers.ContractFactory(SkinMarket,  SkinMarketBy.code, signer);
+console.log(1)
 export const FTcontract = await FTfactory.deploy("cxlt","CX");
+console.log(1)
 const FTAddress = await FTcontract.getAddress()
 console.log("ft的地址：",FTAddress)
 export const SaveFilecontract = await SaveFilefactory.deploy(FTAddress,signer.address);
@@ -99,6 +105,9 @@ console.log("Skincontract16::::",Skincontract16Address)
 export const Skincontract17 = await Skinfactory.deploy("https://picx.zhimg.com/v2-aa48f30ee75fb8f3b84be95075404362_r.jpg?source=1940ef5c");
 const Skincontract17Address = await Skincontract17.getAddress()
 console.log("Skincontract17::::",Skincontract17Address)
+export const Skincontract18 = await Skinfactory.deploy("https://p.qqan.com/up/2021-7/16257943983452527.jpg");
+const Skincontract18Address = await Skincontract18.getAddress()
+console.log("Skincontract18::::",Skincontract18Address)
 
 
 

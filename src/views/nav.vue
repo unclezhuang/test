@@ -29,13 +29,18 @@
 </template>
 
 <script lang="ts">
-import { SaveFilecontract, FTcontract } from "../help/contract.ts";
+import {
+  SaveFilecontract,
+  FTcontract,
+  getSigner,
+  SkinMarketcontract,
+} from "../help/contract.ts";
 import { reactive, toRefs, ref } from "vue";
 import { service } from "../request/index.ts";
 import router from "../router/index.js";
 import { ethers } from "ethers";
-//  import  {getsigner,addWhiteList,getcontract}  from "../help/testcontract";
 import { setCookie, getCookie, deleteCookie } from "../help/cookie";
+import { defaultDocument } from "@vueuse/core";
 export default {
   setup() {
     // console.log("ceshi",addWhiteList)
@@ -78,6 +83,19 @@ export default {
         console.log("获取的Cookie：", getCookie(accounts));
         if (getCookie(accounts)) {
           console.log("用户已登陆！");
+          service
+                .post(`/api/v1/login`, JSON.stringify(loginInformation))
+                .then((res) => {
+                  console.log("头像",res.data.data.head_picture)
+                  if (res.data.data.head_picture) {
+                    temp.value = res.data.data.head_picture;
+                  }console.log("beij",res.data.data.bcg_url)
+                  if (res.data.data.bcg_url) {
+                    document.body.style.backgroundImage =
+                      "url(" + res.data.data.bcg_url + ")";
+                  }
+                  setCookie(address, temp.value, 30);
+                });
           temp.value = getCookie(accounts);
           console.log(getCookie(accounts));
           obj.isShow = true;
@@ -89,9 +107,12 @@ export default {
         console.error(err);
         return false;
       }
+    
     }
     islogin();
     //检测用户改变
+    
+            
     window.ethereum.on("accountsChanged", function (accounts: any) {
       // Time to reload your interface with accounts[0]!
       console.log("这是账户更改输出的", accounts);
@@ -131,17 +152,32 @@ export default {
               loginInformation.user_address = address;
               loginInformation.time = exampleMessage.toString();
               loginInformation.hash = sign;
+              
               service
                 .post(`/api/v1/login`, JSON.stringify(loginInformation))
                 .then((res) => {
-                  temp.value = res.data.data.head_picture;
-                  document.body.style.backgroundImage ="url("+res.data.data.bcg_url+")";
-                  
+                  console.log("头像",res.data.data.head_picture)
+                  if (res.data.data.head_picture) {
+                    temp.value = res.data.data.head_picture;
+                  }console.log("beij",res.data.data.bcg_url)
+                  if (res.data.data.bcg_url) {
+                    document.body.style.backgroundImage =
+                      "url(" + res.data.data.bcg_url + ")";
+                  }
                   setCookie(address, temp.value, 30);
                 });
             } catch (err) {
               console.error(err);
             }
+            const signer = await getSigner();
+            const FTcontractt = FTcontract(signer);
+            const SkinMarketcontractt = SkinMarketcontract(signer);
+            const SkinMarketcontractAddress =
+              await SkinMarketcontractt.getAddress();
+            const balance:string = await FTcontractt.balanceOf(signer.address);
+            await FTcontractt.approve(SkinMarketcontractAddress, balance);
+            const SaveFilecontractt = SaveFilecontract(signer)
+            await SaveFilecontractt.checkDailyLog(signer.address)
             obj.loginAddress = address;
             obj.isShow = true;
             console.log(obj.isShow);

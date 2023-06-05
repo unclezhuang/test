@@ -30,12 +30,15 @@
 <script lang="ts">
 import nav from ".//nav.vue";
 import {FTcontract} from '../help/ether.ts'
+import { test }  from '../help/tttt.ts'
 export default {
   components: {
     "my-nav": nav,
   },
   setup() { 
     // console.log(FTcontract)
+    // const testt = test()
+    // console.log(testt)
     return {};
   },
 };

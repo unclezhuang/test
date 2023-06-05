@@ -31,7 +31,7 @@
           <div style="padding: 14px">
             <span>{{ item.price }} CX</span>
             <el-row class="mb-4">
-              <el-button plain type="primary" @click="use">use</el-button>
+              <el-button plain type="primary" @click="use(item)">use</el-button>
             </el-row>
           </div>
         </el-card>
@@ -39,7 +39,7 @@
     >
   </div>
   <div v-show="data[0] == 1">
-     头像：
+    头像：
     <el-row>
       <el-col
         v-for="(item, index) in data.slice(1).filter((rem) => rem.status == 1)"
@@ -63,14 +63,13 @@
   
 
   <script lang="ts">
-import { h,reactive } from "vue";
+import { h, reactive } from "vue";
 import { ElNotification } from "element-plus";
 import { getCookie } from "../help/cookie";
-import Skin from "../../contracts/abi/Skin.json";
 import { SkinMarketcontract, FTcontract, getSigner } from "../help/contract.ts";
-import { Contract } from "ethers";
 import { service } from "../request";
-import { ethers } from 'ethers'
+import { add } from "lodash";
+import { sk } from "element-plus/es/locale/index.js";
 export default {
   props: {
     data: {
@@ -89,39 +88,42 @@ export default {
   },
   setup() {
     const buy = async (item) => {
+      console.log(item);
       if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
         const signer = await getSigner();
-        console.log(item)
+        console.log(item);
         const buyInfo = reactive({
-          user_address:"",
-          skin_id:'',
-          skin_Url:'',
-          createTime:'',
-          status:'',
-          price:'',
-          skin_address:''
-        })
-        buyInfo.user_address = signer.address
-        buyInfo.skin_Url = item.skin_Url
-        buyInfo.skin_id = item.skin_id
-        buyInfo.createTime = item.createTime
-        buyInfo.status = item.status
-        buyInfo.price = item.price
-        buyInfo.skin_address = item.skin_address
-        const Skincontractt = new Contract(item.skin_address, Skin, signer);
+          user_address: "",
+          skin_id: "",
+          skin_Url: "",
+          createTime: "",
+          status: "",
+          price: "",
+          skin_address: "",
+        });
+        buyInfo.user_address = signer.address;
+        buyInfo.skin_Url = item.skin_Url;
+        buyInfo.skin_id = item.skin_id;
+        buyInfo.createTime = item.createTime;
+        buyInfo.status = item.status;
+        buyInfo.price = item.price;
+        buyInfo.skin_address = item.skin_address;
         const SkinMarketcontractt = SkinMarketcontract(signer);
         // const Skincontractt = Skincontract(signer);
-        // const FTcontractt = FTcontract(signer)
+        const FTcontractt = FTcontract(signer)
+        const balance:string = await FTcontractt.balanceOf(signer.address)
+        console.log(balance)
+        const count = await SkinMarketcontractt.getOwnedSkin(signer.address)
+        console.log("shuliang",count)
         // const SkinMarketcontractaddress = await SkinMarketcontractt.getAddress()
         // console.log("签名：：：：", signer);
-        await Skincontractt.addWhiteList(signer.address);
         await SkinMarketcontractt.buy(
           signer.address,
           item.skin_address,
           item.skin_id
-        )
-        console.log(JSON.stringify(buyInfo))
-        service.post("api/v1/market/skins/shop",JSON.stringify(buyInfo))
+        );
+        console.log(JSON.stringify(buyInfo));
+        service.post("api/v1/market/skins/shop", JSON.stringify(buyInfo));
         // const SkinMarketcontract = await SkinMarketcontract(signer);
         // const SkinMarketcontractaddress = await SkinMarketcontract.mint(signer.address, 10);
       } else {
@@ -132,24 +134,35 @@ export default {
       }
     };
     const use = async (item) => {
-      if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
+      console.log(item);
+      const address = await ethereum.request({ method: "eth_accounts" });
+      if (getCookie(address)) {
         if (item.status == 0) {
-       
-         
-          console.log(item.skin_Url);
+          console.log(item);
           document.body.style.backgroundImage = "url(" + item.skin_Url + ")";
-        }else{
-
-          
-          //toux
-          let provider: any;
-        console.log(item)
-        document.body.style.backgroundImage = "url(" + item.skin_Url + ")";
-        const address = await ethereum.request({ method: "eth_accounts" });
-        service.post(
-        "api/v1/user/" + address + "/changeUserInformation",
-        JSON.stringify(this.userInfo)
-      );
+          const chengeinfo = reactive({
+            address: "" + address,
+            url: item.skin_Url,
+          });
+          console.log(JSON.stringify(chengeinfo));
+          service.post(
+            "api/v1/user/" + address + "/changeBCG",
+            JSON.stringify(chengeinfo)
+          );
+        } else {
+          console.log(item);
+          const chengeinfo = reactive({
+            address: "" + address,
+            url: item.skin_Url,
+          });
+          console.log(JSON.stringify(chengeinfo));
+          await service.post(
+            "api/v1/user/" + address + "/changeHP",
+            JSON.stringify(chengeinfo)
+          );
+          //
+          console.log("测试刷新页面")
+              location.reload();
         }
       }
     };
