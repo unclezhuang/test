@@ -63,16 +63,12 @@ async function getcook() {
     return getCookie(await ethereum.request({ method: "eth_accounts" }))
 
 }
+
 router.beforeEach((to, from, next) => {
     if (to.query.serch) {
         to.query.serch = decodeURIComponent(to.href).substring(decodeURIComponent(to.href).indexOf('=') + 1).slice(1, -1)
         to.params = to.query
     }
-    if (to.name === 'user' && !getcook()) {
-        console.log(getcook())
-        next({name:'homepage'})
-    } else {
         next()
-    }
 })
 export default router

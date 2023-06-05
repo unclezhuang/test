@@ -152,7 +152,7 @@
           <div class="right-side">
             <span style="height: 50%;">note: {{ formData.notes }}</span>
            
-           <div> <span style="height: 50%;">余额： {{ formData.level }}</span></div>
+           <div> <span style="height: 50%;">余额： {{ 1 }}</span></div>
           </div>
           
             
@@ -227,8 +227,8 @@ export default {
         exp:0,
         bcg_url:"",
         level:'',
-      
       }),
+      // balance,
       score: 0,
       posts: 0,
       isEditing: false,
@@ -258,8 +258,8 @@ export default {
       const signer = await getSigner()
       const SaveFilecontractt = SaveFilecontract(signer)
       const FTcontractt = FTcontract(signer);
-      const balanceOfs = FTcontractt.balanceOf(signer.address);
-      console.log("余额为",balanceOfs)
+      const balanceOfs = await FTcontractt.balanceOf(signer.address);
+      // this.balance = balanceOfs
       await SaveFilecontractt.getUserInfo(""+accounts).then((res) => {
         this.formData.level = res[0].toString()
         this.formData.exp = res[1].toString()
