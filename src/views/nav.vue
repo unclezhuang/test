@@ -205,8 +205,9 @@ export default {
         });
       obj.isShow = false;
       router.push({ name: "homepage" });
+      document.body.style.backgroundImage =""
     };
-
+   
     return {
       ...toRefs(obj),
       temp,
