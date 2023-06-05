@@ -142,17 +142,17 @@ export default {
             const address = accounts[0];
             console.log("用户地址：", address);
             const exampleMessage = Date.now();
-            console.log("时间戳", exampleMessage);
             try {
               // 执行您的应用程序逻辑...
               const msg = `0x${exampleMessage.toString()}`;
+              console.log("签名消息:::",msg)
               const sign = await ethereum.request({
                 method: "personal_sign",
                 params: [msg, address, "Example password"],
               });
               console.log("签名:", sign);
               loginInformation.user_address = address;
-              loginInformation.time = exampleMessage.toString();
+              loginInformation.time = `0x${exampleMessage.toString()}`;
               loginInformation.hash = sign;
               
               service

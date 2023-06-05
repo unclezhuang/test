@@ -27,6 +27,7 @@ export default {
     const formRef = ref(null);
     const inputValue = ref("");
     const handleSubmit = async () => {
+      handleCancel();
       const address = await ethereum.request({ method: "eth_accounts" });
       const signer = await getSigner();
       // const SaveFilecontractt = SaveFilecontract(signer);
@@ -59,7 +60,6 @@ export default {
         console.log("错了错了");
       }
       console.log("提交成功，用户地址为 ", address);
-      handleCancel();
     };
     const handleCancel = () => {
       formRef.value?.classList.remove("show");
