@@ -9,7 +9,7 @@
       <el-card style="margin: 5%" :body-style="{ padding: '10%' }">
         <img :src="item.skin_Url" class="image" />
         <div style="padding: 14px">
-          <span>{{ item.price }} CX</span>
+          <span>{{ item.price / 1e18 }} CX</span>
           <el-row class="mb-4">
             <el-button plain type="primary" @click="buy(item)">buy</el-button>
           </el-row>
@@ -29,7 +29,6 @@
         <el-card style="margin: 5%" :body-style="{ padding: '10%' }">
           <img :src="item.skin_Url" class="image" />
           <div style="padding: 14px">
-            <span>{{ item.price }} CX</span>
             <el-row class="mb-4">
               <el-button plain type="primary" @click="use(item)">use</el-button>
             </el-row>
@@ -50,7 +49,6 @@
         <el-card style="margin: 5%" :body-style="{ padding: '10%' }">
           <img :src="item.skin_Url" class="image" />
           <div style="padding: 14px">
-            <span>{{ item.price }} CX</span>
             <el-row class="mb-4">
               <el-button plain type="primary" @click="use(item)">use</el-button>
             </el-row>
@@ -65,11 +63,9 @@
   <script lang="ts">
 import { h, reactive } from "vue";
 import { ElNotification } from "element-plus";
-import { getCookie } from "../help/cookie";
+import { getCookie, setCookie } from "../help/cookie";
 import { SkinMarketcontract, FTcontract, getSigner } from "../help/contract.ts";
 import { service } from "../request";
-import { add } from "lodash";
-import { sk } from "element-plus/es/locale/index.js";
 export default {
   props: {
     data: {
@@ -160,6 +156,7 @@ export default {
             "api/v1/user/" + address + "/changeHP",
             JSON.stringify(chengeinfo)
           );
+          setCookie("" + address,item.skin_Url,30)
           //
           console.log("测试刷新页面")
               location.reload();

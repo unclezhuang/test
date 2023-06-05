@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import { getCookie } from '../help/cookie'
 const routes = [
     {
         path: '/',
@@ -58,11 +59,16 @@ const router = createRouter({
     history: createWebHashHistory(import.meta.env.BASE_URL),
     routes
 })
+async function getcook() {
+    return getCookie(await ethereum.request({ method: "eth_accounts" }))
+
+}
+
 router.beforeEach((to, from, next) => {
     if (to.query.serch) {
-        to.query.serch = decodeURIComponent(to.href).substring(decodeURIComponent(to.href).indexOf('=')+1).slice(1,-1)
+        to.query.serch = decodeURIComponent(to.href).substring(decodeURIComponent(to.href).indexOf('=') + 1).slice(1, -1)
         to.params = to.query
     }
-    next()
+        next()
 })
 export default router

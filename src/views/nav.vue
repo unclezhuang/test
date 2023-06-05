@@ -59,7 +59,7 @@ export default {
       time: "",
       hash: "",
     });
-    const temp = ref("../../src/img/少女熊猫.jpg");
+    const temp = ref("");
     async function islogin() {
       try {
         // 检查 MetaMask 是否已安装
@@ -79,7 +79,7 @@ export default {
           console.log("请先登录 MetaMask");
           obj.isShow = false;
           return false;
-        }
+        }loginInformation.user_address = "" + accounts
         console.log("获取的Cookie：", getCookie(accounts));
         if (getCookie(accounts)) {
           console.log("用户已登陆！");
@@ -88,13 +88,15 @@ export default {
                 .then((res) => {
                   console.log("头像",res.data.data.head_picture)
                   if (res.data.data.head_picture) {
+                    console.log(res.data.data.head_picture)
                     temp.value = res.data.data.head_picture;
                   }console.log("beij",res.data.data.bcg_url)
                   if (res.data.data.bcg_url) {
+                    console.log(res.data.data.backgroundImage)
                     document.body.style.backgroundImage =
                       "url(" + res.data.data.bcg_url + ")";
                   }
-                  setCookie(address, temp.value, 30);
+                  setCookie( ""+ accounts, temp.value, 30);
                 });
           temp.value = getCookie(accounts);
           console.log(getCookie(accounts));
@@ -155,7 +157,7 @@ export default {
               
               service
                 .post(`/api/v1/login`, JSON.stringify(loginInformation))
-                .then((res) => {
+                .then((res) => {   
                   console.log("头像",res.data.data.head_picture)
                   if (res.data.data.head_picture) {
                     temp.value = res.data.data.head_picture;
@@ -164,6 +166,7 @@ export default {
                     document.body.style.backgroundImage =
                       "url(" + res.data.data.bcg_url + ")";
                   }
+                  console.log("頭像",temp.value)
                   setCookie(address, temp.value, 30);
                 });
             } catch (err) {
@@ -199,7 +202,8 @@ export default {
       window.ethereum
         .request({ method: "eth_requestAccounts" })
         .then(async function (accounts) {
-          deleteCookie(accounts);
+          console.log(1111)
+          deleteCookie("" + accounts);
         });
       obj.isShow = false;
       router.push({ name: "homepage" });
