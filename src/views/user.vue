@@ -175,7 +175,7 @@
                   })
                 "
               >
-                <img class="postImage" :src="item.picture_url" alt="没有图片啊" />
+                <img class="postImage" :src="item.picture_url" style="height: 8%;" alt="没有图片啊" />
                 <h3 text="2xl" justify="center">{{ item.title }}</h3>
               </div>
             </el-carousel-item>
