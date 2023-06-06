@@ -134,20 +134,6 @@
           </div>
           <div class="center">
             <span>总数：{{ posts }}</span>
-<<<<<<< HEAD
-            <!-- <span
-              >经验：{{formData.exp}}
-              </span> -->
-              <el-progress
-              :percentage="(formData.exp/500*formData.level)*100"
-            
-                :text-inside="true"
-                :stroke-width="26"
-                :duration="6"
-                color="#b1b3b8"
-                :striped="true"
-                :striped-flow="true"
-=======
             <span>经验：{{ formData.exp }} </span>
             <el-progress
               :percentage="(formData.exp / 500) * formData.level * 100"
@@ -157,7 +143,6 @@
               color="#b1b3b8"
               :striped="true"
               :striped-flow="true"
->>>>>>> d9bdd1763569ac98abf154155869502e46d92568
             />
             <span>等級: {{ formData.level }}</span>
           </div>
