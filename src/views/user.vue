@@ -155,6 +155,7 @@
               <el-input-number
                 v-model="approves"
                 :min="0"
+                :max="1000"
                 size="large"
                 :controls = "false"
                 :value-on-clear="0"
@@ -218,7 +219,7 @@ import MyForm from "./writeFrom.vue";
 import { state } from "./shared.js";
 import { useRouter } from "vue-router";
 import { service } from "../request/index";
-import { SaveFilecontract, getSigner, FTcontract } from "../help/contract";
+import { SaveFilecontract, getSigner, FTcontract, SkinMarketcontract } from "../help/contract";
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -261,12 +262,12 @@ export default {
       const accounts = await ethereum.request({ method: "eth_accounts" });
       const signer = await getSigner();
       const FTcontractt = FTcontract(signer);
-      const SaveFilecontractt = SaveFilecontract(signer);
-      const SaveFilecontractAddress = await SaveFilecontractt.getAddress();
+      const SkinMarketcontractt = SkinMarketcontract(signer);
+      const SkinMarketcontracttAddress = await SkinMarketcontractt.getAddress();
       const balanceOfAccount = await FTcontractt.balanceOf("" + accounts);
       console.log(this.approves*10**18)
       const appro = this.approves*10**18
-      await FTcontractt.approve(SaveFilecontractAddress, appro.toString());
+      await FTcontractt.approve(SkinMarketcontracttAddress, appro.toString());
     },
     saveProfile(formData) {
       this.formData.avatar = formData.avatar ? formData.avatar : this.avatar;
