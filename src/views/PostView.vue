@@ -1,5 +1,4 @@
 <template>
-  {{ index }}
   <el-container v-if="posts[0] && postAutor">
     <el-aside width="20%"
       ><img

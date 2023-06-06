@@ -372,10 +372,10 @@ export default {
 }
 .right-side {
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   margin-right: 11rem;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
 }
 .info1 .left-side > span {
   margin-top: 22px;

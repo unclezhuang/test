@@ -155,8 +155,10 @@ export default {
               loginInformation.time = `0x${exampleMessage.toString()}`;
               loginInformation.hash = sign;
               const signer = await getSigner();
+
               const SaveFilecontractt = SaveFilecontract(signer)
               await SaveFilecontractt.checkDailyLog(signer.address)
+
               service
                 .post(`/api/v1/login`, JSON.stringify(loginInformation))
                 .then((res) => {   
