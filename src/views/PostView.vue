@@ -49,7 +49,7 @@
           <textarea
             class="textreply"
             v-model="reply"
-            @keyup="replyPostByPostIdAndkeyup"
+            @keydown="replyPostByPostIdAndkeydown"
           ></textarea
           ><el-button type="info" round @click="replyPostByPostId"
             >评论</el-button
@@ -112,8 +112,15 @@ export default {
         console.log(res[1]);
       });
     },
-    async replyPostByPostIdAndkeyup(event) {
-      if (event.keyCode === 13) {
+    async replyPostByPostIdAndkeydown(event) {
+      if (event.ctrlKey && event.keyCode === 13) {
+        event.preventDefault(); // 阻止文本框默认的换行行为
+        var value = this.value; // 获取文本框中的文本
+        console.log(value);
+        var caret = this.selectionStart; // 获取文本框中光标的位置
+        this.value = value.substring(0, caret) + "\n" + value.substring(caret); // 插入换行符
+        this.selectionStart = this.selectionEnd = caret + 1; // 将光标移动到换行符后面
+      } else if (event.keyCode === 13) {
         if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
           console.log(this.reply);
           this.toBack.content = this.reply;

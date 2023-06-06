@@ -41,6 +41,8 @@ export default {
       if (event.keyCode === 13) {
         console.log(obj.serchtext.value);
         router.push({ name: "posts", params: { serch: obj.serchtext.value } });
+      }else{
+      console.log(event.keyCode)
       }
     };
     const serchbystring = (event) => {
