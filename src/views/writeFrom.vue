@@ -1,13 +1,19 @@
 <template>
   <div class="form" ref="formRef">
     <el-form-item label="帖子标题">
-      <el-input v-model="form.title" />
+      <el-input v-model="form.title" placeholder="标题" maxlength="10" show-word-limit />
     </el-form-item>
     <el-form-item label="帖子内容">
-      <textarea v-model="form.content" style="resize: none"></textarea>
+      <el-input
+        v-model="form.content"
+        autosize
+        type="textarea"
+        placeholder="内容"
+        maxlength="255" show-word-limit resize="none"
+      />
     </el-form-item>
     <el-form-item label="给你的帖子选个封面吧">
-      <el-input v-model="form.picture_url" />
+      <el-input v-model="form.picture_url" placeholder="URL" />
     </el-form-item>
 
     <el-button type="primary" @click="handleSubmit">提交</el-button>
@@ -40,7 +46,7 @@ export default {
       // );
       // FTcontractt.balanceOf(signer.address).then(res => console.log(res))
       // console.log(balance);
-      const SaveFilecontractt = SaveFilecontract(signer)
+      const SaveFilecontractt = SaveFilecontract(signer);
       form.author_address = "" + address;
       const postInfo = reactive({
         post_key: "",
@@ -57,7 +63,7 @@ export default {
       try {
         await SaveFilecontractt.checkDailyactivity("" + address);
       } catch (err) {
-        console.log("错了错了");
+        console.log("当日发贴量不足，无法领取活跃度奖励");
       }
       console.log("提交成功，用户地址为 ", address);
     };

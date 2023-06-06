@@ -172,15 +172,6 @@ export default {
             } catch (err) {
               console.error(err);
             }
-            const signer = await getSigner();
-            const FTcontractt = FTcontract(signer);
-            const SkinMarketcontractt = SkinMarketcontract(signer);
-            const SkinMarketcontractAddress =
-              await SkinMarketcontractt.getAddress();
-            const balance:string = await FTcontractt.balanceOf(signer.address);
-            await FTcontractt.approve(SkinMarketcontractAddress, balance);
-            const SaveFilecontractt = SaveFilecontract(signer)
-            await SaveFilecontractt.checkDailyLog(signer.address)
             obj.loginAddress = address;
             obj.isShow = true;
             console.log(obj.isShow);
