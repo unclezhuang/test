@@ -50,6 +50,7 @@
             class="textreply"
             v-model="reply"
             @keydown="replyPostByPostIdAndkeydown"
+            placeholder="评论，"
           ></textarea
           ><el-button type="info" round @click="replyPostByPostId"
             >评论</el-button
@@ -113,35 +114,38 @@ export default {
       });
     },
     async replyPostByPostIdAndkeydown(event) {
-      if (event.ctrlKey && event.keyCode === 13) {
-        event.preventDefault(); // 阻止文本框默认的换行行为
-        var value = this.value; // 获取文本框中的文本
-        console.log(value);
-        var caret = this.selectionStart; // 获取文本框中光标的位置
-        this.value = value.substring(0, caret) + "\n" + value.substring(caret); // 插入换行符
-        this.selectionStart = this.selectionEnd = caret + 1; // 将光标移动到换行符后面
-      } else if (event.keyCode === 13) {
-        if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
-          console.log(this.reply);
-          this.toBack.content = this.reply;
-          console.log(await ethereum.request({ method: "eth_accounts" }));
-          const address = await ethereum.request({ method: "eth_accounts" });
-          this.toBack.author_address = address.toString();
-          this.reply = "";
-          console.log(this.toBack.author_address);
-          await service.post(
-            "api/v1/post/" + this.posts[0].post_id + "/response/",
-            JSON.stringify(this.toBack)
-          );
-          service
-            .get("api/v1/post/getpost/" + this.index.post_id)
-            .then((res) => (this.posts = res.data.data));
-        } else {
-          console.log("请先登录！");
-          ElNotification({
-            title: "请登录",
-            message: h("i", { style: "color: red" }, "回复前请先登陆！！！！"),
-          });
+      if (this.reply != "") {
+        if (event.ctrlKey && event.keyCode === 13) {
+          event.preventDefault(); // 阻止文本框默认的换行行为
+          this.reply = this.reply + "\n"; // 插入换行符 // 将光标移动到换行符后面
+        } else if (event.keyCode === 13) {
+          event.preventDefault(); // 阻止文本框默认的换行行为
+          if (getCookie(await ethereum.request({ method: "eth_accounts" }))) {
+            console.log(this.reply);
+            this.toBack.content = this.reply;
+            console.log(await ethereum.request({ method: "eth_accounts" }));
+            const address = await ethereum.request({ method: "eth_accounts" });
+            this.toBack.author_address = address.toString();
+            this.reply = "";
+            console.log(this.toBack.author_address);
+            await service.post(
+              "api/v1/post/" + this.posts[0].post_id + "/response/",
+              JSON.stringify(this.toBack)
+            );
+            service
+              .get("api/v1/post/getpost/" + this.index.post_id)
+              .then((res) => (this.posts = res.data.data));
+          } else {
+            console.log("请先登录！");
+            ElNotification({
+              title: "请登录",
+              message: h(
+                "i",
+                { style: "color: red" },
+                "回复前请先登陆！！！！"
+              ),
+            });
+          }
         }
       }
     },
