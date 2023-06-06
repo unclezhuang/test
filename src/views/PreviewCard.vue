@@ -31,7 +31,7 @@
         <div style="padding: 14px">
           <h3 style="font-size: 18px">标题：{{ item.title.String }}</h3>
           <p>作者：{{ item.author_name }}</p>
-          <p>时间：{{ item.time }}</p>
+          <p>时间：{{ item.time.slice(0, 10) }}</p>
           <el-text class="w-1px" truncated>内容：{{ item.content }}</el-text>
         </div>
       </el-card>
