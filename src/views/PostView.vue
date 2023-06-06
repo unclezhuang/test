@@ -16,8 +16,7 @@
         <div class="demo-progress">
           经验：{{ postAutor.experience }}
           <el-progress
-            :percentage="(postAutor.experience / 500) * postAutor.level * 100"
-            :format="format"
+            :percentage="postAutor.experience / (500 * postAutor.level) * 100"
             :text-inside="true"
             :stroke-width="26"
             :duration="6"
@@ -50,7 +49,7 @@
             class="textreply"
             v-model="reply"
             @keydown="replyPostByPostIdAndkeydown"
-            placeholder="评论，"
+            placeholder="评论.(Ctrl + Enter 换行)"
           ></textarea
           ><el-button type="info" round @click="replyPostByPostId"
             >评论</el-button
@@ -79,10 +78,7 @@ export default {
       content: "",
       author_address: "",
     });
-    const format = (percentage) =>
-      percentage === 100 ? "Full" : `${percentage}%`;
     return {
-      format,
       postAutor: ref(),
       toBack,
       index,

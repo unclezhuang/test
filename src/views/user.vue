@@ -265,7 +265,8 @@ export default {
       const SaveFilecontractAddress = await SaveFilecontractt.getAddress();
       const balanceOfAccount = await FTcontractt.balanceOf("" + accounts);
       console.log(this.approves*10**18)
-      await FTcontractt.approve(SaveFilecontractAddress, this.approves*10**18);
+      const appro = this.approves*10**18
+      await FTcontractt.approve(SaveFilecontractAddress, appro.toString());
     },
     saveProfile(formData) {
       this.formData.avatar = formData.avatar ? formData.avatar : this.avatar;
