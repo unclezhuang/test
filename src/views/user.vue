@@ -263,6 +263,8 @@ export default {
       const signer = await getSigner()
       const SaveFilecontractt = SaveFilecontract(signer)
       const FTcontractt = FTcontract(signer);
+      const ftaddress =FTcontractt.getAddress()
+      await console.log("地址",ftaddress)
       const balanceOfs = await FTcontractt.balanceOf(signer.address);
       this.formData.balance = balanceOfs.toString()
       ethereum.request({method:'eth_getBalance',params:[signer.address,'latest']}).then(res => this.formData.ethbalance = parseInt(res,16))
