@@ -134,12 +134,12 @@
           </div>
           <div class="center">
             <span>总数：{{ posts }}</span>
-            <span
+            <!-- <span
               >经验：{{formData.exp}}
-              </span>
+              </span> -->
               <el-progress
               :percentage="(formData.exp/500*formData.level)*100"
-                :format="format"
+            
                 :text-inside="true"
                 :stroke-width="26"
                 :duration="6"
@@ -217,7 +217,7 @@ export default {
   data() {
     const router = useRouter();
     return {
-      format,
+   
       formData: reactive({
         ethbalance:"",
         balance:"",
