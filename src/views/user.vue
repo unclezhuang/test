@@ -152,8 +152,14 @@
             <span>ETH: {{ formData.ethbalance / 1e18 }}</span>
             <span
               ><span @click="approve" class="app">授权</span>:
-              <input type="num" v-model="approves"
-            /></span>
+              <el-input-number
+                v-model="approves"
+                :min="0"
+                size="large"
+                :controls = "false"
+                :value-on-clear="0"
+              /> </span
+            >
           </div>
         </div>
       </el-header>
@@ -205,7 +211,7 @@
   </el-container>
 </template>
 <script>
-import { ref, reactive, h } from "vue";
+import { ref, reactive } from "vue";
 import ProfileCard from "./ProfileCard.vue";
 import EditProfileForm from "./EditProfileForm.vue";
 import MyForm from "./writeFrom.vue";
@@ -213,7 +219,6 @@ import { state } from "./shared.js";
 import { useRouter } from "vue-router";
 import { service } from "../request/index";
 import { SaveFilecontract, getSigner, FTcontract } from "../help/contract";
-import { ElNotification } from "element-plus";
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -222,6 +227,7 @@ export default {
   },
   data() {
     const router = useRouter();
+
     return {
       formData: reactive({
         ethbalance: "",
@@ -258,15 +264,8 @@ export default {
       const SaveFilecontractt = SaveFilecontract(signer);
       const SaveFilecontractAddress = await SaveFilecontractt.getAddress();
       const balanceOfAccount = await FTcontractt.balanceOf("" + accounts);
-      if (approves < balanceOfAccount) {
-        // console.log("SaceFilecontractAddress：：：",SaveFilecontractAddress)
-        await FTcontractt.approve(SaveFilecontractAddress, approves);
-      } else {
-        ElNotification({
-          title: "请登录",
-          message: h("i", { style: "color: red" }, "购买前请先登陆！！！！"),
-        });
-      }
+      console.log(this.approves*10**18)
+      await FTcontractt.approve(SaveFilecontractAddress, this.approves*10**18);
     },
     saveProfile(formData) {
       this.formData.avatar = formData.avatar ? formData.avatar : this.avatar;

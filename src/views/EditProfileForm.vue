@@ -35,11 +35,14 @@
       </div>
       <div>
         <label for="notes">签名: </label>
-        <textarea
-          id="notes"
-          style="resize: none"
-          v-model="formData.notes"
-        ></textarea>
+        <el-input
+        id="notes"
+        v-model="formData.notes"
+        autosize
+        type="textarea"
+        placeholder="内容"
+        maxlength="255" show-word-limit resize="none"
+      />
       </div>
       <button class="button" type="submit" @click="changeinfo">保存</button>
       <button class="button" @click="cancel">取消</button>

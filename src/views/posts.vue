@@ -14,7 +14,6 @@
   <div class="page">
     <el-pagination
       :page-size="15"
-      :pager-count="11"
       layout="prev, pager, next"
       :total="obj.posts.length"
       default-current-page="1"
