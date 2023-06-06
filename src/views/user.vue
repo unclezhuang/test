@@ -128,43 +128,44 @@
         <div class="info1">
           <div class="left-side">
             <span>name: {{ formData.nickname }}</span>
-            <span>gender:{{ formData.gender =='1' ? '女' : '男' }}</span>
+            <span>gender:{{ formData.gender == "1" ? "女" : "男" }}</span>
             <span>email:{{ formData.email }}</span>
             <span>age:{{ formData.age }}</span>
           </div>
           <div class="center">
             <span>总数：{{ posts }}</span>
-            <span
-              >经验：{{formData.exp}}
-              </span>
-              <el-progress
-              :percentage="(formData.exp/500*formData.level)*100"
-                :format="format"
-                :text-inside="true"
-                :stroke-width="26"
-                :duration="6"
-                color="#b1b3b8"
-                :striped="true"
-                :striped-flow="true"
+            <span>经验：{{ formData.exp }} </span>
+            <el-progress
+              :percentage="(formData.exp / 500) * formData.level * 100"
+              :text-inside="true"
+              :stroke-width="26"
+              :duration="6"
+              color="#b1b3b8"
+              :striped="true"
+              :striped-flow="true"
             />
             <span>等級: {{ formData.level }}</span>
           </div>
           <div class="right-side">
-            <span>note: {{ formData.notes }}
-
-            </span>
-           <span>CX： {{ formData.balance / 1e18 }}</span>
-           <span>ETH: {{ formData.ethbalance / 1e18 }}</span>
-           <span>授权：<input type="num"></span>
+            <span>note: {{ formData.notes }} </span>
+            <span>CX： {{ formData.balance / 1e18 }}</span>
+            <span>ETH: {{ formData.ethbalance / 1e18 }}</span>
+            <span
+              ><span @click="approve" class="app">授权</span>:
+              <input type="num" v-model="approves"
+            /></span>
           </div>
-          
-            
         </div>
       </el-header>
       <el-main class="main" style="height: 100%"
         ><div style="height: 100%">
           <span class="bold">历史发布的帖子:</span>
-          <el-carousel  :trigger="click" :interval="4000" type="card" height="60%;margin-top:10%">
+          <el-carousel
+            :trigger="click"
+            :interval="4000"
+            type="card"
+            height="60%;margin-top:10%"
+          >
             <el-carousel-item v-for="item in postList" :key="item">
               <div
                 class="postinfo"
@@ -175,7 +176,11 @@
                   })
                 "
               >
-                <img class="postImage" :src="item.picture_url" alt="没有图片啊" />
+                <img
+                  class="postImage"
+                  :src="item.picture_url"
+                  alt="没有图片啊"
+                />
                 <h3 text="2xl" justify="center">{{ item.title }}</h3>
               </div>
             </el-carousel-item>
@@ -200,14 +205,15 @@
   </el-container>
 </template>
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, h } from "vue";
 import ProfileCard from "./ProfileCard.vue";
 import EditProfileForm from "./EditProfileForm.vue";
 import MyForm from "./writeFrom.vue";
 import { state } from "./shared.js";
 import { useRouter } from "vue-router";
 import { service } from "../request/index";
-import { SaveFilecontract,getSigner,FTcontract } from "../help/contract"
+import { SaveFilecontract, getSigner, FTcontract } from "../help/contract";
+import { ElNotification } from "element-plus";
 export default {
   components: {
     "profile-card": ProfileCard,
@@ -217,20 +223,20 @@ export default {
   data() {
     const router = useRouter();
     return {
-      format,
       formData: reactive({
-        ethbalance:"",
-        balance:"",
+        ethbalance: "",
+        balance: "",
         avatar: "",
         nickname: "",
         age: "",
         gender: "",
         email: "",
         notes: "",
-        exp:0,
-        bcg_url:"",
-        level:'',
+        exp: 0,
+        bcg_url: "",
+        level: "",
       }),
+      approves: "",
       // balance,
       score: 0,
       posts: 0,
@@ -245,6 +251,23 @@ export default {
     this.loadPosts();
   },
   methods: {
+    async approve() {
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      const signer = await getSigner();
+      const FTcontractt = FTcontract(signer);
+      const SaveFilecontractt = SaveFilecontract(signer);
+      const SaveFilecontractAddress = await SaveFilecontractt.getAddress();
+      const balanceOfAccount = await FTcontractt.balanceOf("" + accounts);
+      if (approves < balanceOfAccount) {
+        // console.log("SaceFilecontractAddress：：：",SaveFilecontractAddress)
+        await FTcontractt.approve(SaveFilecontractAddress, approves);
+      } else {
+        ElNotification({
+          title: "请登录",
+          message: h("i", { style: "color: red" }, "购买前请先登陆！！！！"),
+        });
+      }
+    },
     saveProfile(formData) {
       this.formData.avatar = formData.avatar ? formData.avatar : this.avatar;
       this.formData.nickname = formData.nickname
@@ -258,16 +281,21 @@ export default {
     },
     async loadPosts() {
       const accounts = await ethereum.request({ method: "eth_accounts" });
-      const signer = await getSigner()
-      const SaveFilecontractt = SaveFilecontract(signer)
+      const signer = await getSigner();
+      const SaveFilecontractt = SaveFilecontract(signer);
       const FTcontractt = FTcontract(signer);
       const balanceOfs = await FTcontractt.balanceOf(signer.address);
-      this.formData.balance = balanceOfs.toString()
-      ethereum.request({method:'eth_getBalance',params:[signer.address,'latest']}).then(res => this.formData.ethbalance = parseInt(res,16))
-      await SaveFilecontractt.getUserInfo(""+accounts).then((res) => {
-        this.formData.level = res[0].toString()
-        this.formData.exp = res[1].toString()
-      })
+      this.formData.balance = balanceOfs.toString();
+      ethereum
+        .request({
+          method: "eth_getBalance",
+          params: [signer.address, "latest"],
+        })
+        .then((res) => (this.formData.ethbalance = parseInt(res, 16)));
+      await SaveFilecontractt.getUserInfo("" + accounts).then((res) => {
+        this.formData.level = res[0].toString();
+        this.formData.exp = res[1].toString();
+      });
       service
         .get("api/v1/user/" + accounts + "/getuserInformation")
         .then((res) => {
@@ -480,5 +508,11 @@ export default {
 
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #eebe77;
+}
+
+.app:hover {
+  cursor: pointer; /* 更改鼠标悬停时的样式为手型 */
+  transition: 3;
+  background-color: #dedfe0;
 }
 </style>
