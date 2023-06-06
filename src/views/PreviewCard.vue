@@ -1,5 +1,5 @@
 <template>
-  <div class="top" style="border:none;">
+  <div class="top" style="border: none">
     <div class="tags-wrapper">
       <div style="width: 33.33%" class="tags">
         <router-link :to="{ name: 'posts', params: { serch: '区块链' } }">
@@ -18,7 +18,6 @@
       </div>
     </div>
     <div style="width: 33.33%; float: left" v-for="i in obj" :key="i">
-      
       <el-card
         v-for="item in i"
         :key="item.id"
@@ -32,7 +31,8 @@
         <div style="padding: 14px">
           <h3 style="font-size: 18px">标题：{{ item.title.String }}</h3>
           <p>作者：{{ item.author_name }}</p>
-          <p>{{ item.time }}</p>
+          <p>时间：{{ item.time }}</p>
+          <el-text class="w-1px" truncated>内容：{{ item.content }}</el-text>
         </div>
       </el-card>
     </div>

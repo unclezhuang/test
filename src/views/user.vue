@@ -128,7 +128,7 @@
         <div class="info1">
           <div class="left-side">
             <span>name: {{ formData.nickname }}</span>
-            <span>gender:{{ formData.gender ? '女' : '男' }}</span>
+            <span>gender:{{ formData.gender =='1' ? '女' : '男' }}</span>
             <span>email:{{ formData.email }}</span>
             <span>age:{{ formData.age }}</span>
           </div>
@@ -138,7 +138,7 @@
               >经验：{{formData.exp}}
               </span>
               <el-progress
-                :percentage="formData.exp"
+              :percentage="(formData.exp/500*formData.level)*100"
                 :format="format"
                 :text-inside="true"
                 :stroke-width="26"
@@ -155,7 +155,7 @@
             </span>
            <span>CX： {{ formData.balance / 1e18 }}</span>
            <span>ETH: {{ formData.ethbalance / 1e18 }}</span>
-           
+           <span>授权：<input type="num"></span>
           </div>
           
             
@@ -215,8 +215,6 @@ export default {
     MyForm,
   },
   data() {
-    const format = (percentage) =>
-      percentage === 500 ? "Full" : `${this.formData.exp / (500 * this.formData.level)*100}%`;
     const router = useRouter();
     return {
       format,
@@ -269,8 +267,6 @@ export default {
       await SaveFilecontractt.getUserInfo(""+accounts).then((res) => {
         this.formData.level = res[0].toString()
         this.formData.exp = res[1].toString()
-        console.log(res[0])
-        console.log(res[1])
       })
       service
         .get("api/v1/user/" + accounts + "/getuserInformation")
