@@ -1,4 +1,4 @@
-<template>
+<template><!-- 该对象将用于引用组件中的表单 DOM 元素 -->
   <div class="form" ref="formRef">
     <el-form-item label="帖子标题">
       <el-input v-model="form.title" placeholder="标题" maxlength="10" show-word-limit />
@@ -53,19 +53,20 @@ export default {
       });
       console.log(JSON.stringify(form));
       await service
-        .post("api/v1/post/create", JSON.stringify(form))
-        .then((res) => (postInfo.post_key = res.data.data.post_key));
+        .post("api/v1/post/create", JSON.stringify(form))//把form转化成json的格式然后放到post里，再调合约
+        .then((res) => (postInfo.post_key = res.data.data.post_key));//把postkey定义成后面数据库中拿到的postkey格式
       const test = await SaveFilecontractt.storeFileHash(
         postInfo.post_key,
         "" + address,
         postInfo.post_key
       );
       try {
-        await SaveFilecontractt.checkDailyactivity("" + address);
+        await SaveFilecontractt.checkDailyactivity("" + address);//检查账户的每日活跃度 默认为5
       } catch (err) {
         console.log("当日发贴量不足，无法领取活跃度奖励");
       }
       console.log("提交成功，用户地址为 ", address);
+      location.reload();
     };
     const handleCancel = () => {
       formRef.value?.classList.remove("show");

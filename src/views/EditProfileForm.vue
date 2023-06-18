@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>Edit </h2>
+    <!-- 调用submitform方法，提交表单数据给父组件 -->
     <form @submit.prevent="submitForm">
       <div>
         <label for="nickname">名称: </label>
@@ -27,6 +28,7 @@
           value="1"
           v-model="formData.gender"
         />
+        <!-- 使得初始值为formdata里的值 -->
         <label for="female">女</label>
       </div>
       <div>
@@ -55,7 +57,7 @@ import { reactive } from "vue";
 import { service } from "../request/index";
 export default {
   props: {
-    formData: reactive({
+    formData: reactive({//定义了一个用来传给user的formdata
       avatar: "",
         nickname: "",
         age: "",
@@ -68,7 +70,7 @@ export default {
   },
   data() {
     return {
-      userInfo: reactive({
+      userInfo: reactive({//传给后端数据
         user_address: "",
         user_name: "",
         email: "",
@@ -91,7 +93,7 @@ export default {
     cancel() {
       this.$emit("cancel-edit-profile");
     },
-    async changeinfo() {
+    async changeinfo() {//将formdata中的信息和userinfo信息进行同步
       const address = await ethereum.request({ method: "eth_accounts" });
       this.userInfo.user_address = ""+address;
       this.userInfo.user_name = this.formData.nickname;

@@ -15,13 +15,14 @@
         <div class="demo-progress">
           经验：{{ postAutor.experience }}
           <el-progress
-            :percentage="postAutor.experience / (500 * postAutor.level) * 100"
+            :percentage="(postAutor.experience / (500 * postAutor.level)) * 100"
             :text-inside="true"
             :stroke-width="26"
             :duration="6"
             color="#b1b3b8"
             :striped="true"
             :striped-flow="true"
+            style="width: 100%"
           />
         </div>
       </div>
@@ -30,27 +31,32 @@
       <el-main>
         <div>标题：{{ posts[0].title.String }}</div>
         <div>
-          <div class="post">
+          <div class="post one">
             内容：
-            <span>第 {{ 1 }} 楼: </span>
+            <span class="one-line">第 {{ 1 }} 楼: </span>
             <el-text>{{ posts[0].content }}</el-text>
           </div>
-          <div class="post" v-for="(reply, index) in postReply()" :key="index">
-            第 {{ index + 2 }} 楼
+          <div
+            class="post two"
+            v-for="(reply, index) in postReply()"
+            :key="index"
+          >
+            第 {{ index + 2 }} 楼:
             {{ reply.content }}
-            {{ reply.author_name }}
+            <span class="auter">{{ reply.author_name }}</span>
           </div>
         </div></el-main
       >
       <el-footer
         ><div class="reply">
-          <textarea
-            class="textreply"
+          <el-input
             v-model="reply"
-            @keydown="replyPostByPostIdAndkeydown"
+            autosize
+            type="textarea"
             placeholder="评论.(Ctrl + Enter 换行)"
-          ></textarea
-          ><el-button type="info" round @click="replyPostByPostId"
+            @keydown="replyPostByPostIdAndkeydown"
+            resize="none"
+          /><el-button type="info" round @click="replyPostByPostId"
             >评论</el-button
           >
         </div></el-footer
@@ -177,32 +183,65 @@ export default {
   },
 };
 </script>
-
 <style>
 .reply {
+  margin-top: 15px;
   text-align: center;
-  justify-content: center;
   display: flex;
 }
+
 .textreply {
   resize: none;
-  width: 90%;
+  width: 100%;
 }
+
 .post {
   flex-grow: 1;
-  height: calc(100% / 20);
+  min-height: calc(100% / 10);
+  height: auto;
   padding: 10px;
   margin-bottom: 0%;
+  border: 0;
+  border-style: none;
+  border-color: transparent;
+  background-color: #ffffff;
 }
+.one {
+  min-height: calc(100% / 4) !important;
+  margin-bottom: 15px;
+}
+
+.two {
+  border-bottom: 1px solid #ccc;
+}
+
 .demo-progress .el-progress--line {
   margin-bottom: 15px;
   width: 350px;
 }
+
 el-aside {
   position: absolute;
   top: 20%;
 }
-el-aside {
-  position: absolute;
+
+.introduce ul {
+  margin-top: 5%;
+  list-style: none;
+}
+
+.introduce li {
+  margin-top: 5%;
+}
+
+.one-line {
+  color: #a8abb2;
+}
+
+.two-line {
+  margin-top: 15px;
+}
+.auter {
+  float: right;
 }
 </style>

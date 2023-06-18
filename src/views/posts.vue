@@ -13,7 +13,7 @@
   </div>
   <div class="page">
     <el-pagination
-      :page-size="15"
+      :page-size="3"
       layout="prev, pager, next"
       :total="obj.posts.length"
       default-current-page="1"
@@ -45,7 +45,7 @@ const handleChange = (page: number) => {
   pagein();
 };
 const pagein = () => {
-  return obj.posts.slice((currentPage.value - 1) * 15, currentPage.value * 15);
+  return obj.posts.slice((currentPage.value - 1) * 3, currentPage.value * 3);
 };
 const topostbyindex = (item) => {
   router.push({ name: "post", params: { serch: JSON.stringify(item) } });

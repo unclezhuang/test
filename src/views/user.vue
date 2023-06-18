@@ -102,6 +102,7 @@
             box-sizing: border-box;
           "
         />
+        <!-- 点击绑定事件 值为true时会弹出修改信息表格 默认为false-->
         <button
           class="profile-button"
           @click="this.isEditing = !this.isEditing"
@@ -109,6 +110,8 @@
           编辑个人资料
         </button>
         <div class="button1">
+           <!-- vif用于判断isEditing值 ，：读取现在的formdata ，引用了 editprofile组件-->
+
           <edit-profile-form
             v-if="isEditing"
             :formData="this.formData"
@@ -116,6 +119,7 @@
             @cancel-edit-profile="this.isEditing = false"
           ></edit-profile-form>
         </div>
+        <!-- 用来传值，方便在父组件中调用 -->
         <my-form ref="myFormRef"></my-form>
         <button class="post-button" @click="showForm">写帖子</button>
       </div>
@@ -148,6 +152,7 @@
           </div>
           <div class="right-side">
             <span>note: {{ formData.notes }} </span>
+             <!-- CX为平台币 精度为10的18次方 ETH为私链上的代币-->
             <span>CX： {{ formData.balance / 1e18 }}</span>
             <span>ETH: {{ formData.ethbalance / 1e18 }}</span>
             <span
@@ -230,7 +235,8 @@ export default {
     const router = useRouter();
 
     return {
-      formData: reactive({
+      formData: reactive({   //此处定义了一个空的formdata
+
         ethbalance: "",
         balance: "",
         avatar: "",
@@ -259,13 +265,15 @@ export default {
   },
   methods: {
     async approve() {
-      const accounts = await ethereum.request({ method: "eth_accounts" });
-      const signer = await getSigner();
-      const FTcontractt = FTcontract(signer);
-      const SkinMarketcontractt = SkinMarketcontract(signer);
+      const accounts = await ethereum.request({ method: "eth_accounts" }); //从小狐狸上获得钱包地址
+
+      const signer = await getSigner();//从contract里拿到签名
+
+      const FTcontractt = FTcontract(signer);//连接合约
+      const SkinMarketcontractt = SkinMarketcontract(signer);//连接合约
       const SkinMarketcontracttAddress = await SkinMarketcontractt.getAddress();
       const balanceOfAccount = await FTcontractt.balanceOf("" + accounts);
-      console.log(this.approves*10**18)
+      console.log(this.approves*10**18)//打印授权
       const appro = this.approves*10**18
       await FTcontractt.approve(SkinMarketcontracttAddress, appro.toString());
     },
@@ -299,11 +307,11 @@ export default {
         this.formData.level = res[0].toString();
         this.formData.exp = res[1].toString();
       });
-      service
+      service // 从数据库中拿信息
         .get("api/v1/user/" + accounts + "/getuserInformation")
-        .then((res) => {
-          console.log(res.data.data);
-          this.formData.avatar = res.data.data.head_picture;
+        .then((res) => {// res导入的包
+          console.log(res.data.data);//数据库.数据
+          this.formData.avatar = res.data.data.head_picture;//从数据库中拿信息填充空的formdata
           this.formData.nickname = res.data.data.user_name;
           this.formData.age = res.data.data.age;
           this.formData.gender = res.data.data.gender;
